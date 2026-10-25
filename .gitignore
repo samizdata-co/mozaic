@@ -1,0 +1,12 @@
+node_modules
+.DS_Store
+.env
+.env.*
+!.env.example
+.svelte-kit
+dist
+build
+test-results
+playwright-report
+*.timestamp-*
+apps/docs/exports

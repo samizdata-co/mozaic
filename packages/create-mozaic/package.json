@@ -1,0 +1,26 @@
+{
+	"name": "create-mozaic",
+	"version": "0.1.0",
+	"description": "Scaffold a mozaic analysis project: R/Python data scripts plus Svelte charts built as static embeds.",
+	"type": "module",
+	"bin": {
+		"create-mozaic": "./bin/create-mozaic.js"
+	},
+	"files": [
+		"bin",
+		"src",
+		"template"
+	],
+	"scripts": {
+		"test": "vitest --run",
+		"check": "tsc -p jsconfig.json"
+	},
+	"devDependencies": {
+		"@types/node": "^24.0.0",
+		"typescript": "^6.0.3",
+		"vitest": "^4.1.12"
+	},
+	"engines": {
+		"node": ">=22.17"
+	}
+}

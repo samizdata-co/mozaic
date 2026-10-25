@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Demo</title>
+		<style>
+			body {
+				margin: 0;
+				font-family: sans-serif;
+			}
+			figure {
+				margin: 0;
+				padding: 8px;
+				background: #fff;
+			}
+		</style>
+	</head>
+	<body>
+		<figure class="mz-chart" data-mz-medium="web">
+			<h2>Fixture chart</h2>
+			<svg width="200" height="100"><rect width="120" height="40" fill="#2a78d6"></rect></svg>
+		</figure>
+		<script>
+			// Stands in for a real mozaic embed page.
+			const params = new URLSearchParams(location.search);
+			const figure = document.querySelector('.mz-chart');
+			if (params.get('medium') === 'print') {
+				figure.dataset.mzMedium = 'print';
+				figure.style.width = params.get('width') + 'px';
+			}
+			window.__mozaic = {
+				ready: true,
+				toSvg: () => '<svg xmlns="http://www.w3.org/2000/svg"><text>fixture</text></svg>'
+			};
+		</script>
+	</body>
+</html>

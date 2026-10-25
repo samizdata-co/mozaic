@@ -1,0 +1,56 @@
+{
+	"name": "docs",
+	"private": true,
+	"version": "0.1.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview --port 4173",
+		"prepare": "svelte-kit sync || echo ''",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"test": "vitest --run",
+		"test:e2e": "playwright test --project=chromium --project=mobile",
+		"export": "mozaic export build --out exports",
+		"test:visual": "playwright test --project=visual"
+	},
+	"devDependencies": {
+		"@axe-core/playwright": "^4.14.0",
+		"@mozaic/cli": "workspace:*",
+		"@playwright/test": "1.64.1",
+		"@sveltejs/adapter-static": "^4.0.0",
+		"@sveltejs/kit": "^3.0.0",
+		"@sveltejs/vite-plugin-svelte": "^7.2.0",
+		"@types/d3-array": "^3.2.1",
+		"@types/d3-dsv": "^3.0.7",
+		"@types/d3-geo": "^3.1.0",
+		"@types/d3-interpolate": "^3.0.4",
+		"@types/d3-scale": "^4.0.8",
+		"@types/d3-scale-chromatic": "^3.1.0",
+		"@types/d3-shape": "^3.1.6",
+		"@types/geojson": "^7946.0.14",
+		"@types/topojson-client": "^3.1.5",
+		"@types/topojson-specification": "^1.0.5",
+		"svelte": "^5.57.1",
+		"svelte-check": "^4.6.0",
+		"typescript": "^6.0.3",
+		"vite": "^8.3.0",
+		"vitest": "^4.1.12"
+	},
+	"imports": {
+		"#lib": "./src/lib/index.js",
+		"#lib/*": "./src/lib/*"
+	},
+	"dependencies": {
+		"d3-array": "^3.2.4",
+		"d3-dsv": "^3.0.1",
+		"d3-geo": "^3.1.1",
+		"d3-interpolate": "^3.0.1",
+		"d3-scale": "^4.0.2",
+		"d3-scale-chromatic": "^3.1.0",
+		"d3-shape": "^3.2.0",
+		"marked": "^18.1.1",
+		"mozaic": "workspace:*",
+		"topojson-client": "^3.1.0"
+	}
+}

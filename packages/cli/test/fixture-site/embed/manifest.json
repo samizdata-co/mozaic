@@ -1,0 +1,13 @@
+{
+	"project": "fixture",
+	"embeds": [
+		{
+			"slug": "demo",
+			"style": "base",
+			"locale": "en",
+			"title": "Demo",
+			"path": "embed/demo/base/en/",
+			"print": { "column": 55 }
+		}
+	]
+}

@@ -1,0 +1,148 @@
+{
+	"name": "mozaic",
+	"version": "0.1.0",
+	"description": "A personal library of chart components for the web and print, built on Svelte 5 and d3.",
+	"type": "module",
+	"scripts": {
+		"dev": "vite dev",
+		"package": "svelte-kit sync && svelte-package && publint",
+		"prepare": "svelte-kit sync || echo ''",
+		"prepack": "pnpm package",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"test:unit": "vitest",
+		"test": "vitest --run",
+		"test:coverage": "vitest --run --coverage"
+	},
+	"files": [
+		"dist",
+		"src/lib/recipes",
+		"!dist/**/*.test.*",
+		"!dist/**/*.spec.*"
+	],
+	"sideEffects": [
+		"**/*.css"
+	],
+	"svelte": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"mozaic-dev": "./src/lib/index.ts",
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js"
+		},
+		"./core": {
+			"mozaic-dev": "./src/lib/core/index.ts",
+			"types": "./dist/core/index.d.ts",
+			"svelte": "./dist/core/index.js"
+		},
+		"./marks": {
+			"mozaic-dev": "./src/lib/marks/index.ts",
+			"types": "./dist/marks/index.d.ts",
+			"svelte": "./dist/marks/index.js"
+		},
+		"./guides": {
+			"mozaic-dev": "./src/lib/guides/index.ts",
+			"types": "./dist/guides/index.d.ts",
+			"svelte": "./dist/guides/index.js"
+		},
+		"./annotations": {
+			"mozaic-dev": "./src/lib/annotations/index.ts",
+			"types": "./dist/annotations/index.d.ts",
+			"svelte": "./dist/annotations/index.js"
+		},
+		"./interactive": {
+			"mozaic-dev": "./src/lib/interactive/index.ts",
+			"types": "./dist/interactive/index.d.ts",
+			"svelte": "./dist/interactive/index.js"
+		},
+		"./frame": {
+			"mozaic-dev": "./src/lib/frame/index.ts",
+			"types": "./dist/frame/index.d.ts",
+			"svelte": "./dist/frame/index.js"
+		},
+		"./table": {
+			"mozaic-dev": "./src/lib/table/index.ts",
+			"types": "./dist/table/index.d.ts",
+			"svelte": "./dist/table/index.js"
+		},
+		"./embed": {
+			"mozaic-dev": "./src/lib/embed/index.ts",
+			"types": "./dist/embed/index.d.ts",
+			"svelte": "./dist/embed/index.js"
+		},
+		"./export": {
+			"mozaic-dev": "./src/lib/export/index.ts",
+			"types": "./dist/export/index.d.ts",
+			"svelte": "./dist/export/index.js"
+		},
+		"./recipes": {
+			"mozaic-dev": "./src/lib/recipes/index.ts",
+			"types": "./dist/recipes/index.d.ts",
+			"svelte": "./dist/recipes/index.js"
+		},
+		"./styles": {
+			"mozaic-dev": "./src/lib/styles/index.ts",
+			"types": "./dist/styles/index.d.ts",
+			"default": "./dist/styles/index.js"
+		},
+		"./locale": {
+			"mozaic-dev": "./src/lib/locale/index.ts",
+			"types": "./dist/locale/index.d.ts",
+			"default": "./dist/locale/index.js"
+		},
+		"./transforms": {
+			"mozaic-dev": "./src/lib/transforms/index.ts",
+			"types": "./dist/transforms/index.d.ts",
+			"default": "./dist/transforms/index.js"
+		},
+		"./package.json": "./package.json"
+	},
+	"peerDependencies": {
+		"svelte": "^5.57.0"
+	},
+	"dependencies": {
+		"d3-array": "^3.2.4",
+		"d3-delaunay": "^6.0.4",
+		"d3-format": "^3.1.0",
+		"d3-geo": "^3.1.1",
+		"d3-hierarchy": "^3.1.2",
+		"d3-scale": "^4.0.2",
+		"d3-shape": "^3.2.0",
+		"d3-time-format": "^4.1.0"
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-auto": "^8.0.0",
+		"@sveltejs/kit": "^3.1.0",
+		"@sveltejs/package": "^3.0.1",
+		"@sveltejs/vite-plugin-svelte": "^7.3.1",
+		"@types/d3-array": "^3.2.1",
+		"@types/d3-delaunay": "^6.0.4",
+		"@types/d3-format": "^3.0.4",
+		"@types/d3-geo": "^3.1.0",
+		"@types/d3-hierarchy": "^3.1.7",
+		"@types/d3-scale": "^4.0.8",
+		"@types/d3-scale-chromatic": "^3.1.0",
+		"@types/d3-shape": "^3.1.6",
+		"@types/d3-time-format": "^4.0.3",
+		"@types/geojson": "^7946.0.14",
+		"@vitest/coverage-v8": "^4.1.12",
+		"d3-scale-chromatic": "^3.1.0",
+		"linkedom": "^0.18.14",
+		"publint": "^0.3.21",
+		"svelte": "^5.57.2",
+		"svelte-check": "^4.6.0",
+		"typescript": "^6.0.3",
+		"vite": "^8.3.5",
+		"vitest": "^4.1.8"
+	},
+	"keywords": [
+		"svelte",
+		"charts",
+		"dataviz",
+		"d3"
+	],
+	"imports": {
+		"#lib": "./src/lib/index.js",
+		"#lib/*": "./src/lib/*"
+	}
+}
