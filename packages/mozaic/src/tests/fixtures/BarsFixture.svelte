@@ -12,8 +12,16 @@
 		style = 'base',
 		locale = 'en',
 		medium = 'web',
-		orientation = 'horizontal'
-	}: { style?: StyleName; locale?: LocaleCode; medium?: Medium; orientation?: 'horizontal' | 'vertical' } = $props();
+		orientation = 'horizontal',
+		fluid = false
+	}: {
+		style?: StyleName;
+		locale?: LocaleCode;
+		medium?: Medium;
+		orientation?: 'horizontal' | 'vertical';
+		/** Leave the plot width to measurement, as on a real page. */
+		fluid?: boolean;
+	} = $props();
 
 	const data = [
 		{ name: 'A', value: 1200.5 },
@@ -30,7 +38,7 @@
 		x={orientation === 'horizontal' ? linear : band}
 		y={orientation === 'horizontal' ? band : linear}
 		height={120}
-		width={400}
+		width={fluid ? undefined : 400}
 	>
 		<Svg>
 			<AxisX ticks={3} />

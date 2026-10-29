@@ -13,6 +13,8 @@ import { incomes } from './histogram/data';
 import { rows as spending } from './treemap/data';
 import { series as cities } from './small-multiples/data';
 import { cells } from './heatmap/data';
+import { majority, parties } from './parliament/data';
+import { series as pollSeries } from './poll-tracker/data';
 
 // The gallery data is synthetic, but each headline must still be true of it.
 describe('gallery headlines match their data', () => {
@@ -97,5 +99,17 @@ describe('gallery headlines match their data', () => {
 	it('heatmap: recent years are mostly warmer than average', () => {
 		const recent = cells.filter((c) => Number(c.year) >= 2022);
 		expect(recent.filter((c) => c.anomaly > 0).length / recent.length).toBeGreaterThan(0.6);
+	});
+
+	it('parliament: no party can govern alone', () => {
+		expect(Math.max(...parties.map((p) => p.seats))).toBeLessThan(majority);
+		expect(parties.reduce((s, p) => s + p.seats, 0)).toBe(101);
+	});
+
+	it('poll-tracker: the two largest parties are now level', () => {
+		const at = (id: string, i: number) => pollSeries.find((s) => s.id === id)!.values.at(i)!.value;
+		expect(at('a', 0) - at('b', 0)).toBeGreaterThan(6);
+		expect(Math.abs(at('a', -1) - at('b', -1))).toBeLessThan(2);
+		expect(at('d', -1)).toBeLessThan(5);
 	});
 });

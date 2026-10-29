@@ -4,7 +4,7 @@
 
 A house style is a `Theme` object: CSS tokens for type and colours, palettes for data, defaults for plots, breakpoints, print settings, web fonts, a logo and a default language. Charts pick one with `<Chart style="zdg">`.
 
-Built-in styles: `samizdata`, `zdg` and the neutral `base`.
+Built-in styles: `samizdata`, `zdg`, `moldova-alege` and the neutral `base`.
 
 ## SAMIZDATA
 
@@ -33,6 +33,15 @@ From the zdg.md site design (October 2026).
 - **Data palettes:** the site has no published chart palette. The categorical palette starts with the brand blue and coral (`#0158b5`, `#ff595a`) and adds amber, teal, violet and light blue; slots 1–4 pass the colour-blindness checks for all pairs. The sequential ramp runs from a pale blue (at least 2:1 on white) through the brand blue to the site's navies (`#10357f`, `#002853`). The diverging scale is blue ↔ coral with a neutral grey midpoint.
 - **Shape:** pill-shaped buttons with uppercase labels, as on the site.
 - **Logo:** the "spune adevărul / zdg / ZIARUL de GARDĂ" wordmark from the site, optimised to 5.5 KB.
+
+## Moldova Alege
+
+For the Moldova Alege poll tracker, where party colours carry the meaning in nearly every chart.
+
+- **Type:** IBM Plex Serif 600 for titles, IBM Plex Sans for everything else (Romanian diacritics and Cyrillic), from Bunny Fonts.
+- **Colour:** white background, ink `#161a22`, slate `#4b5262` for secondary text and a dark slate accent `#2b3a55`. The chrome stays neutral on purpose: yellow, red, blue, teal and plum all belong to parties.
+- **Data palettes:** party colours are not in the style; projects key them by party. The categorical palette is for everything else: slots 1–4 (blue, orange, teal, plum) pass the colour-blindness checks for all pairs on white, slots 5–6 (light blue, amber) are below 3:1 and need labels. The diverging scale is orange ↔ blue with a warm grey midpoint, not red ↔ green, because a yes or no on a political question is not good or bad. The sequential ramp is blue.
+- **Logo:** a small parliament of 24 seats with the majority side in ink, and the `Moldova Alege` wordmark.
 
 ## Fonts
 

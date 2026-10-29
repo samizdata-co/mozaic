@@ -14,4 +14,6 @@ export { default as Waffle } from './Waffle.svelte';
 export { default as Dumbbell } from './Dumbbell.svelte';
 export { default as Slope } from './Slope.svelte';
 export { default as Beeswarm } from './Beeswarm.svelte';
+export { default as Hemicycle } from './Hemicycle.svelte';
+export { default as Intervals } from './Intervals.svelte';
 export { barPath } from './bar-path.js';

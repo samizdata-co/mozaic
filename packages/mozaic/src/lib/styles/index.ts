@@ -1,14 +1,15 @@
 import { base, extendTheme } from './base.js';
 import { samizdata } from './samizdata.js';
 import { zdg } from './zdg.js';
+import { moldovaAlege } from './moldova-alege.js';
 import type { Breakpoint, Theme } from './types.js';
 
 export type { Breakpoint, Medium, Padding, Theme, ThemeOverrides } from './types.js';
-export { base, extendTheme, samizdata, zdg };
+export { base, extendTheme, moldovaAlege, samizdata, zdg };
 export { contrastRatio, luminance, rampSteps } from './color.js';
 
 /** Registry of built-in house styles. Add a style by adding a file and an entry here. */
-export const styles = { base, samizdata, zdg } satisfies Record<string, Theme>;
+export const styles = { base, samizdata, zdg, 'moldova-alege': moldovaAlege } satisfies Record<string, Theme>;
 export type StyleName = keyof typeof styles;
 
 export function resolveStyle(style: StyleName | Theme): Theme {

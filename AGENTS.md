@@ -8,12 +8,12 @@ Read `PLAN.md` for the design, `docs/adr/` for decisions and `apps/docs/src/cont
 - `packages/mozaic/src/lib/`: the library. Each folder is a subpath export (`mozaic/<folder>`).
   - `core/`: `Plot`, `Svg`, `Html`, `Canvas`, `Facets`, `usePlot()`, `useChart()`, `useTheme()`, `useLocale()`, `scaled()`, `position()`, `mm()`.
   - `frame/`: `Chart`, `Header`, `Title`, `Subtitle`, `Footer`, `Source`, `Notes`, `Byline`, `Logo`, `DataTable`, `DataDownload`.
-  - `marks/`: `Bars`, `Line`, `Area`, `Points`, `Rects`, `Arcs`, `Text`, `Rules`, `GeoPath`, `Voronoi`, `LineEndLabels`, `Treemap`, `Waffle`, `Dumbbell`, `Slope`, `Beeswarm`.
+  - `marks/`: `Bars`, `Line`, `Area`, `Points`, `Rects`, `Arcs`, `Text`, `Rules`, `GeoPath`, `Voronoi`, `LineEndLabels`, `Treemap`, `Waffle`, `Dumbbell`, `Slope`, `Beeswarm`, `Hemicycle`, `Intervals`.
   - `guides/`: `AxisX`, `AxisY`, `GridX`, `GridY`, `Legend`, `ColorRamp`, `SizeLegend`, `Key`.
   - `annotations/`: `Callout`, `Arrow`, `Label`, `RefLine`, `RefBand`.
   - `interactive/`: `PointerArea`, `Tooltip`, `ButtonGroup`, `Scroller`.
-  - `table/`: `Table`, `Sparkline`, `toCSV`. `transforms/`: `stack`, `bin`, `groupBy`, `rollup`, `indexTo`, `dodge`, `treemapLayout`, `avoidOverlap`.
-  - `styles/`: themes (`samizdata` from the SAMIZDATA brand system, `zdg` from zdg.md), `rampSteps`, `contrastRatio`, logos in `styles/logos/`. `locale/`: en, ro, ru. `embed/`: `Embed`, resize protocol, `hostScript`, `embedCode`. `export/`: `figureToSvg`, downloads. `recipes/`: `BarChart`, `ColumnChart`, `LineChart`, `ScatterChart`.
+  - `table/`: `Table`, `Sparkline`, `toCSV`. `transforms/`: `stack`, `bin`, `groupBy`, `rollup`, `indexTo`, `dodge`, `treemapLayout`, `avoidOverlap`, `hemicycleLayout`, `kernelSmooth`, `loess`.
+  - `styles/`: themes (`samizdata` from the SAMIZDATA brand system, `zdg` from zdg.md, `moldova-alege` for the Moldova Alege poll tracker), `rampSteps`, `contrastRatio`, logos in `styles/logos/`. `locale/`: en, ro, ru. `embed/`: `Embed`, resize protocol, `hostScript`, `embedCode`. `export/`: `figureToSvg`, downloads. `recipes/`: `BarChart`, `ColumnChart`, `LineChart`, `ScatterChart`.
   - `src/tests/`: server-render tests with fixtures.
 - `packages/cli/`: `mozaic export` and `mozaic eject` (plain Node ESM + JSDoc).
 - `packages/create-mozaic/`: scaffolder; `template/` is the analysis project (placeholders like `__STYLE__`).

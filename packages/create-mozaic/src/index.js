@@ -3,7 +3,7 @@ import { cp, readdir, readFile, rename, stat, writeFile } from 'node:fs/promises
 import { basename, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-export const STYLES = ['samizdata', 'zdg', 'base'];
+export const STYLES = ['samizdata', 'zdg', 'moldova-alege', 'base'];
 export const LOCALES = ['en', 'ro', 'ru'];
 const TEMPLATE = fileURLToPath(new URL('../template', import.meta.url));
 const TEXT = /\.(svelte|ts|js|json|md|yml|yaml|toml|R|py|csv|html|txt)$|^(justfile|_gitignore)$/;

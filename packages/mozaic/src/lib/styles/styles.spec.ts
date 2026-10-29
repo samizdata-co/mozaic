@@ -4,6 +4,7 @@ import {
 	breakpointFor,
 	contrastRatio,
 	extendTheme,
+	moldovaAlege,
 	rampSteps,
 	resolveStyle,
 	samizdata,
@@ -14,7 +15,8 @@ import {
 
 describe('styles', () => {
 	it('registers the house styles', () => {
-		expect(Object.keys(styles)).toEqual(['base', 'samizdata', 'zdg']);
+		expect(Object.keys(styles)).toEqual(['base', 'samizdata', 'zdg', 'moldova-alege']);
+		expect(resolveStyle('moldova-alege')).toBe(moldovaAlege);
 		expect(resolveStyle('zdg')).toBe(zdg);
 		expect(resolveStyle(samizdata)).toBe(samizdata);
 		expect(() => resolveStyle('nope' as never)).toThrow(/Unknown mozaic style/);
@@ -80,6 +82,17 @@ describe('styles', () => {
 		expect(zdg.palettes.categorical.slice(0, 2)).toEqual(['#0158b5', '#ff595a']);
 		expect(zdg.logo?.svg).toMatch(/^<svg[^>]*viewBox="0 0 84 48"/);
 		expect(zdg.logo?.svg).not.toContain('id=');
+	});
+
+	it('uses the Moldova Alege identity', () => {
+		expect(moldovaAlege.tokens['--mz-font-title']).toContain('IBM Plex Serif');
+		expect(moldovaAlege.tokens['--mz-font-body']).toContain('IBM Plex Sans');
+		expect(moldovaAlege.defaultLocale).toBe('ro');
+		expect(moldovaAlege.logo?.text).toBe('Moldova Alege');
+		expect(moldovaAlege.logo?.svg).toMatch(/^<svg[^>]*viewBox="0 0 36 20"/);
+		expect(moldovaAlege.logo?.svg).not.toContain('id=');
+		// The diverging poles are not red and green: a yes or no is not good or bad.
+		expect(moldovaAlege.palettes.diverging).toEqual(['#d4691e', '#e6e4df', '#2a6fb0']);
 	});
 
 	it('keeps text colours readable on each style’s background', () => {

@@ -1,6 +1,6 @@
 # mozaic
 
-A chart library for the web and print, built on Svelte 5 and d3: small, composable components on top of plain d3 scales, house styles for **SAMIZDATA** and **Ziarul de Gardă**, self-sizing static embeds, and SVG/PDF/PNG export.
+A chart library for the web and print, built on Svelte 5 and d3: small, composable components on top of plain d3 scales, house styles for **SAMIZDATA**, **Ziarul de Gardă** and **Moldova Alege**, self-sizing static embeds, and SVG/PDF/PNG export.
 
 - **Any chart.** `Chart` → `Plot` → layers → marks. Scales are d3 scales; marks, axes, legends and annotations are ordinary components you can copy and change, or replace with raw SVG.
 - **Styles and languages.** One prop switches the house style (fonts, colours, palettes) and the language (en, ro, ru: number and date formats, UI strings).
