@@ -182,6 +182,21 @@ describe('compound marks', () => {
 		expect(renderDocument(CompoundFixture, { kind: 'dumbbell' }).$$('.mz-dumbbell circle')).toHaveLength(8);
 	});
 
+	it('arrows: a line and a head per row, pointing from start to end', () => {
+		const { $$ } = renderDocument(CompoundFixture, { kind: 'arrows' });
+		expect($$('.mz-arrows-line')).toHaveLength(4);
+		const heads = $$('.mz-arrows-head').map((p) =>
+			p
+				.getAttribute('d')!
+				.match(/-?[\d.]+/g)!
+				.map(Number)
+		);
+		expect(heads).toHaveLength(4);
+		// The tip is the first point; the base is behind it: left of it for Alpha (10 → 14), right for Beta (6 → 4).
+		expect(heads[0][2]).toBeLessThan(heads[0][0]);
+		expect(heads[1][2]).toBeGreaterThan(heads[1][0]);
+	});
+
 	it('slope: one line per item plus two axes, and headings', () => {
 		const { $$ } = renderDocument(CompoundFixture, { kind: 'slope' });
 		expect($$('.mz-slope line')).toHaveLength(6);

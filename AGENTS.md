@@ -8,12 +8,12 @@ Read `PLAN.md` for the design, `docs/adr/` for decisions and `apps/docs/src/cont
 - `packages/mozaic/src/lib/`: the library. Each folder is a subpath export (`mozaic/<folder>`).
   - `core/`: `Plot`, `Svg`, `Html`, `Canvas`, `Facets`, `usePlot()`, `useChart()`, `useTheme()`, `useLocale()`, `scaled()`, `position()`, `mm()`.
   - `frame/`: `Chart`, `Header`, `Title`, `Subtitle`, `Footer`, `Source`, `Notes`, `Byline`, `Logo`, `DataTable`, `DataDownload`.
-  - `marks/`: `Bars`, `Line`, `Area`, `Points`, `Rects`, `Arcs`, `Text`, `Rules`, `GeoPath`, `Voronoi`, `LineEndLabels`, `Treemap`, `Waffle`, `Dumbbell`, `Slope`, `Beeswarm`, `Hemicycle`, `Intervals`.
+  - `marks/`: `Bars`, `Line`, `Area`, `Points`, `Rects`, `Arcs`, `Text`, `Rules`, `GeoPath`, `Voronoi`, `LineEndLabels`, `Treemap`, `Waffle`, `Dumbbell`, `Arrows`, `Slope`, `Beeswarm`, `Hemicycle`, `Intervals`.
   - `guides/`: `AxisX`, `AxisY`, `GridX`, `GridY`, `Legend`, `ColorRamp`, `SizeLegend`, `Key`.
   - `annotations/`: `Callout`, `Arrow`, `Label`, `RefLine`, `RefBand`.
   - `interactive/`: `PointerArea`, `Tooltip`, `ButtonGroup`, `Scroller`.
   - `table/`: `Table`, `Sparkline`, `toCSV`. `transforms/`: `stack`, `bin`, `groupBy`, `rollup`, `indexTo`, `dodge`, `treemapLayout`, `avoidOverlap`, `hemicycleLayout`, `kernelSmooth`, `loess`.
-  - `styles/`: themes (`samizdata` from the SAMIZDATA brand system, `zdg` from zdg.md, `moldova-alege` for the Moldova Alege poll tracker), `rampSteps`, `contrastRatio`, logos in `styles/logos/`. `locale/`: en, ro, ru. `embed/`: `Embed`, resize protocol, `hostScript`, `embedCode`. `export/`: `figureToSvg`, downloads. `recipes/`: `BarChart`, `ColumnChart`, `LineChart`, `ScatterChart`.
+  - `styles/`: themes (`samizdata` from the SAMIZDATA brand system, `zdg` from zdg.md, `moldova-alege` for the Moldova Alege poll tracker), `rampSteps`, `contrastRatio`, logos in `styles/logos/`. `locale/`: en, ro, ru. `embed/`: `Embed`, resize protocol, `hostScript`, `embedCode`. `export/`: `figureToSvg`, downloads. `recipes/`: complete chart templates, `BarChart`, `ColumnChart`, `LineChart`, `ScatterChart`, `ArrowChart` (arrow plot: change between two dates per row), `BarDotChart` (bars for the latest value, dots for an earlier one, value and change at the right).
   - `src/tests/`: server-render tests with fixtures.
 - `packages/cli/`: `mozaic export` and `mozaic eject` (plain Node ESM + JSDoc).
 - `packages/create-mozaic/`: scaffolder; `template/` is the analysis project (placeholders like `__STYLE__`).
@@ -43,6 +43,7 @@ Read `PLAN.md` for the design, `docs/adr/` for decisions and `apps/docs/src/cont
 - Anything that must print goes in `<Svg>`. `<Html>`, `<Canvas>`, tooltips and controls are hidden in print.
 - Theme-dependent defaults must be `$derived`, not destructuring defaults.
 - Use `Accessor<T, Value>`, never `Accessor<T, any>` (it erases callback types).
+- A chart form that more than one project could use (not just one dataset) belongs here as a recipe in `recipes/`, not in the project: add it to `recipes/index.ts`, `RECIPES` in `packages/cli/src/eject.js` and `src/tests/recipes.spec.ts`. Projects wrap recipes with their data and strings.
 - Every component has an `@component` comment and typed, JSDoc-commented `Props`: the API reference is generated from them.
 - Every chart: `alt` text, a legend for 2+ series, all strings per locale, and a headline that is true of the data.
 - Never nest interactive content (a chart can contain links and buttons; don't wrap it in `<a>`).

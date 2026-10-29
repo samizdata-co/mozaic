@@ -103,7 +103,7 @@ Use the snippet form when chart code needs pixel positions, e.g. for a tooltip:
 Marks take `data` and accessors. Accessors can be functions `(d, i) => value` or constants. Common props: `fill`, `opacity`, `title` (an SVG tooltip for screen readers), and `onpointerenter` / `onpointerleave` / `onclick`, which receive the datum.
 
 - Basic: `Bars` (horizontal or vertical from the scales; stacked with `base`, grouped with `group`), `Line`, `Area`, `Points`, `Rects`, `Arcs`, `Text`, `Rules`, `GeoPath`, `Voronoi` (hover cells).
-- Compound: `LineEndLabels`, `Treemap`, `Waffle`, `Dumbbell`, `Slope`, `Beeswarm`.
+- Compound: `LineEndLabels`, `Treemap`, `Waffle`, `Dumbbell`, `Arrows`, `Slope`, `Beeswarm`.
 
 When no mark fits, write SVG directly with `usePlot()`. See [Writing marks](../writing-marks/).
 
@@ -130,7 +130,7 @@ Annotations: `Callout` (text with a curved arrow), `Arrow`, `Label`, `RefLine` a
 
 ## Recipes
 
-Recipes are complete charts with sensible defaults: `BarChart`, `ColumnChart`, `LineChart`, `ScatterChart` from `mozaic/recipes`. Each takes the data, accessors and the frame text, plus an `annotations` snippet for extra SVG.
+Recipes are complete charts with sensible defaults: `BarChart`, `ColumnChart`, `LineChart`, `ScatterChart`, `ArrowChart` (an arrow plot: how each row changed between two dates) and `BarDotChart` (bars for the latest value with a dot for an earlier one and the change written beside them) from `mozaic/recipes`. Each takes the data, accessors and the frame text, plus an `annotations` snippet for extra SVG.
 
 When you need to change more than the props allow, run `mozaic eject BarChart`. It copies the recipe's source into `src/lib/recipes/` with imports rewritten, and you edit it like any other file.
 
