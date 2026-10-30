@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { renderDocument } from './dom.js';
-import { BarChart, ColumnChart, LineChart, ScatterChart } from '../lib/recipes/index.js';
+import { ArrowChart, BarChart, BarDotChart, ColumnChart, LineChart, ScatterChart } from '../lib/recipes/index.js';
 
 const rows = [
 	{ name: 'Chișinău', value: 30 },
@@ -68,5 +68,63 @@ describe('recipes', () => {
 		});
 		expect($$('.mz-points circle')).toHaveLength(3);
 		expect($$('.mz-label text').map((t) => t.textContent)).toEqual(['b']);
+	});
+	const waves = [
+		{ name: 'Ana', before: 32.4, after: 29.2 },
+		{ name: 'Ion', before: 3.2, after: 11.6 },
+		{ name: 'Eva', before: undefined, after: 1.2 },
+		{ name: 'Dan', before: 11.2, after: undefined }
+	];
+	type Wave = (typeof waves)[number];
+
+	it('ArrowChart: arrows for complete rows, dots for the rest, end values and date labels', () => {
+		const { $$ } = renderDocument(ArrowChart, {
+			data: waves,
+			label: (d: Wave) => d.name,
+			start: (d: Wave) => d.before,
+			end: (d: Wave) => d.after,
+			startLabel: 'Sept',
+			endLabel: 'Oct',
+			format: (n: number) => `${n}%`,
+			width: 400
+		});
+		expect($$('.mz-arrows-head')).toHaveLength(2);
+		expect($$('.mz-arrow-dot-end')).toHaveLength(1);
+		expect($$('.mz-arrow-dot-start')).toHaveLength(1);
+		expect($$('.mz-arrow-value').map((t) => t.textContent)).toEqual(['29.2%', '11.6%', '1.2%', '11.2%']);
+		expect($$('.mz-arrow-date').map((t) => t.textContent)).toEqual(['Sept', 'Oct']);
+	});
+
+	it('ArrowChart: a value that would cross the left edge goes beside the other end', () => {
+		const { $ } = renderDocument(ArrowChart, {
+			data: [{ name: 'Low', before: 8, after: 0.2 }],
+			label: (d: { name: string }) => d.name,
+			start: (d: { before: number }) => d.before,
+			end: (d: { after: number }) => d.after,
+			domain: [0, 10],
+			width: 400
+		});
+		expect($('.mz-arrow-value')!.getAttribute('text-anchor')).toBe('start');
+	});
+
+	it('BarDotChart: a bar per latest value, a dot per earlier one, value and change', () => {
+		const { $$ } = renderDocument(BarDotChart, {
+			data: waves,
+			label: (d: Wave) => d.name,
+			value: (d: Wave) => d.after,
+			previous: (d: Wave) => d.before,
+			valueLabel: 'October',
+			previousLabel: 'September',
+			width: 400
+		});
+		expect($$('.mz-bars path')).toHaveLength(3);
+		expect($$('.mz-points circle')).toHaveLength(3);
+		expect($$('.mz-legend li')).toHaveLength(2);
+		expect($$('.mz-bar-dot-value').map((t) => t.textContent?.replace(/\s+/g, ' ').trim())).toEqual([
+			'29.2 −3.2',
+			'11.6 +8.4',
+			'1.2',
+			'–'
+		]);
 	});
 });

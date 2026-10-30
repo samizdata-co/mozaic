@@ -11,6 +11,7 @@ import TableFixture from './fixtures/TableFixture.svelte';
 import FacetsFixture from './fixtures/FacetsFixture.svelte';
 import ControlsFixture from './fixtures/ControlsFixture.svelte';
 import EdgeAxisFixture from './fixtures/EdgeAxisFixture.svelte';
+import ElectionFixture from './fixtures/ElectionFixture.svelte';
 
 const finite = (value: string | null) => value !== null && !/NaN|undefined/.test(value);
 
@@ -73,6 +74,14 @@ describe('Chart frame', () => {
 			.$$('.mz-axis-x text')
 			.map((t) => t.getAttribute('text-anchor'));
 		expect(centred).toEqual(['middle', 'middle', 'middle']);
+	});
+
+	it('sizes the HTML layer in percentages until the plot is measured', () => {
+		const fluid = renderDocument(BarsFixture, { fluid: true }).$('.mz-html')!.getAttribute('style')!;
+		expect(fluid).toMatch(/width: [\d.]+%/);
+		expect(fluid).not.toContain('px');
+		const fixed = renderDocument(BarsFixture).$('.mz-html')!.getAttribute('style')!;
+		expect(fixed).toMatch(/width: [\d.]+px/);
 	});
 
 	it('uses print tokens and drops interactive layers in print', () => {
@@ -173,6 +182,21 @@ describe('compound marks', () => {
 		expect(renderDocument(CompoundFixture, { kind: 'dumbbell' }).$$('.mz-dumbbell circle')).toHaveLength(8);
 	});
 
+	it('arrows: a line and a head per row, pointing from start to end', () => {
+		const { $$ } = renderDocument(CompoundFixture, { kind: 'arrows' });
+		expect($$('.mz-arrows-line')).toHaveLength(4);
+		const heads = $$('.mz-arrows-head').map((p) =>
+			p
+				.getAttribute('d')!
+				.match(/-?[\d.]+/g)!
+				.map(Number)
+		);
+		expect(heads).toHaveLength(4);
+		// The tip is the first point; the base is behind it: left of it for Alpha (10 → 14), right for Beta (6 → 4).
+		expect(heads[0][2]).toBeLessThan(heads[0][0]);
+		expect(heads[1][2]).toBeGreaterThan(heads[1][0]);
+	});
+
 	it('slope: one line per item plus two axes, and headings', () => {
 		const { $$ } = renderDocument(CompoundFixture, { kind: 'slope' });
 		expect($$('.mz-slope line')).toHaveLength(6);
@@ -270,5 +294,43 @@ describe('layout and controls', () => {
 
 	it('hides controls in print', () => {
 		expect(renderDocument(ControlsFixture, { medium: 'print' }).$('[role="radiogroup"]')).toBeNull();
+	});
+});
+
+describe('Election marks', () => {
+	it('draws one seat per seat, party by party, inside the plot', () => {
+		const { $, $$ } = renderDocument(ElectionFixture);
+		const parties = $$('.mz-hemicycle-party');
+		expect(parties.map((g) => g.querySelectorAll('circle').length)).toEqual([55, 26, 20]);
+		expect(parties.map((g) => g.getAttribute('fill'))).toEqual(['#e0a800', '#d7263d', '#14a38b']);
+		expect(parties[0].querySelector('title')!.textContent).toBe('A: 55');
+		for (const c of $$('.mz-hemicycle circle')) {
+			const [cx, cy, r] = ['cx', 'cy', 'r'].map((a) => Number(c.getAttribute(a)));
+			expect(cx - r).toBeGreaterThanOrEqual(-0.01);
+			expect(cx + r).toBeLessThanOrEqual(400 - 40 - 16 + 0.01);
+			expect(cy + r).toBeLessThanOrEqual(200 + 0.01);
+		}
+		expect($('.mz-hemicycle-majority')).not.toBeNull();
+		expect($('.mz-hemicycle-label')!.textContent).toBe('51 for a majority');
+		expect($('.mz-hemicycle .total')!.textContent).toBe('101');
+		// The first party fills from the left: its seats are left of the centre on average.
+		const xs = [...parties[0].querySelectorAll('circle')].map((c) => Number(c.getAttribute('cx')));
+		expect(Math.min(...xs)).toBeLessThan(50);
+	});
+
+	it('leaves unfilled seats empty when the chamber is bigger', () => {
+		const { $$ } = renderDocument(ElectionFixture, { total: 110 });
+		expect($$('.mz-hemicycle-empty circle')).toHaveLength(9);
+	});
+
+	it('draws a range bar and a dot per interval', () => {
+		const { $$ } = renderDocument(ElectionFixture);
+		const ranges = $$('.mz-interval-range');
+		expect(ranges).toHaveLength(3);
+		expect($$('.mz-interval-dot')).toHaveLength(3);
+		for (const el of [...ranges, ...$$('.mz-interval-dot')])
+			for (const a of el.getAttributeNames()) expect(finite(el.getAttribute(a)), a).toBe(true);
+		const width = Number(ranges[0].getAttribute('width'));
+		expect(width).toBeCloseTo(((54 - 46) / 60) * (400 - 40 - 16), 0);
 	});
 });

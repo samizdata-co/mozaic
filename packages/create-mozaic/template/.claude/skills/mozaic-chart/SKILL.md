@@ -9,11 +9,15 @@ description: Build or change a chart in this mozaic analysis project. Use when a
    the analysis script (`analysis/R` or `analysis/py`) that writes it, and run it.
 2. **Form.** Pick the chart from what the data must show: magnitude → bars; change over time →
    lines; parts of a whole → stacked bars or a waffle; distribution → beeswarm or histogram;
-   geography → choropleth; two values per item → dumbbell or slope. One number → no chart.
+   geography → choropleth; two values per item → dumbbell or slope; one item at two dates → arrow plot (`ArrowChart`), or bars
+   with a dot for the earlier date (`BarDotChart`) when the latest value matters most. One number → no chart.
 3. **Files.** Copy `src/charts/example/` to `src/charts/<slug>/`. Edit `data.ts` (import the CSV
    with `?raw`, parse with `csvParse(raw, autoType)`, type the rows), `messages.ts` (title,
    subtitle, alt, notes, source per language) and `Chart.svelte`.
-4. **Compose.** Use `Chart` / `Header` / `Plot` / `Svg` / marks / guides / `Footer` from mozaic.
+4. **Compose.** If a recipe in `mozaic/recipes` fits (`BarChart`, `ColumnChart`, `LineChart`,
+   `ScatterChart`, `ArrowChart`, `BarDotChart`), wrap it: pass the data, accessors and strings. A new
+   form that other charts could reuse goes into mozaic as a recipe, not into this project.
+   Otherwise use `Chart` / `Header` / `Plot` / `Svg` / marks / guides / `Footer` from mozaic.
    Prefer existing marks (`Bars`, `Line`, `Area`, `Points`, `Rects`, `Text`, `GeoPath`, `Treemap`,
    `Waffle`, `Dumbbell`, `Slope`, `Beeswarm`) and annotations (`Callout`, `RefLine`, `RefBand`,
    `Label`). Write raw SVG with `usePlot()` scales only when no mark fits.

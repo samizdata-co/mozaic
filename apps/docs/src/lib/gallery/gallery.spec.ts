@@ -4,7 +4,7 @@ import { examples } from './index';
 import { components } from '../api';
 import * as mozaic from 'mozaic';
 
-const styles = ['base', 'samizdata', 'zdg'] as const;
+const styles = ['base', 'samizdata', 'zdg', 'plebiscit'] as const;
 const locales = ['en', 'ro', 'ru'] as const;
 
 describe('gallery examples', () => {

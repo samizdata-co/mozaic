@@ -2,9 +2,9 @@
 	import { scaleBand, scaleLinear } from 'd3-scale';
 	import { Chart } from '../../lib/frame/index.js';
 	import { Plot, Svg } from '../../lib/core/index.js';
-	import { Arcs, Beeswarm, Dumbbell, Slope, Treemap, Waffle } from '../../lib/marks/index.js';
+	import { Arcs, Arrows, Beeswarm, Dumbbell, Slope, Treemap, Waffle } from '../../lib/marks/index.js';
 
-	let { kind }: { kind: 'treemap' | 'waffle' | 'dumbbell' | 'slope' | 'beeswarm' | 'arcs' } = $props();
+	let { kind }: { kind: 'treemap' | 'waffle' | 'dumbbell' | 'arrows' | 'slope' | 'beeswarm' | 'arcs' } = $props();
 
 	const items = [
 		{ name: 'Alpha', group: 'g1', a: 10, b: 14 },
@@ -20,6 +20,10 @@
 	{#if kind === 'dumbbell'}
 		<Plot x={linear} y={band} height={160} width={400}>
 			<Svg><Dumbbell data={items} y={(d) => d.name} x1={(d) => d.a} x2={(d) => d.b} /></Svg>
+		</Plot>
+	{:else if kind === 'arrows'}
+		<Plot x={linear} y={band} height={160} width={400}>
+			<Svg><Arrows data={items} y={(d) => d.name} x1={(d) => d.a} x2={(d) => d.b} /></Svg>
 		</Plot>
 	{:else if kind === 'slope'}
 		<Plot y={linear} height={160} width={400} padding={{ left: 80, right: 80, top: 20, bottom: 8 }}>

@@ -4,6 +4,7 @@ import {
 	breakpointFor,
 	contrastRatio,
 	extendTheme,
+	plebiscit,
 	rampSteps,
 	resolveStyle,
 	samizdata,
@@ -14,7 +15,8 @@ import {
 
 describe('styles', () => {
 	it('registers the house styles', () => {
-		expect(Object.keys(styles)).toEqual(['base', 'samizdata', 'zdg']);
+		expect(Object.keys(styles)).toEqual(['base', 'samizdata', 'zdg', 'plebiscit']);
+		expect(resolveStyle('plebiscit')).toBe(plebiscit);
 		expect(resolveStyle('zdg')).toBe(zdg);
 		expect(resolveStyle(samizdata)).toBe(samizdata);
 		expect(() => resolveStyle('nope' as never)).toThrow(/Unknown mozaic style/);
@@ -80,6 +82,17 @@ describe('styles', () => {
 		expect(zdg.palettes.categorical.slice(0, 2)).toEqual(['#0158b5', '#ff595a']);
 		expect(zdg.logo?.svg).toMatch(/^<svg[^>]*viewBox="0 0 84 48"/);
 		expect(zdg.logo?.svg).not.toContain('id=');
+	});
+
+	it('uses the Plebiscit.md identity', () => {
+		expect(plebiscit.tokens['--mz-font-title']).toContain('IBM Plex Serif');
+		expect(plebiscit.tokens['--mz-font-body']).toContain('IBM Plex Sans');
+		expect(plebiscit.defaultLocale).toBe('ro');
+		expect(plebiscit.logo?.text).toBe('Plebiscit.md');
+		expect(plebiscit.logo?.svg).toMatch(/^<svg[^>]*viewBox="0 0 36 20"/);
+		expect(plebiscit.logo?.svg).not.toContain('id=');
+		// The diverging poles are not red and green: a yes or no is not good or bad.
+		expect(plebiscit.palettes.diverging).toEqual(['#d4691e', '#e6e4df', '#2a6fb0']);
 	});
 
 	it('keeps text colours readable on each style’s background', () => {

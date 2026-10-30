@@ -57,6 +57,12 @@ import CanvasScatter from './canvas-scatter/Chart.svelte';
 import CanvasScatterSource from './canvas-scatter/Chart.svelte?raw';
 import CanvasScatterData from './canvas-scatter/data.ts?raw';
 import Scrolly from './scrolly/Chart.svelte';
+import Parliament from './parliament/Chart.svelte';
+import ParliamentSource from './parliament/Chart.svelte?raw';
+import ParliamentData from './parliament/data.ts?raw';
+import PollTracker from './poll-tracker/Chart.svelte';
+import PollTrackerSource from './poll-tracker/Chart.svelte?raw';
+import PollTrackerData from './poll-tracker/data.ts?raw';
 import ScrollySource from './scrolly/Chart.svelte?raw';
 import ScrollyData from './scrolly/data.ts?raw';
 
@@ -253,6 +259,28 @@ export const examples: Example[] = [
 		component: CanvasScatter,
 		source: CanvasScatterSource,
 		data: CanvasScatterData,
+		print: ['column', 'double']
+	},
+	{
+		slug: 'poll-tracker',
+		title: 'Poll tracker',
+		description:
+			'A kernel-weighted poll average with 95% bands (kernelSmooth), the individual polls as dots, a threshold line, end labels and a crosshair.',
+		tags: ['lines', 'polls', 'smoothing', 'time'],
+		component: PollTracker,
+		source: PollTrackerSource,
+		data: PollTrackerData,
+		print: ['column', 'double']
+	},
+	{
+		slug: 'parliament',
+		title: 'Parliament (hemicycle)',
+		description:
+			'One dot per seat in half-rings, party by party, with a majority line, the total in the middle and hover on a party.',
+		tags: ['parliament', 'elections', 'parts of a whole'],
+		component: Parliament,
+		source: ParliamentSource,
+		data: ParliamentData,
 		print: ['column', 'double']
 	},
 	{
