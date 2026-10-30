@@ -2,7 +2,16 @@ import { access, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { dirname, join, resolve } from 'node:path';
 
-export const RECIPES = ['BarChart', 'ColumnChart', 'LineChart', 'ScatterChart', 'ArrowChart', 'BarDotChart'];
+export const RECIPES = [
+	'BarChart',
+	'ColumnChart',
+	'LineChart',
+	'ScatterChart',
+	'ArrowChart',
+	'BarDotChart',
+	'StackedBarChart',
+	'MosaicChart'
+];
 
 /**
  * Rewrite a recipe's internal imports (`../core/index.js`) to package imports (`mozaic/core`).

@@ -130,7 +130,7 @@ Annotations: `Callout` (text with a curved arrow), `Arrow`, `Label`, `RefLine` a
 
 ## Recipes
 
-Recipes are complete charts with sensible defaults: `BarChart`, `ColumnChart`, `LineChart`, `ScatterChart`, `ArrowChart` (an arrow plot: how each row changed between two dates) and `BarDotChart` (bars for the latest value with a dot for an earlier one and the change written beside them) from `mozaic/recipes`. Each takes the data, accessors and the frame text, plus an `annotations` snippet for extra SVG.
+Recipes are complete charts with sensible defaults: `BarChart`, `ColumnChart`, `LineChart`, `ScatterChart`, `ArrowChart` (an arrow plot: how each row changed between two dates), `BarDotChart` (bars for the latest value with a dot for an earlier one and the change written beside them), `StackedBarChart` (100% stacked bars, with optional brackets grouping series and a reference line) and `MosaicChart` (a Marimekko chart: 100% stacked bars as tall as their totals, so each cell’s area is its value) from `mozaic/recipes`. Each takes the data, accessors and the frame text, plus an `annotations` snippet for extra SVG.
 
 When you need to change more than the props allow, run `mozaic eject BarChart`. It copies the recipe's source into `src/lib/recipes/` with imports rewritten, and you edit it like any other file.
 
