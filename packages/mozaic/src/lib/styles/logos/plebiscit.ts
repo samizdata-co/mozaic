@@ -1,6 +1,6 @@
 /**
- * Moldova Alege mark: a small parliament of 24 seats, the majority side in ink.
+ * Plebiscit.md mark: a small parliament of 24 seats, the majority side in ink.
  * Drawn for mozaic; no element ids or title (the logo component supplies the name).
  */
-export const moldovaAlegeMark =
+export const plebiscitMark =
 	'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 20" aria-hidden="true"><g fill="#1d2433"><circle cx="11.00" cy="17.50" r="1.75"/><circle cx="6.50" cy="17.50" r="1.75"/><circle cx="2.00" cy="17.50" r="1.75"/><circle cx="2.78" cy="12.56" r="1.75"/><circle cx="7.64" cy="12.51" r="1.75"/><circle cx="5.06" cy="8.10" r="1.75"/><circle cx="13.05" cy="12.55" r="1.75"/><circle cx="10.83" cy="8.51" r="1.75"/><circle cx="8.60" cy="4.56" r="1.75"/><circle cx="13.06" cy="2.28" r="1.75"/><circle cx="15.44" cy="6.29" r="1.75"/><circle cx="18.00" cy="10.50" r="1.75"/><circle cx="18.00" cy="1.50" r="1.75"/><circle cx="20.56" cy="6.29" r="1.75" opacity=".3"/><circle cx="22.94" cy="2.28" r="1.75" opacity=".3"/><circle cx="27.40" cy="4.56" r="1.75" opacity=".3"/><circle cx="25.17" cy="8.51" r="1.75" opacity=".3"/><circle cx="22.95" cy="12.55" r="1.75" opacity=".3"/><circle cx="30.94" cy="8.10" r="1.75" opacity=".3"/><circle cx="28.36" cy="12.51" r="1.75" opacity=".3"/><circle cx="33.22" cy="12.56" r="1.75" opacity=".3"/><circle cx="25.00" cy="17.50" r="1.75" opacity=".3"/><circle cx="29.50" cy="17.50" r="1.75" opacity=".3"/><circle cx="34.00" cy="17.50" r="1.75" opacity=".3"/></g></svg>';

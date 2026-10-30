@@ -1,8 +1,8 @@
 import { extendTheme } from './base.js';
-import { moldovaAlegeMark } from './logos/moldova-alege.js';
+import { plebiscitMark } from './logos/plebiscit.js';
 
 /**
- * Moldova Alege, a poll tracker for Moldova. The brand stays out of the way of
+ * Plebiscit.md, a poll tracker for Moldova. The brand stays out of the way of
  * the data: party colours (yellow, red, blue, teal, plum) carry meaning in
  * every chart, so the chrome is ink and grey with a dark slate accent that no
  * party uses. IBM Plex Serif 600 titles and IBM Plex Sans text, both with
@@ -15,9 +15,9 @@ import { moldovaAlegeMark } from './logos/moldova-alege.js';
  * orange ↔ blue with a warm grey midpoint, deliberately not red ↔ green: a yes
  * or no on a political question is not good or bad.
  */
-export const moldovaAlege = extendTheme({
-	name: 'moldova-alege',
-	label: 'Moldova Alege',
+export const plebiscit = extendTheme({
+	name: 'plebiscit',
+	label: 'Plebiscit.md',
 	tokens: {
 		'--mz-font-title': "'IBM Plex Serif', Georgia, serif",
 		'--mz-font-body': "'IBM Plex Sans', system-ui, sans-serif",
@@ -54,6 +54,6 @@ export const moldovaAlege = extendTheme({
 	fonts: {
 		stylesheet: 'https://fonts.bunny.net/css?family=ibm-plex-sans:400,500,600,700|ibm-plex-serif:600&display=swap'
 	},
-	logo: { label: 'Moldova Alege', svg: moldovaAlegeMark, text: 'Moldova Alege', height: 18 },
+	logo: { label: 'Plebiscit.md', svg: plebiscitMark, text: 'Plebiscit.md', height: 18 },
 	defaultLocale: 'ro'
 });
