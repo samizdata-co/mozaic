@@ -39,6 +39,6 @@ pnpm add mozaic d3-scale d3-array d3-shape
 | `mozaic/locale`      | `createLocale` (`en`, `ro`, `ru`)                                                                                                                                                                   |
 | `mozaic/embed`       | `Embed`, `useEmbedParams`, `embedCode`, `hostScript`, `observeHeight`                                                                                                                               |
 | `mozaic/export`      | `figureToSvg`, `downloadSvg`, `downloadPng`, `figureToPng`                                                                                                                                          |
-| `mozaic/recipes`     | `BarChart`, `ColumnChart`, `LineChart`, `ScatterChart`, `ArrowChart`, `BarDotChart`                                                                                                                 |
+| `mozaic/recipes`     | `BarChart`, `ColumnChart`, `LineChart`, `ScatterChart`, `ArrowChart`, `BarDotChart`, `StackedBarChart`, `MosaicChart`                                                                               |
 
 Requires Svelte 5.57+. The full guides, API reference and gallery are in the repository's docs site.

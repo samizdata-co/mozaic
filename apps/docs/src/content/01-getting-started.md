@@ -77,7 +77,7 @@ A chart is a `<Chart>` frame around a `<Plot>`, with layers of marks:
 </Chart>
 ```
 
-For common charts there are also ready-made [recipes](../concepts/#recipes): `BarChart`, `ColumnChart`, `LineChart`, `ScatterChart`, `ArrowChart` and `BarDotChart`.
+For common charts there are also ready-made [recipes](../concepts/#recipes): `BarChart`, `ColumnChart`, `LineChart`, `ScatterChart`, `ArrowChart`, `BarDotChart`, `StackedBarChart` and `MosaicChart`.
 
 ## Next
 

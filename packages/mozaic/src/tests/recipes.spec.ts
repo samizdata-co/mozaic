@@ -1,6 +1,15 @@
 import { describe, expect, it } from 'vitest';
 import { renderDocument } from './dom.js';
-import { ArrowChart, BarChart, BarDotChart, ColumnChart, LineChart, ScatterChart } from '../lib/recipes/index.js';
+import {
+	ArrowChart,
+	BarChart,
+	BarDotChart,
+	ColumnChart,
+	LineChart,
+	MosaicChart,
+	ScatterChart,
+	StackedBarChart
+} from '../lib/recipes/index.js';
 
 const rows = [
 	{ name: 'Chișinău', value: 30 },
@@ -126,5 +135,68 @@ describe('recipes', () => {
 			'1.2',
 			'–'
 		]);
+	});
+	const votes = [
+		{ area: 'North', who: 'Ana', n: 60 },
+		{ area: 'North', who: 'Ion', n: 40 },
+		{ area: 'South', who: 'Ana', n: 10 },
+		{ area: 'South', who: 'Ion', n: 290 },
+		{ area: 'Abroad', who: 'Ana', n: 90 },
+		{ area: 'Abroad', who: 'Ion', n: 10 }
+	];
+	type Vote = (typeof votes)[number];
+	const voteProps = {
+		data: votes,
+		row: (d: Vote) => d.area,
+		series: (d: Vote) => d.who,
+		value: (d: Vote) => d.n
+	};
+
+	it('StackedBarChart: shares per row, labels that fit, brackets and a reference line', () => {
+		const { $$ } = renderDocument(StackedBarChart, {
+			...voteProps,
+			data: votes.filter((d) => d.area !== 'South'),
+			groups: [{ label: 'Left', from: 'Ana', to: 'Ana' }],
+			reference: 0.5,
+			width: 600
+		});
+		expect($$('.mz-rects rect')).toHaveLength(4);
+		expect($$('.mz-legend li')).toHaveLength(2);
+		expect($$('.mz-stacked-label').map((t) => t.textContent?.replace(/\s+/g, ' ').trim())).toEqual([
+			'Ana 60.0%',
+			'Ana 90.0%',
+			'Ion 40.0%',
+			'Ion 10.0%'
+		]);
+		expect($$('.mz-stacked-bracket text').map((t) => t.textContent)).toEqual(['Left']);
+		expect($$('.mz-ref-line line')).toHaveLength(1);
+	});
+
+	it('StackedBarChart: a single bar has no row axis, and segments under labelMin go unlabelled', () => {
+		const { $$ } = renderDocument(StackedBarChart, {
+			...voteProps,
+			data: votes.filter((d) => d.area === 'Abroad'),
+			labelMin: 0.2,
+			width: 600
+		});
+		expect($$('.mz-axis-y')).toHaveLength(0);
+		expect($$('.mz-stacked-label')).toHaveLength(1);
+	});
+
+	it('MosaicChart: rows as tall as their totals, sorted by a series share', () => {
+		const { $$ } = renderDocument(MosaicChart, {
+			...voteProps,
+			sortBy: ['Ana'],
+			labelSeries: ['Ion'],
+			height: 500,
+			width: 600
+		});
+		const rects = $$('.mz-rects rect');
+		expect(rects).toHaveLength(6);
+		expect($$('.mz-mosaic-row text').map((t) => t.textContent)).toEqual(['Abroad', 'North', 'South']);
+		// South has 300 of 500 votes: 60% of the plot height.
+		const south = rects.filter((r) => r.querySelector('title')?.textContent?.startsWith('South'));
+		expect(Number(south[0].getAttribute('height'))).toBeCloseTo(300, 0);
+		expect($$('.mz-mosaic-series').map((t) => t.textContent)).toEqual(['Ion']);
 	});
 });
