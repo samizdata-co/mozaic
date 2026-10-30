@@ -9,7 +9,7 @@ export { base, extendTheme, plebiscit, samizdata, zdg };
 export { contrastRatio, luminance, rampSteps } from './color.js';
 
 /** Registry of built-in house styles. Add a style by adding a file and an entry here. */
-export const styles = { base, samizdata, zdg, 'plebiscit': plebiscit } satisfies Record<string, Theme>;
+export const styles = { base, samizdata, zdg, plebiscit: plebiscit } satisfies Record<string, Theme>;
 export type StyleName = keyof typeof styles;
 
 export function resolveStyle(style: StyleName | Theme): Theme {
