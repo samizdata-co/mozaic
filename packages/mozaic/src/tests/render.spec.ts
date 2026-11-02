@@ -13,6 +13,7 @@ import ControlsFixture from './fixtures/ControlsFixture.svelte';
 import EdgeAxisFixture from './fixtures/EdgeAxisFixture.svelte';
 import ElectionFixture from './fixtures/ElectionFixture.svelte';
 import EmbeddedFixture from './fixtures/EmbeddedFixture.svelte';
+import DownloadsFixture from './fixtures/DownloadsFixture.svelte';
 
 const finite = (value: string | null) => value !== null && !/NaN|undefined/.test(value);
 
@@ -88,7 +89,10 @@ describe('Chart frame', () => {
 	it('shows the embed code under the chart, except in print and inside an embed', () => {
 		const embed = { src: '/embed/bars/ro/', scriptSrc: '/embed.js', title: 'Bare' };
 		const { $ } = renderDocument(BarsFixture, { locale: 'ro', embed });
-		expect($('.mz-embed-code summary')!.textContent).toBe('Încorporează');
+		const button = $('.mz-chart-tools .mz-tool')!;
+		expect(button.getAttribute('aria-label')).toBe('Încorporează');
+		expect(button.getAttribute('aria-expanded')).toBe('false');
+		expect($('.mz-embed-code')!.hasAttribute('hidden')).toBe(true);
 		const code = $('.mz-embed-code textarea')!;
 		expect(code.getAttribute('aria-label')).toBe('Codul de încorporare');
 		expect(code.textContent).toContain('src="/embed/bars/ro/" title="Bare"');
@@ -98,6 +102,16 @@ describe('Chart frame', () => {
 		const embedded = renderDocument(EmbeddedFixture);
 		expect(embedded.$('.mz-chart')).not.toBeNull();
 		expect(embedded.$('.mz-embed-code')).toBeNull();
+	});
+
+	it('offers PNG and SVG downloads when asked, or under setDownloads()', () => {
+		expect(renderDocument(BarsFixture).$('.mz-image-download')).toBeNull();
+		const own = renderDocument(BarsFixture, { locale: 'ro', download: 'bars' });
+		expect(own.$('.mz-tool')!.getAttribute('aria-label')).toBe('Descarcă');
+		expect(own.$$('.mz-image-download button').map((b) => b.textContent)).toEqual(['PNG', 'SVG']);
+		expect(renderDocument(DownloadsFixture).$('.mz-image-download')).not.toBeNull();
+		expect(renderDocument(DownloadsFixture, { download: false }).$('.mz-image-download')).toBeNull();
+		expect(renderDocument(BarsFixture, { medium: 'print', download: true }).$('.mz-chart-tools')).toBeNull();
 	});
 
 	it('uses print tokens and drops interactive layers in print', () => {
@@ -285,7 +299,10 @@ describe('Table and data access', () => {
 	});
 
 	it('offers a data table and a CSV download', () => {
-		expect($('.mz-data-table summary')!.textContent).toBe('Arată datele');
+		const button = $('.mz-chart-tools .mz-tool')!;
+		expect(button.getAttribute('aria-label')).toBe('Arată datele');
+		expect(button.getAttribute('aria-controls')).toBe($('.mz-chart-tools .mz-data-table')!.getAttribute('id'));
+		expect($('.mz-chart-tools .mz-data-table table')).not.toBeNull();
 		const link = $('.mz-data-download')!;
 		expect(link.getAttribute('download')).toBe('districts.csv');
 		expect(decodeURIComponent(link.getAttribute('href')!)).toContain('District,Value');

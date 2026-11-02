@@ -14,6 +14,8 @@ export interface LocaleStrings {
 	embedCode: string;
 	copy: string;
 	copied: string;
+	/** The control under a chart that saves it as an image ("Download" PNG · SVG). */
+	downloadImage: string;
 	noData: string;
 	search: string;
 	showAll: (n: number) => string;
@@ -68,6 +70,7 @@ export const definitions = {
 			embedCode: 'Embed code',
 			copy: 'Copy the code',
 			copied: 'Copied',
+			downloadImage: 'Download',
 			noData: 'No data',
 			search: 'Search',
 			showAll: (n) => `Show all ${n} rows`,
@@ -112,6 +115,7 @@ export const definitions = {
 			embedCode: 'Codul de încorporare',
 			copy: 'Copiază codul',
 			copied: 'Copiat',
+			downloadImage: 'Descarcă',
 			noData: 'Fără date',
 			search: 'Caută',
 			showAll: (n) => `Arată toate cele ${n} rânduri`,
@@ -156,6 +160,7 @@ export const definitions = {
 			embedCode: 'Код для встраивания',
 			copy: 'Скопировать код',
 			copied: 'Скопировано',
+			downloadImage: 'Скачать',
 			noData: 'Нет данных',
 			search: 'Поиск',
 			showAll: (n) => `Показать все строки (${n})`,

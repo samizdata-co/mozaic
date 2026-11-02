@@ -1,3 +1,4 @@
+import type { Snippet } from 'svelte';
 import type { GeoPath, GeoPermissibleObjects, GeoProjection } from 'd3-geo';
 import type { Locale } from '../locale/index.js';
 import type { Breakpoint, Medium, Padding, Theme } from '../styles/types.js';
@@ -76,4 +77,6 @@ export interface ChartContext {
 		/** Whether the chart has alt text (rendered with the `desc` id). */
 		readonly hasDesc?: boolean;
 	};
+	/** What the buttons under the chart open besides embed and download: `<DataTable>` puts its table here. */
+	readonly tools?: { table: Snippet | null };
 }

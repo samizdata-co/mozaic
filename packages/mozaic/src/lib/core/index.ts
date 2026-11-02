@@ -5,9 +5,11 @@ export { default as Canvas } from './Canvas.svelte';
 export { default as Facets } from './Facets.svelte';
 export {
 	setChartContext,
+	setDownloads,
 	setInitialWidth,
 	setPlotContext,
 	useChart,
+	useDownloads,
 	useInitialWidth,
 	useLocale,
 	usePlot,

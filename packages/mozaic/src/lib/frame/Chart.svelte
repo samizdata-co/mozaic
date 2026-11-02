@@ -9,12 +9,12 @@ a map or a table.
 -->
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import { setChartContext } from '../core/context.js';
+	import { setChartContext, useDownloads } from '../core/context.js';
 	import { createLocale, type LocaleCode } from '../locale/index.js';
 	import { breakpointFor, resolveStyle, tokensToStyle, type StyleName } from '../styles/index.js';
 	import type { Medium, Theme } from '../styles/types.js';
 	import type { ChartEmbed } from '../embed/code.js';
-	import EmbedCode from './EmbedCode.svelte';
+	import ChartTools from './ChartTools.svelte';
 
 	interface Props {
 		/** House style name or a Theme object. */
@@ -28,8 +28,13 @@ a map or a table.
 		width?: number;
 		/** Add the style's web-font stylesheet to the page head. Turn off when the host page already loads the fonts. */
 		loadFonts?: boolean;
-		/** The chart's embed page: shows "Embed" under the chart, with the code to put it on another site. */
+		/** The chart's embed page: shows an "Embed" button under the chart, with the code to put it on another site. */
 		embed?: ChartEmbed;
+		/**
+		 * Show a "Download" button under the chart (PNG or SVG). A string is the file name, without extension;
+		 * otherwise it comes from the title. Defaults to `setDownloads()` above the chart (off without it).
+		 */
+		download?: boolean | string;
 		class?: string;
 		children?: Snippet;
 	}
@@ -42,11 +47,14 @@ a map or a table.
 		width: fixedWidth,
 		loadFonts = true,
 		embed,
+		download,
 		class: className = '',
 		children
 	}: Props = $props();
 
 	const uid = $props.id();
+	const downloads = useDownloads();
+	const tools = $state<{ table: Snippet | null }>({ table: null });
 	const theme = $derived(resolveStyle(style));
 	const loc = $derived(createLocale(locale ?? theme.defaultLocale));
 
@@ -82,7 +90,8 @@ a map or a table.
 		get measured() {
 			return measured;
 		},
-		ids
+		ids,
+		tools
 	});
 </script>
 
@@ -106,7 +115,7 @@ a map or a table.
 	bind:clientWidth={measuredWidth}
 >
 	{@render children?.()}
-	{#if embed}<EmbedCode {...embed} />{/if}
+	<ChartTools {embed} download={download ?? downloads} table={tools.table} />
 	{#if alt}<p id={ids.desc} class="mz-visually-hidden">{alt}</p>{/if}
 </figure>
 

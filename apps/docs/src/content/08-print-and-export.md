@@ -50,6 +50,8 @@ The exporter uses, in order: `--browser`, `$MOZAIC_BROWSER`, Playwright's Chromi
 
 If the designer does not have the fonts, open the SVG or PDF and convert text to outlines in Illustrator or Inkscape.
 
+The download buttons under a chart (`<Chart download>`, see [Embedding](../embedding/)) add 20 px of space around it (`figureToSvg(figure, { padding })` for your own). Their PNGs embed the web fonts the chart uses, so the text looks as it does on the page; the SVGs name the fonts without embedding them.
+
 ## Colour
 
 Exports are RGB. Print palettes are chosen to survive conversion; colour management (CMYK, PDF/X) is left to the print designer.

@@ -7,7 +7,8 @@
  * - HTML text becomes SVG `<text>`, one element per rendered line, so it
  *   stays editable in Illustrator or Inkscape.
  * - Elements with a background colour (legend swatches) become rectangles.
- * - Interactive-only parts (tooltips, buttons, data tables) are left out.
+ * - Interactive-only parts (tooltips, buttons, data tables) are left out, and the image ends above the
+ *   controls under the chart.
  */
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -40,7 +41,7 @@ const EXCLUDE = [
 	'.mz-button-group',
 	'.mz-data-table',
 	'.mz-data-download',
-	'.mz-embed-code',
+	'.mz-chart-tools',
 	'.mz-table-search',
 	'.mz-table-more',
 	'.mz-tooltip',
@@ -61,8 +62,13 @@ function transparent(color: string): boolean {
 	return !color || color === 'transparent' || /rgba\([^)]*,\s*0\)$/.test(color);
 }
 
+/** Whether an element is left out of exports: interactive-only parts and the controls under the chart. */
+export function isExcluded(el: Element): boolean {
+	return el.closest(EXCLUDE) !== null;
+}
+
 function hidden(el: Element): boolean {
-	if (el.closest(EXCLUDE)) return true;
+	if (isExcluded(el)) return true;
 	const cs = getComputedStyle(el);
 	return cs.display === 'none' || cs.visibility === 'hidden' || Number(cs.opacity) === 0;
 }
@@ -142,15 +148,29 @@ function textLines(node: Text, origin: DOMRect): string[] {
 	});
 }
 
-export function figureToSvg(figure: HTMLElement, options: { background?: boolean } = {}): string {
+export interface SvgOptions {
+	/** Fill the image with the chart's background colour (default true). */
+	background?: boolean;
+	/** Space around the chart, in px (default 0). */
+	padding?: number;
+}
+
+export function figureToSvg(figure: HTMLElement, options: SvgOptions = {}): string {
+	const pad = options.padding ?? 0;
 	const origin = figure.getBoundingClientRect();
 	const width = Math.ceil(origin.width);
-	const height = Math.ceil(origin.height);
+	// End at the last part that is exported, not at the controls under it (embed, download, data table).
+	const bottom = Math.max(
+		...[...figure.children].filter((el) => !hidden(el)).map((el) => el.getBoundingClientRect().bottom)
+	);
+	const height = Math.ceil(Number.isFinite(bottom) ? bottom - origin.top : origin.height);
 	const parts: string[] = [];
 
 	const bg = getComputedStyle(figure).backgroundColor;
-	if (options.background !== false && !transparent(bg))
-		parts.push(`<rect width="${width}" height="${height}" fill="${bg}"/>`);
+	const fill =
+		options.background !== false && !transparent(bg)
+			? `<rect width="${width + 2 * pad}" height="${height + 2 * pad}" fill="${bg}"/>`
+			: '';
 
 	// Boxes with a background colour (legend swatches, keys, table bars).
 	for (const el of figure.querySelectorAll('*')) {
@@ -180,5 +200,7 @@ export function figureToSvg(figure: HTMLElement, options: { background?: boolean
 		parts.push(...textLines(node as Text, origin));
 	}
 
-	return `<svg xmlns="${SVG_NS}" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${parts.join('')}</svg>`;
+	const [w, h] = [width + 2 * pad, height + 2 * pad];
+	const body = pad ? `<g transform="translate(${pad} ${pad})">${parts.join('')}</g>` : parts.join('');
+	return `<svg xmlns="${SVG_NS}" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">${fill}${body}</svg>`;
 }

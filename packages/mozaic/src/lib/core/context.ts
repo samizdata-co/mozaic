@@ -8,6 +8,7 @@ const CHART = Symbol('mozaic:chart');
 const PLOT = Symbol('mozaic:plot');
 const INITIAL_WIDTH = Symbol('mozaic:initial-width');
 const EMBEDDED = Symbol('mozaic:embedded');
+const DOWNLOADS = Symbol('mozaic:downloads');
 
 /** Used when a component renders outside `<Chart>` (tests, quick sketches). */
 const fallbackChart: ChartContext = {
@@ -68,4 +69,16 @@ export function setEmbedded(): void {
 
 export function useEmbedded(): boolean {
 	return getContext<boolean | undefined>(EMBEDDED) ?? false;
+}
+
+/**
+ * Show "Download PNG · SVG" under every chart inside this component (a site's layout, say), unless a chart
+ * sets `<Chart download={false}>`. Charts inside `<Embed>` never show it.
+ */
+export function setDownloads(on = true): void {
+	setContext(DOWNLOADS, on);
+}
+
+export function useDownloads(): boolean {
+	return getContext<boolean | undefined>(DOWNLOADS) ?? false;
 }

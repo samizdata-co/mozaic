@@ -1,9 +1,11 @@
 <!--
 @component
-A collapsed "Show the data" table under the chart, so the values are
-available to screen readers and anyone who wants the numbers. Hidden in print.
+The chart's data as a table, so the values are available to screen readers and anyone who wants the
+numbers: a "Show the data" button among the icons under the chart opens it. Outside `<Chart>` it is a
+collapsed "Show the data" section. Hidden in print.
 -->
 <script lang="ts" generics="T">
+	import { onDestroy } from 'svelte';
 	import { useChart } from '../core/context.js';
 	import Table from '../table/Table.svelte';
 	import type { Column } from '../table/types.js';
@@ -11,12 +13,24 @@ available to screen readers and anyone who wants the numbers. Hidden in print.
 	let { data, columns, maxRows }: { data: T[]; columns: Column<T>[]; maxRows?: number } = $props();
 
 	const chart = useChart();
+	const tools = chart.tools;
+	if (tools) {
+		// Cast: a linked package can see another copy of svelte's Snippet type.
+		tools.table = table as unknown as NonNullable<typeof tools.table>;
+		onDestroy(() => {
+			if (tools.table === table) tools.table = null;
+		});
+	}
 </script>
 
-{#if chart.medium !== 'print'}
+{#snippet table()}
+	<Table {data} {columns} {maxRows} />
+{/snippet}
+
+{#if chart.medium !== 'print' && !tools}
 	<details class="mz-data-table">
 		<summary>{chart.locale.strings.showData}</summary>
-		<Table {data} {columns} {maxRows} />
+		{@render table()}
 	</details>
 {/if}
 

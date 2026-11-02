@@ -40,13 +40,15 @@ The iframe keeps the CMS's CSS away from the chart. `embedCode({ src, title, hei
 
 ### Under the chart
 
-Give `<Chart>` (or any recipe) its embed page and readers get the code where they see the chart: an "Embed" control under it opens the snippet with a copy button.
+Give `<Chart>` (or any recipe) its embed page and readers get the code where they see the chart: an "Embed" icon button under it opens the snippet with a copy button.
 
 ```svelte
 <Chart {style} {locale} embed={{ src: `/embed/spending/${locale}/`, scriptSrc: '/embed.js' }}>
 ```
 
-Paths are resolved against the page the chart is on. The iframe's title defaults to the chart's title and its height to the chart's height on that page. The control is hidden in print, in exports and inside `<Embed>`, so the embedded chart does not offer its own code.
+Paths are resolved against the page the chart is on. The iframe's title defaults to the chart's title and its height to the chart's height on that page. The button is hidden in print, in exports and inside `<Embed>`, so the embedded chart does not offer its own code.
+
+A "Download" icon button beside it saves the chart as PNG or SVG (see [Print and export](../print-and-export/)). Turn it on for one chart with `<Chart download>` (a string is the file name; otherwise it comes from the title), or for every chart on a site by calling `setDownloads()` from `mozaic/frame` in the layout; `download={false}` leaves one chart out.
 
 ## Resizing
 

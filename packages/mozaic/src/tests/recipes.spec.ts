@@ -30,7 +30,7 @@ describe('recipes', () => {
 		});
 		expect($$('.mz-bars path')).toHaveLength(3);
 		expect($('.mz-title')!.textContent).toBe('Bar title');
-		expect($('.mz-embed-code summary')!.textContent).toBe('Embed');
+		expect($('.mz-chart-tools .mz-tool')!.getAttribute('aria-label')).toBe('Embed');
 		expect($$('.mz-axis-y text').map((t) => t.textContent?.trim())).toEqual(['Chișinău', 'Bălți', 'Cahul']);
 		expect($$('.mz-text text').map((t) => t.textContent?.trim())).toContain('30');
 	});
