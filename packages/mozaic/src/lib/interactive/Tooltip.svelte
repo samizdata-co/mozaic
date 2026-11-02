@@ -1,11 +1,13 @@
 <!--
 @component
 A tooltip card at a pixel position in the plot area (inside `<Html>`).
-Flips to the left of the point in the right part of the plot.
+Flips to the left of the point in the right part of the plot, and changes side or
+slides over when needed to stay inside the chart.
 -->
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import { usePlot } from '../core/context.js';
+	import { tooltipLeft } from './tooltip-position.js';
 
 	interface Props {
 		/** Plot-area pixel position. */
@@ -23,15 +25,23 @@ Flips to the left of the point in the right part of the plot.
 	const plot = usePlot();
 	const flip = $derived(x > plot.width * 0.6);
 	const top = $derived(Math.max(0, Math.min(plot.height, y)));
+	// Once measured, the tooltip is placed so it stays inside the chart (see tooltipLeft).
+	let tooltipWidth = $state(0);
+	const left = $derived(tooltipWidth ? tooltipLeft(x, tooltipWidth, plot, offset) : null);
 </script>
 
 {#if visible && plot.medium !== 'print'}
 	<div
 		class="mz-tooltip {className}"
 		role="status"
-		style:left="{x}px"
+		style:left="{left ?? x}px"
 		style:top="{top}px"
-		style:transform={flip ? `translate(calc(-100% - ${offset}px), -50%)` : `translate(${offset}px, -50%)`}
+		style:transform={left !== null
+			? 'translate(0, -50%)'
+			: flip
+				? `translate(calc(-100% - ${offset}px), -50%)`
+				: `translate(${offset}px, -50%)`}
+		bind:offsetWidth={tooltipWidth}
 	>
 		{@render children?.()}
 	</div>
