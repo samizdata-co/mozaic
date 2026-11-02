@@ -9,6 +9,8 @@ The chart headline. Its id labels the chart's SVG for screen readers.
 	let { class: className = '', children }: { class?: string; children?: Snippet } = $props();
 
 	const chart = useChart();
+	// Inside a <Chart> (not the shared fallback context), tell the SVG layers there is a title to point to.
+	if (chart.ids.title) chart.ids.hasTitle = true;
 </script>
 
 <h2 id={chart.ids.title || undefined} class="mz-title {className}">

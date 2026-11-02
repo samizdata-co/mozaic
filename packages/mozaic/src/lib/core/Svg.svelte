@@ -31,8 +31,14 @@ belongs in an `<Svg>` layer.
 	viewBox="0 0 {plot.fullWidth} {plot.fullHeight}"
 	role={decorative ? 'presentation' : 'img'}
 	aria-hidden={decorative ? 'true' : undefined}
-	aria-labelledby={!decorative && chart.ids.title ? chart.ids.title : undefined}
-	aria-describedby={!decorative && chart.ids.desc ? chart.ids.desc : undefined}
+	aria-labelledby={decorative
+		? undefined
+		: chart.ids.hasTitle
+			? chart.ids.title
+			: chart.ids.hasDesc
+				? chart.ids.desc
+				: undefined}
+	aria-describedby={!decorative && chart.ids.hasTitle && chart.ids.hasDesc ? chart.ids.desc : undefined}
 >
 	{#if defs}<defs>{@render defs()}</defs>{/if}
 	<g transform="translate({plot.padding.left},{plot.padding.top})">

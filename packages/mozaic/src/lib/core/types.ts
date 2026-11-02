@@ -68,5 +68,12 @@ export interface ChartContext {
 	readonly width: number;
 	readonly measured: boolean;
 	/** Element ids used for ARIA wiring. */
-	readonly ids: { title: string; desc: string };
+	readonly ids: {
+		title: string;
+		desc: string;
+		/** Set by `<Title>` as it renders, so the SVG is only labelled by a title that exists. */
+		hasTitle?: boolean;
+		/** Whether the chart has alt text (rendered with the `desc` id). */
+		readonly hasDesc?: boolean;
+	};
 }

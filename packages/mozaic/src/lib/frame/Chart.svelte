@@ -54,7 +54,14 @@ a map or a table.
 	const measured = $derived(fixedWidth != null || measuredWidth > 0);
 	const width = $derived(fixedWidth ?? (measuredWidth || theme.plot.initialWidth));
 	const breakpoint = $derived(breakpointFor(width, theme.breakpoints));
-	const ids = { title: `${uid}-title`, desc: `${uid}-desc` };
+	const ids = {
+		title: `${uid}-title`,
+		desc: `${uid}-desc`,
+		hasTitle: false,
+		get hasDesc() {
+			return !!alt;
+		}
+	};
 
 	setChartContext({
 		get theme() {
