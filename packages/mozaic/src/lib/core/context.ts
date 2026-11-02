@@ -7,6 +7,7 @@ import type { ChartContext, PlotContext } from './types.js';
 const CHART = Symbol('mozaic:chart');
 const PLOT = Symbol('mozaic:plot');
 const INITIAL_WIDTH = Symbol('mozaic:initial-width');
+const EMBEDDED = Symbol('mozaic:embedded');
 
 /** Used when a component renders outside `<Chart>` (tests, quick sketches). */
 const fallbackChart: ChartContext = {
@@ -58,4 +59,13 @@ export function setInitialWidth(get: () => number): void {
 
 export function useInitialWidth(): (() => number) | undefined {
 	return getContext<(() => number) | undefined>(INITIAL_WIDTH);
+}
+
+/** `<Embed>` marks its charts as embedded, so they leave out controls meant for the chart's own site. */
+export function setEmbedded(): void {
+	setContext(EMBEDDED, true);
+}
+
+export function useEmbedded(): boolean {
+	return getContext<boolean | undefined>(EMBEDDED) ?? false;
 }

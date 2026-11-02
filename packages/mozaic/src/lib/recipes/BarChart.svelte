@@ -9,6 +9,7 @@ file into your project and change anything.
 	import { scaleBand, scaleLinear } from 'd3-scale';
 	import { max, min } from 'd3-array';
 	import { Chart, Header, Title, Subtitle, Footer, Source, Notes } from '../frame/index.js';
+	import type { ChartEmbed } from '../embed/index.js';
 	import { Plot, Svg, Html, estimateTextWidth, scaled, type PlotContext } from '../core/index.js';
 	import { Bars, Rules, Text } from '../marks/index.js';
 	import { AxisY } from '../guides/index.js';
@@ -29,6 +30,8 @@ file into your project and change anything.
 		notes?: string;
 		source?: string;
 		alt?: string;
+		/** The chart's embed page, for the embed code under the chart (see `<Chart embed>`). */
+		embed?: ChartEmbed;
 		/** Value label format; defaults to locale numbers. */
 		format?: (n: number) => string;
 		/** Bar colour; defaults to the first categorical colour. */
@@ -53,6 +56,7 @@ file into your project and change anything.
 		notes,
 		source,
 		alt,
+		embed,
 		format,
 		color,
 		sort = true,
@@ -74,7 +78,7 @@ file into your project and change anything.
 	let hovered = $state<T | null>(null);
 </script>
 
-<Chart {style} {locale} {medium} {width} {alt}>
+<Chart {style} {locale} {medium} {width} {alt} {embed}>
 	{#if title || subtitle}
 		<Header>
 			{#if title}<Title>{title}</Title>{/if}

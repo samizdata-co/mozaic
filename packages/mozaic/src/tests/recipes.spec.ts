@@ -25,10 +25,12 @@ describe('recipes', () => {
 			value: (d: (typeof rows)[number]) => d.value,
 			title: 'Bar title',
 			source: 'Src',
-			width: 400
+			width: 400,
+			embed: { src: '/embed/bars/en/' }
 		});
 		expect($$('.mz-bars path')).toHaveLength(3);
 		expect($('.mz-title')!.textContent).toBe('Bar title');
+		expect($('.mz-embed-code summary')!.textContent).toBe('Embed');
 		expect($$('.mz-axis-y text').map((t) => t.textContent?.trim())).toEqual(['Chișinău', 'Bălți', 'Cahul']);
 		expect($$('.mz-text text').map((t) => t.textContent?.trim())).toContain('30');
 	});

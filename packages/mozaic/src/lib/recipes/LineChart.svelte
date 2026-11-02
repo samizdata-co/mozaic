@@ -11,6 +11,7 @@ project.
 	import { bisector, extent, max, min } from 'd3-array';
 	import { curveMonotoneX } from 'd3-shape';
 	import { Chart, Header, Title, Subtitle, Footer, Source, Notes } from '../frame/index.js';
+	import type { ChartEmbed } from '../embed/index.js';
 	import { Plot, Svg, Html, type PlotContext } from '../core/index.js';
 	import { Line, LineEndLabels } from '../marks/index.js';
 	import { AxisX, AxisY, GridY, Legend } from '../guides/index.js';
@@ -34,6 +35,8 @@ project.
 		notes?: string;
 		source?: string;
 		alt?: string;
+		/** The chart's embed page, for the embed code under the chart (see `<Chart embed>`). */
+		embed?: ChartEmbed;
 		format?: (n: number) => string;
 		/** Tooltip date format (d3-time-format specifier). */
 		dateFormat?: string;
@@ -59,6 +62,7 @@ project.
 		notes,
 		source,
 		alt,
+		embed,
 		format,
 		dateFormat = '%B %Y',
 		color,
@@ -87,7 +91,7 @@ project.
 	const valueAt = (s: S, date: Date) => points(s).find((p) => +xValue(p) === +date);
 </script>
 
-<Chart {style} {locale} {medium} {width} {alt}>
+<Chart {style} {locale} {medium} {width} {alt} {embed}>
 	<Header>
 		{#if title}<Title>{title}</Title>{/if}
 		{#if subtitle}<Subtitle>{subtitle}</Subtitle>{/if}

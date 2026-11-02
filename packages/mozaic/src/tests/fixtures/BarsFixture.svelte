@@ -7,13 +7,15 @@
 	import { Tooltip } from '../../lib/interactive/index.js';
 	import type { LocaleCode } from '../../lib/locale/index.js';
 	import type { Medium, StyleName } from '../../lib/styles/index.js';
+	import type { ChartEmbed } from '../../lib/embed/index.js';
 
 	let {
 		style = 'base',
 		locale = 'en',
 		medium = 'web',
 		orientation = 'horizontal',
-		fluid = false
+		fluid = false,
+		embed
 	}: {
 		style?: StyleName;
 		locale?: LocaleCode;
@@ -21,6 +23,7 @@
 		orientation?: 'horizontal' | 'vertical';
 		/** Leave the plot width to measurement, as on a real page. */
 		fluid?: boolean;
+		embed?: ChartEmbed;
 	} = $props();
 
 	const data = [
@@ -32,7 +35,7 @@
 	const linear = scaleLinear().domain([-100, 1500]);
 </script>
 
-<Chart {style} {locale} {medium} width={400} alt="Test bars">
+<Chart {style} {locale} {medium} {embed} width={400} alt="Test bars">
 	<Header><Title>Bars title</Title></Header>
 	<Plot
 		x={orientation === 'horizontal' ? linear : band}

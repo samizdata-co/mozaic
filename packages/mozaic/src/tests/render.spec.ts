@@ -12,6 +12,7 @@ import FacetsFixture from './fixtures/FacetsFixture.svelte';
 import ControlsFixture from './fixtures/ControlsFixture.svelte';
 import EdgeAxisFixture from './fixtures/EdgeAxisFixture.svelte';
 import ElectionFixture from './fixtures/ElectionFixture.svelte';
+import EmbeddedFixture from './fixtures/EmbeddedFixture.svelte';
 
 const finite = (value: string | null) => value !== null && !/NaN|undefined/.test(value);
 
@@ -82,6 +83,21 @@ describe('Chart frame', () => {
 		expect(fluid).not.toContain('px');
 		const fixed = renderDocument(BarsFixture).$('.mz-html')!.getAttribute('style')!;
 		expect(fixed).toMatch(/width: [\d.]+px/);
+	});
+
+	it('shows the embed code under the chart, except in print and inside an embed', () => {
+		const embed = { src: '/embed/bars/ro/', scriptSrc: '/embed.js', title: 'Bare' };
+		const { $ } = renderDocument(BarsFixture, { locale: 'ro', embed });
+		expect($('.mz-embed-code summary')!.textContent).toBe('Încorporează');
+		const code = $('.mz-embed-code textarea')!;
+		expect(code.getAttribute('aria-label')).toBe('Codul de încorporare');
+		expect(code.textContent).toContain('src="/embed/bars/ro/" title="Bare"');
+		expect(code.textContent).toContain('script src="/embed.js" async');
+		expect(renderDocument(BarsFixture).$('.mz-embed-code')).toBeNull();
+		expect(renderDocument(BarsFixture, { medium: 'print', embed }).$('.mz-embed-code')).toBeNull();
+		const embedded = renderDocument(EmbeddedFixture);
+		expect(embedded.$('.mz-chart')).not.toBeNull();
+		expect(embedded.$('.mz-embed-code')).toBeNull();
 	});
 
 	it('uses print tokens and drops interactive layers in print', () => {

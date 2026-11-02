@@ -9,6 +9,7 @@ copies this file into your project.
 	import { scaleLinear, scaleSqrt } from 'd3-scale';
 	import { extent, max } from 'd3-array';
 	import { Chart, Header, Title, Subtitle, Footer, Source, Notes } from '../frame/index.js';
+	import type { ChartEmbed } from '../embed/index.js';
 	import { Plot, Svg, Html, type PlotContext } from '../core/index.js';
 	import { Points, Voronoi } from '../marks/index.js';
 	import { AxisX, AxisY, GridX, GridY, Legend } from '../guides/index.js';
@@ -38,6 +39,8 @@ copies this file into your project.
 		notes?: string;
 		source?: string;
 		alt?: string;
+		/** The chart's embed page, for the embed code under the chart (see `<Chart embed>`). */
+		embed?: ChartEmbed;
 		xLabel?: string;
 		yLabel?: string;
 		xFormat?: (n: number) => string;
@@ -63,6 +66,7 @@ copies this file into your project.
 		notes,
 		source,
 		alt,
+		embed,
 		xLabel,
 		yLabel,
 		xFormat,
@@ -98,7 +102,7 @@ copies this file into your project.
 	let hovered = $state<T | null>(null);
 </script>
 
-<Chart {style} {locale} {medium} {width} {alt}>
+<Chart {style} {locale} {medium} {width} {alt} {embed}>
 	<Header>
 		{#if title}<Title>{title}</Title>{/if}
 		{#if subtitle}<Subtitle>{subtitle}</Subtitle>{/if}
