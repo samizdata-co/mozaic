@@ -77,6 +77,8 @@ export interface Theme {
 		text?: string;
 		/** Rendered height of the SVG in px. */
 		height?: number;
+		/** Where the logo links to (opens in a new tab, so it works from embeds). */
+		href?: string;
 	};
 }
 

@@ -54,6 +54,6 @@ export const plebiscit = extendTheme({
 	fonts: {
 		stylesheet: 'https://fonts.bunny.net/css?family=ibm-plex-sans:400,500,600,700|ibm-plex-serif:600&display=swap'
 	},
-	logo: { label: 'Plebiscit.md', svg: plebiscitMark, text: 'Plebiscit.md', height: 18 },
+	logo: { label: 'Plebiscit.md', svg: plebiscitMark, text: 'Plebiscit.md', height: 18, href: 'https://plebiscit.md' },
 	defaultLocale: 'ro'
 });
