@@ -63,6 +63,12 @@ import ParliamentData from './parliament/data.ts?raw';
 import PollTracker from './poll-tracker/Chart.svelte';
 import PollTrackerSource from './poll-tracker/Chart.svelte?raw';
 import PollTrackerData from './poll-tracker/data.ts?raw';
+import ArrowPlot from './arrow-plot/Chart.svelte';
+import ArrowPlotSource from './arrow-plot/Chart.svelte?raw';
+import ArrowPlotData from './arrow-plot/data.ts?raw';
+import BarDot from './bar-dot/Chart.svelte';
+import BarDotSource from './bar-dot/Chart.svelte?raw';
+import BarDotData from './bar-dot/data.ts?raw';
 import ScrollySource from './scrolly/Chart.svelte?raw';
 import ScrollyData from './scrolly/data.ts?raw';
 
@@ -159,6 +165,28 @@ export const examples: Example[] = [
 		component: Dumbbell,
 		source: DumbbellSource,
 		data: DumbbellData,
+		print: ['column', 'double']
+	},
+	{
+		slug: 'arrow-plot',
+		title: 'Arrow plot (recipe)',
+		description:
+			'The ArrowChart recipe: one arrow per row from an earlier value to a later one, end values beside the arrowheads, the two dates over the first arrow, and one row highlighted.',
+		tags: ['arrows', 'comparison', 'recipe'],
+		component: ArrowPlot,
+		source: ArrowPlotSource,
+		data: ArrowPlotData,
+		print: ['column', 'double']
+	},
+	{
+		slug: 'bar-dot',
+		title: 'Bars and dots for two survey waves (recipe)',
+		description:
+			'The BarDotChart recipe: bars for the latest wave, dots for the earlier one, the value and change at the right, a row asked only once and a grey "don\'t know".',
+		tags: ['bars', 'comparison', 'surveys', 'recipe'],
+		component: BarDot,
+		source: BarDotSource,
+		data: BarDotData,
 		print: ['column', 'double']
 	},
 	{

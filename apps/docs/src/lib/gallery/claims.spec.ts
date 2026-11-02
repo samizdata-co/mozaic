@@ -14,6 +14,8 @@ import { rows as spending } from './treemap/data';
 import { series as cities } from './small-multiples/data';
 import { cells } from './heatmap/data';
 import { majority, parties } from './parliament/data';
+import { rows as trust } from './arrow-plot/data';
+import { rows as worries } from './bar-dot/data';
 import { series as pollSeries } from './poll-tracker/data';
 
 // The gallery data is synthetic, but each headline must still be true of it.
@@ -111,5 +113,20 @@ describe('gallery headlines match their data', () => {
 		expect(at('a', 0) - at('b', 0)).toBeGreaterThan(6);
 		expect(Math.abs(at('a', -1) - at('b', -1))).toBeLessThan(2);
 		expect(at('d', -1)).toBeLessThan(5);
+	});
+
+	it('arrow-plot: trust in the president more than doubled, the largest change', () => {
+		const president = trust.find((r) => r.institution === 'president')!;
+		expect(president.after).toBeGreaterThan(president.before * 2);
+		const change = (r: (typeof trust)[number]) => Math.abs(r.after - r.before);
+		expect(trust.toSorted((a, b) => change(b) - change(a))[0]).toBe(president);
+	});
+
+	it('bar-dot: prices are the top worry and rose; war fell the most', () => {
+		const issues = worries.filter((r) => r.worry !== 'dontKnow');
+		expect(issues.toSorted((a, b) => b.autumn! - a.autumn!)[0].worry).toBe('prices');
+		expect(issues[0].autumn!).toBeGreaterThan(issues[0].spring!);
+		const both = issues.filter((r) => r.spring !== undefined);
+		expect(both.toSorted((a, b) => a.autumn! - a.spring! - (b.autumn! - b.spring!))[0].worry).toBe('war');
 	});
 });
