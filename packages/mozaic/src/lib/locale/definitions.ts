@@ -9,6 +9,11 @@ export interface LocaleStrings {
 	graphic: string;
 	showData: string;
 	downloadData: string;
+	/** The control under a chart that shows its embed code, the code's label, and its copy button. */
+	embed: string;
+	embedCode: string;
+	copy: string;
+	copied: string;
 	noData: string;
 	search: string;
 	showAll: (n: number) => string;
@@ -59,6 +64,10 @@ export const definitions = {
 			graphic: 'Graphic',
 			showData: 'Show the data',
 			downloadData: 'Download the data (CSV)',
+			embed: 'Embed',
+			embedCode: 'Embed code',
+			copy: 'Copy the code',
+			copied: 'Copied',
 			noData: 'No data',
 			search: 'Search',
 			showAll: (n) => `Show all ${n} rows`,
@@ -99,6 +108,10 @@ export const definitions = {
 			graphic: 'Grafic',
 			showData: 'Arată datele',
 			downloadData: 'Descarcă datele (CSV)',
+			embed: 'Încorporează',
+			embedCode: 'Codul de încorporare',
+			copy: 'Copiază codul',
+			copied: 'Copiat',
 			noData: 'Fără date',
 			search: 'Caută',
 			showAll: (n) => `Arată toate cele ${n} rânduri`,
@@ -139,6 +152,10 @@ export const definitions = {
 			graphic: 'Графика',
 			showData: 'Показать данные',
 			downloadData: 'Скачать данные (CSV)',
+			embed: 'Встроить',
+			embedCode: 'Код для встраивания',
+			copy: 'Скопировать код',
+			copied: 'Скопировано',
 			noData: 'Нет данных',
 			search: 'Поиск',
 			showAll: (n) => `Показать все строки (${n})`,

@@ -14,6 +14,7 @@ project and change anything.
 	import { scaleLinear } from 'd3-scale';
 	import { group, sum } from 'd3-array';
 	import { Chart, Header, Title, Subtitle, Footer, Source, Notes } from '../frame/index.js';
+	import type { ChartEmbed } from '../embed/index.js';
 	import { Plot, Svg, estimateTextWidth, type PlotContext } from '../core/index.js';
 	import { Rects } from '../marks/index.js';
 	import { AxisX, Legend } from '../guides/index.js';
@@ -52,6 +53,8 @@ project and change anything.
 		notes?: string;
 		source?: string;
 		alt?: string;
+		/** The chart's embed page, for the embed code under the chart (see `<Chart embed>`). */
+		embed?: ChartEmbed;
 		/** Share format (0–1) for tooltips; defaults to a locale percentage with one decimal. */
 		format?: (share: number) => string;
 		/** Plot height in px, or a function of the outer width and breakpoint. Defaults to enough room for every row label, and at least 480 px. */
@@ -83,6 +86,7 @@ project and change anything.
 		notes,
 		source,
 		alt,
+		embed,
 		format,
 		height,
 		annotations
@@ -183,7 +187,7 @@ project and change anything.
 	}
 </script>
 
-<Chart {style} {locale} {medium} {width} {alt}>
+<Chart {style} {locale} {medium} {width} {alt} {embed}>
 	{#if title || subtitle || legendItems.length > 1}
 		<Header>
 			{#if title}<Title>{title}</Title>{/if}

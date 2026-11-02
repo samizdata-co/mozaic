@@ -40,6 +40,7 @@ const EXCLUDE = [
 	'.mz-button-group',
 	'.mz-data-table',
 	'.mz-data-download',
+	'.mz-embed-code',
 	'.mz-table-search',
 	'.mz-table-more',
 	'.mz-tooltip',

@@ -38,6 +38,16 @@ Copy it from the preview page:
 
 The iframe keeps the CMS's CSS away from the chart. `embedCode({ src, title, height, scriptSrc })` from `mozaic/embed` generates the snippet.
 
+### Under the chart
+
+Give `<Chart>` (or any recipe) its embed page and readers get the code where they see the chart: an "Embed" control under it opens the snippet with a copy button.
+
+```svelte
+<Chart {style} {locale} embed={{ src: `/embed/spending/${locale}/`, scriptSrc: '/embed.js' }}>
+```
+
+Paths are resolved against the page the chart is on. The iframe's title defaults to the chart's title and its height to the chart's height on that page. The control is hidden in print, in exports and inside `<Embed>`, so the embedded chart does not offer its own code.
+
 ## Resizing
 
 The embed page posts its height to the parent page whenever it changes:

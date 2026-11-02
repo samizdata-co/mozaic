@@ -12,6 +12,7 @@ your project and change anything.
 	import type { Snippet } from 'svelte';
 	import { scaleBand, scaleLinear } from 'd3-scale';
 	import { Chart, Header, Title, Subtitle, Footer, Source, Notes } from '../frame/index.js';
+	import type { ChartEmbed } from '../embed/index.js';
 	import { Plot, Svg, estimateTextWidth, scaled, type PlotContext } from '../core/index.js';
 	import { Rects } from '../marks/index.js';
 	import { AxisX, AxisY, Legend } from '../guides/index.js';
@@ -57,6 +58,8 @@ your project and change anything.
 		notes?: string;
 		source?: string;
 		alt?: string;
+		/** The chart's embed page, for the embed code under the chart (see `<Chart embed>`). */
+		embed?: ChartEmbed;
 		/** Share format (0–1); defaults to a locale percentage with one decimal. */
 		format?: (share: number) => string;
 		rowHeight?: number;
@@ -86,6 +89,7 @@ your project and change anything.
 		notes,
 		source,
 		alt,
+		embed,
 		format,
 		rowHeight = 64,
 		annotations
@@ -141,7 +145,7 @@ your project and change anything.
 	}
 </script>
 
-<Chart {style} {locale} {medium} {width} {alt}>
+<Chart {style} {locale} {medium} {width} {alt} {embed}>
 	{#if title || subtitle || legendItems.length > 1}
 		<Header>
 			{#if title}<Title>{title}</Title>{/if}

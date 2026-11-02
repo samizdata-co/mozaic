@@ -12,6 +12,7 @@ project and change anything.
 	import { scaleBand, scaleLinear } from 'd3-scale';
 	import { max, min } from 'd3-array';
 	import { Chart, Header, Title, Subtitle, Footer, Source, Notes } from '../frame/index.js';
+	import type { ChartEmbed } from '../embed/index.js';
 	import { Plot, Svg, estimateTextWidth, scaled, type PlotContext } from '../core/index.js';
 	import { Arrows } from '../marks/index.js';
 	import { AxisX, AxisY, GridX } from '../guides/index.js';
@@ -39,6 +40,8 @@ project and change anything.
 		notes?: string;
 		source?: string;
 		alt?: string;
+		/** The chart's embed page, for the embed code under the chart (see `<Chart embed>`). */
+		embed?: ChartEmbed;
 		/** Value label format; defaults to locale numbers. */
 		format?: (n: number) => string;
 		/** Axis tick format; defaults to `format`. */
@@ -72,6 +75,7 @@ project and change anything.
 		notes,
 		source,
 		alt,
+		embed,
 		format,
 		tickFormat,
 		color,
@@ -140,7 +144,7 @@ project and change anything.
 	}
 </script>
 
-<Chart {style} {locale} {medium} {width} {alt}>
+<Chart {style} {locale} {medium} {width} {alt} {embed}>
 	{#if title || subtitle}
 		<Header>
 			{#if title}<Title>{title}</Title>{/if}

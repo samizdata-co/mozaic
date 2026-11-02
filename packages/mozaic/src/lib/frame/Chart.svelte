@@ -13,6 +13,8 @@ a map or a table.
 	import { createLocale, type LocaleCode } from '../locale/index.js';
 	import { breakpointFor, resolveStyle, tokensToStyle, type StyleName } from '../styles/index.js';
 	import type { Medium, Theme } from '../styles/types.js';
+	import type { ChartEmbed } from '../embed/code.js';
+	import EmbedCode from './EmbedCode.svelte';
 
 	interface Props {
 		/** House style name or a Theme object. */
@@ -26,6 +28,8 @@ a map or a table.
 		width?: number;
 		/** Add the style's web-font stylesheet to the page head. Turn off when the host page already loads the fonts. */
 		loadFonts?: boolean;
+		/** The chart's embed page: shows "Embed" under the chart, with the code to put it on another site. */
+		embed?: ChartEmbed;
 		class?: string;
 		children?: Snippet;
 	}
@@ -37,6 +41,7 @@ a map or a table.
 		alt,
 		width: fixedWidth,
 		loadFonts = true,
+		embed,
 		class: className = '',
 		children
 	}: Props = $props();
@@ -94,6 +99,7 @@ a map or a table.
 	bind:clientWidth={measuredWidth}
 >
 	{@render children?.()}
+	{#if embed}<EmbedCode {...embed} />{/if}
 	{#if alt}<p id={ids.desc} class="mz-visually-hidden">{alt}</p>{/if}
 </figure>
 
