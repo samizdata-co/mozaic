@@ -2,6 +2,8 @@
 @component
 Vertical axis for the plot's y scale. With `inside`, labels sit just above
 the gridlines inside the plot area, which saves left padding on small screens.
+`unit` names the unit once, after the top tick label ("50 lei/m³"); on a
+left axis it runs into the plot, so it needs no extra padding.
 -->
 <script lang="ts">
 	import { useChart, usePlot } from '../core/context.js';
@@ -20,6 +22,8 @@ the gridlines inside the plot area, which saves left padding on small screens.
 		baseline?: boolean;
 		/** Axis title, drawn above the axis. */
 		label?: string;
+		/** Unit written after the top tick label, e.g. "lei/m³" or "%". */
+		unit?: string;
 		class?: string;
 	}
 
@@ -36,6 +40,7 @@ the gridlines inside the plot area, which saves left padding on small screens.
 		tickPadding: tickPaddingInput,
 		baseline: baselineInput,
 		label,
+		unit,
 		class: className = ''
 	}: Props = $props();
 
@@ -47,17 +52,29 @@ the gridlines inside the plot area, which saves left padding on small screens.
 	const fmt = $derived(format ?? defaultTickFormat(values, chart.locale));
 	const dir = $derived(position === 'left' ? -1 : 1);
 	const anchor = $derived(inside ? (position === 'left' ? 'start' : 'end') : position === 'left' ? 'end' : 'start');
+	// The tick nearest the top of the plot carries the unit.
+	const top = $derived(
+		unit
+			? values.reduce((a, b) => ((scaled(plot.y, b) ?? Infinity) < (scaled(plot.y, a) ?? Infinity) ? b : a), values[0])
+			: undefined
+	);
+	// Outside a left axis, the unit starts where the numbers end and runs into the plot.
+	const unitApart = $derived(position === 'left' && !inside);
 </script>
 
 <g class="mz-axis mz-axis-y {className}" transform="translate({position === 'left' ? 0 : plot.width},0)">
 	{#if baseline}<line class="mz-axis-line" y2={plot.height} />{/if}
 	{#each values as value, i (value)}
+		{@const withUnit = unit && value === top && !unitApart ? `${fmt(value, i)} ${unit}` : fmt(value, i)}
 		<g class="mz-tick" transform="translate(0,{scaled(plot.y, value)})">
 			{#if tickSize > 0 && !inside}<line x2={dir * tickSize} />{/if}
 			{#if inside}
-				<text x={0} dy="-0.35em" text-anchor={anchor}>{fmt(value, i)}</text>
+				<text x={0} dy="-0.35em" text-anchor={anchor}>{withUnit}</text>
 			{:else}
-				<text x={dir * (tickSize + tickPadding)} dy="0.32em" text-anchor={anchor}>{fmt(value, i)}</text>
+				<text x={dir * (tickSize + tickPadding)} dy="0.32em" text-anchor={anchor}>{withUnit}</text>
+			{/if}
+			{#if unit && value === top && unitApart}
+				<text class="mz-axis-unit" x={-(tickSize + tickPadding) + 4} dy="0.32em" text-anchor="start">{unit}</text>
 			{/if}
 		</g>
 	{/each}
@@ -70,6 +87,12 @@ the gridlines inside the plot area, which saves left padding on small screens.
 	.mz-axis text {
 		fill: var(--mz-color-muted);
 		font-size: var(--mz-size-axis);
+	}
+	.mz-axis-unit {
+		paint-order: stroke;
+		stroke: var(--mz-color-bg);
+		stroke-width: 3px;
+		stroke-linejoin: round;
 	}
 	.mz-axis line {
 		stroke: var(--mz-color-axis);

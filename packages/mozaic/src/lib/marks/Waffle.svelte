@@ -1,7 +1,9 @@
 <!--
 @component
 A waffle chart: a grid of squares, one per unit, coloured by category in
-data order. Good for parts of a whole ("37 of 100 people").
+data order. Good for parts of a whole ("37 of 100 people"). With
+`origin="bottom"` the squares fill from the bottom row up, so the first
+category sits at the base and waffles of different totals share a baseline.
 -->
 <script lang="ts" generics="T">
 	import { useChart, usePlot } from '../core/context.js';
@@ -17,6 +19,8 @@ data order. Good for parts of a whole ("37 of 100 people").
 		emptyFill?: string;
 		/** Gap between squares in px. */
 		gap?: number;
+		/** Row the squares start filling from: the top (default) or the bottom of the plot. */
+		origin?: 'top' | 'bottom';
 		title?: (d: T) => string;
 		class?: string;
 	}
@@ -29,6 +33,7 @@ data order. Good for parts of a whole ("37 of 100 people").
 		total,
 		emptyFill = 'var(--mz-color-grid)',
 		gap = 2,
+		origin = 'top',
 		title,
 		class: className = ''
 	}: Props = $props();
@@ -55,7 +60,10 @@ data order. Good for parts of a whole ("37 of 100 people").
 	{#each squares as sq}
 		<rect
 			x={(sq.i % columns) * cell + gap / 2}
-			y={Math.floor(sq.i / columns) * cell + gap / 2}
+			y={(origin === 'bottom'
+				? plot.height - (Math.floor(sq.i / columns) + 1) * cell
+				: Math.floor(sq.i / columns) * cell) +
+				gap / 2}
 			width={Math.max(0, cell - gap)}
 			height={Math.max(0, cell - gap)}
 			fill={sq.d === undefined

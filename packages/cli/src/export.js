@@ -7,7 +7,7 @@ const PX_PER_MM = 96 / 25.4;
 
 /** Interactive-only parts that do not belong in a static image. */
 const HIDE_IN_IMAGES =
-	'.mz-data-table, .mz-data-download, .mz-button-group, .mz-table-search, .mz-table-more { display: none !important; }';
+	'.mz-chart-tools, .mz-tooltip, .mz-data-table, .mz-data-download, .mz-button-group, .mz-table-search, .mz-table-more { display: none !important; }';
 
 /**
  * @typedef {{ slug: string, style: string, locale: string, title: string, path: string, print: Record<string, number> }} EmbedEntry

@@ -22,6 +22,10 @@ the mozaic chart library (Svelte 5 + d3). House style: `src/lib/theme.ts`. Langu
   Text uses text colours (`var(--mz-color-text)`), never data colours.
 - Every chart needs `alt` text, a legend for 2+ series, and strings in every language.
 - Use the theme's breakpoints (`plot.breakpoint`) for small-screen layouts.
+- Name the y unit once, on the top tick: `<AxisY unit="lei/m³" />`.
+- Tooltips: `<Tooltip title items>`, one item per series (label, value, colour), so values line up.
+- Event markers on a time axis: `<RefLine x={date} label="…" dotted labelY={-30} />`, labels above the plot.
+- No `<DataTable>` ("Show the data" button) unless asked for.
 
 ## Before you finish
 

@@ -4,7 +4,10 @@
 	import { Plot, Svg } from '../../lib/core/index.js';
 	import { Arcs, Arrows, Beeswarm, Dumbbell, Slope, Treemap, Waffle } from '../../lib/marks/index.js';
 
-	let { kind }: { kind: 'treemap' | 'waffle' | 'dumbbell' | 'arrows' | 'slope' | 'beeswarm' | 'arcs' } = $props();
+	let {
+		kind
+	}: { kind: 'treemap' | 'waffle' | 'waffle-bottom' | 'dumbbell' | 'arrows' | 'slope' | 'beeswarm' | 'arcs' } =
+		$props();
 
 	const items = [
 		{ name: 'Alpha', group: 'g1', a: 10, b: 14 },
@@ -48,6 +51,8 @@
 					<Treemap data={items} value={(d) => d.a} group={(d) => d.group} label={(d) => d.name} />
 				{:else if kind === 'waffle'}
 					<Waffle data={items} value={(d) => d.a} total={40} />
+				{:else if kind === 'waffle-bottom'}
+					<Waffle data={items} value={(d) => d.a} total={40} origin="bottom" />
 				{:else}
 					<Arcs data={items} value={(d) => d.a} label={(d) => d.name} />
 				{/if}

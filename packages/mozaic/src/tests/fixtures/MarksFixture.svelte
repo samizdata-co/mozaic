@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { scaleLinear } from 'd3-scale';
 	import { Chart } from '../../lib/frame/index.js';
-	import { Plot, Svg } from '../../lib/core/index.js';
+	import { Html, Plot, Svg } from '../../lib/core/index.js';
 	import { Area, Line, LineEndLabels, Points, Rects, Rules, Text } from '../../lib/marks/index.js';
-	import { GridX, GridY } from '../../lib/guides/index.js';
+	import { AxisY, GridX, GridY } from '../../lib/guides/index.js';
+	import { Tooltip } from '../../lib/interactive/index.js';
 	import { Arrow, Callout, Label, RefBand, RefLine } from '../../lib/annotations/index.js';
 
 	const data = [
@@ -23,6 +24,7 @@
 		<Svg>
 			<GridX ticks={4} />
 			<GridY ticks={5} />
+			<AxisY ticks={5} unit="lei/m³" />
 			<RefBand x1={1} x2={2} label="band-label" />
 			<Area {data} x={(d) => d.x} y={(d) => d.y} opacity={0.2} />
 			<Line {data} x={(d) => d.x} y={(d) => d.y} />
@@ -32,6 +34,7 @@
 			<Text x={2} y={45} text={twoLines} halo />
 			<Callout x={4} y={40} dx={-40} dy={-20} label="callout-label" />
 			<RefLine y={35} label="target" />
+			<RefLine x={2} label={twoLines} labelY={-30} anchor="end" dotted />
 			<Label x={1} y={30} label="labelled-point" marker />
 			<Arrow from={[0, 10]} to={[1, 30]} />
 			<LineEndLabels
@@ -45,5 +48,16 @@
 				color={() => 'red'}
 			/>
 		</Svg>
+		<Html>
+			<Tooltip
+				x={10}
+				y={10}
+				title="tooltip-title"
+				items={[
+					{ label: 'A', value: '1,00', color: 'red', shape: 'line' },
+					{ label: 'Longer B', value: '20,00', color: 'blue' }
+				]}
+			/>
+		</Html>
 	</Plot>
 </Chart>

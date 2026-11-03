@@ -180,6 +180,31 @@ describe('marks and annotations', () => {
 		expect(finite($('.mz-arrow path')!.getAttribute('d'))).toBe(true);
 	});
 
+	it('draws dotted event lines with a multi-line label above the plot', () => {
+		const event = $$('.mz-ref-line')[1];
+		const line = event.querySelector('line')!;
+		expect(line.getAttribute('y1')).toBe('-30');
+		expect(line.getAttribute('stroke-linecap')).toBe('round');
+		const text = event.querySelector('text')!;
+		expect(text.getAttribute('text-anchor')).toBe('end');
+		expect([...text.querySelectorAll('tspan')].map((t) => t.textContent)).toEqual(['line one', 'line two']);
+	});
+
+	it('writes the unit once, after the top tick of the y axis', () => {
+		const units = $$('.mz-axis-unit');
+		expect(units).toHaveLength(1);
+		expect(units[0].textContent).toBe('lei/m³');
+		const ticks = $$('.mz-axis-y .mz-tick');
+		expect(ticks[ticks.length - 1].querySelector('.mz-axis-unit')).not.toBeNull();
+	});
+
+	it('lists tooltip items with swatches and values', () => {
+		expect($('.mz-tooltip-title')!.textContent).toBe('tooltip-title');
+		expect($$('.mz-tooltip-label').map((t) => t.textContent)).toEqual(['A', 'Longer B']);
+		expect($$('.mz-tooltip-value').map((t) => t.textContent)).toEqual(['1,00', '20,00']);
+		expect($('.mz-tooltip-swatch.line')!.getAttribute('style')).toContain('red');
+	});
+
 	it('nudges overlapping end labels apart', () => {
 		const ys = $$('.mz-line-end-labels text').map((t) => Number(t.getAttribute('y')));
 		expect(Math.abs(ys[0] - ys[1])).toBeGreaterThanOrEqual(14);
@@ -205,6 +230,18 @@ describe('compound marks', () => {
 
 	it('waffle: total squares', () => {
 		expect(renderDocument(CompoundFixture, { kind: 'waffle' }).$$('.mz-waffle rect')).toHaveLength(40);
+	});
+
+	it('waffle: fills from the bottom row with origin="bottom"', () => {
+		const rects = (kind: 'waffle' | 'waffle-bottom') => renderDocument(CompoundFixture, { kind }).$$('.mz-waffle rect');
+		const ys = (kind: 'waffle' | 'waffle-bottom') => rects(kind).map((r) => Number(r.getAttribute('y')));
+		const top = ys('waffle');
+		const bottom = ys('waffle-bottom');
+		expect(top[0]).toBeLessThan(top[top.length - 1]);
+		expect(bottom[0]).toBeGreaterThan(bottom[bottom.length - 1]);
+		// The first row sits on the bottom of the 200 px plot (squares are inset by half the 2 px gap).
+		const size = Number(rects('waffle-bottom')[0].getAttribute('height'));
+		expect(bottom[0] + size + 1).toBe(200);
 	});
 
 	it('dumbbell: two dots per row', () => {
