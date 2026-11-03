@@ -1,8 +1,8 @@
 <!-- Built with the ScatterChart recipe: a ready-made chart you can also eject and edit. -->
 <script lang="ts">
-	import { ScatterChart } from 'mozaic/recipes';
-	import { RefLine } from 'mozaic/annotations';
-	import { createLocale } from 'mozaic/locale';
+	import { ScatterChart } from '@samizdata/mozaic/recipes';
+	import { RefLine } from '@samizdata/mozaic/annotations';
+	import { createLocale } from '@samizdata/mozaic/locale';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { districts, messages, type District } from './data';

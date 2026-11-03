@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { scaleThreshold } from 'd3-scale';
 	import { geoConicConformal } from 'd3-geo';
-	import { Chart, Header, Title, Subtitle, Footer, Source, Notes } from 'mozaic/frame';
-	import { Plot, Svg, Html } from 'mozaic/core';
-	import { GeoPath } from 'mozaic/marks';
-	import { Legend } from 'mozaic/guides';
-	import { Tooltip } from 'mozaic/interactive';
-	import { createLocale } from 'mozaic/locale';
-	import { rampSteps } from 'mozaic/styles';
+	import { Chart, Header, Title, Subtitle, Footer, Source, Notes } from '@samizdata/mozaic/frame';
+	import { Plot, Svg, Html } from '@samizdata/mozaic/core';
+	import { GeoPath } from '@samizdata/mozaic/marks';
+	import { Legend } from '@samizdata/mozaic/guides';
+	import { Tooltip } from '@samizdata/mozaic/interactive';
+	import { createLocale } from '@samizdata/mozaic/locale';
+	import { rampSteps } from '@samizdata/mozaic/styles';
 	import type { ExampleProps } from '../types';
 	import { displayName, messages, outline, raions, type Raion } from './data';
 

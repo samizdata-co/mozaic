@@ -2,12 +2,12 @@
 	import { scaleSqrt } from 'd3-scale';
 	import { max } from 'd3-array';
 	import { geoConicConformal } from 'd3-geo';
-	import { Chart, Header, Title, Subtitle, Footer, Notes, Source } from 'mozaic/frame';
-	import { Plot, Svg, Html, position } from 'mozaic/core';
-	import { GeoPath, Points } from 'mozaic/marks';
-	import { SizeLegend } from 'mozaic/guides';
-	import { Tooltip } from 'mozaic/interactive';
-	import { createLocale } from 'mozaic/locale';
+	import { Chart, Header, Title, Subtitle, Footer, Notes, Source } from '@samizdata/mozaic/frame';
+	import { Plot, Svg, Html, position } from '@samizdata/mozaic/core';
+	import { GeoPath, Points } from '@samizdata/mozaic/marks';
+	import { SizeLegend } from '@samizdata/mozaic/guides';
+	import { Tooltip } from '@samizdata/mozaic/interactive';
+	import { createLocale } from '@samizdata/mozaic/locale';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { displayName } from '../raion-map/data';

@@ -9,19 +9,19 @@ mozaic is a chart library for the web and print. You build each chart from small
 Each piece of analysis lives in its own repository: R or Python scripts for the data, and Svelte files for one or two charts.
 
 ```bash
-pnpm create mozaic budget-2026 --locales ro,ru --title "Budget 2026"
+pnpm create @samizdata/mozaic budget-2026 --locales ro,ru --title "Budget 2026"
 cd budget-2026
 pnpm install
 pnpm dev
 ```
 
-Open http://localhost:5173 to see the preview page with the example chart. Until mozaic is published to a registry, point the project at a local checkout:
+Open http://localhost:5173 to see the preview page with the example chart. The project installs `@samizdata/mozaic` and `@samizdata/mozaic-cli` from npm. To work against a local checkout of the library instead, pass its paths:
 
 ```bash
-pnpm create mozaic budget-2026 --mozaic ../mozaic/packages/mozaic --cli ../mozaic/packages/cli
+pnpm create @samizdata/mozaic budget-2026 --mozaic ../mozaic/packages/mozaic --cli ../mozaic/packages/cli
 ```
 
-Then build `mozaic` once in the library checkout (`pnpm --filter mozaic package`). The project's house style is in `src/lib/theme.ts`; see [Styles](../styles/) to use an outlet's style. For SAMIZDATA and Ziarul de Gardă projects, maia sets that up for you.
+and build `@samizdata/mozaic` once in the library checkout (`pnpm --filter mozaic package`). The project's house style is in `src/lib/theme.ts`; see [Styles](../styles/) to use an outlet's style. For SAMIZDATA and Ziarul de Gardă projects, maia sets that up for you.
 
 ## What you get
 
@@ -47,10 +47,10 @@ A chart is a `<Chart>` frame around a `<Plot>`, with layers of marks:
 ```svelte
 <script lang="ts">
 	import { scaleBand, scaleLinear } from 'd3-scale';
-	import { Chart, Header, Title, Footer, Source } from 'mozaic/frame';
-	import { Plot, Svg } from 'mozaic/core';
-	import { Bars } from 'mozaic/marks';
-	import { AxisX, AxisY, GridX } from 'mozaic/guides';
+	import { Chart, Header, Title, Footer, Source } from '@samizdata/mozaic/frame';
+	import { Plot, Svg } from '@samizdata/mozaic/core';
+	import { Bars } from '@samizdata/mozaic/marks';
+	import { AxisX, AxisY, GridX } from '@samizdata/mozaic/guides';
 
 	const data = [
 		{ city: 'Chișinău', value: 30 },

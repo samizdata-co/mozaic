@@ -101,7 +101,7 @@ test('llms.txt bundles docs, API and examples', async ({ request }) => {
 	expect(response.ok()).toBe(true);
 	const text = await response.text();
 	expect(text).toContain('# API reference');
-	expect(text).toContain('### Bars (mozaic/marks)');
+	expect(text).toContain('### Bars (@samizdata/mozaic/marks)');
 	expect(text).toContain('## Example: Choropleth map');
 });
 

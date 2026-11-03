@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { render } from 'svelte/server';
 import { examples } from './index';
 import { components } from '../api';
-import * as mozaic from 'mozaic';
-import { checkTheme } from 'mozaic/styles';
+import * as mozaic from '@samizdata/mozaic';
+import { checkTheme } from '@samizdata/mozaic/styles';
 import { styles } from '../styles';
 
 const locales = ['en', 'ro', 'ru'] as const;

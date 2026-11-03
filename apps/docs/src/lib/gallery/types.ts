@@ -1,6 +1,6 @@
 import type { Component } from 'svelte';
-import type { LocaleCode } from 'mozaic/locale';
-import type { Medium, Theme } from 'mozaic/styles';
+import type { LocaleCode } from '@samizdata/mozaic/locale';
+import type { Medium, Theme } from '@samizdata/mozaic/styles';
 
 /** Props every gallery chart accepts. */
 export interface ExampleProps {

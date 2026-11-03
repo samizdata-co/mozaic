@@ -5,7 +5,7 @@ Read `PLAN.md` for the design, `docs/adr/` for decisions and `apps/docs/src/cont
 
 ## Layout
 
-- `packages/mozaic/src/lib/`: the library. Each folder is a subpath export (`mozaic/<folder>`).
+- `packages/mozaic/src/lib/`: the library. Each folder is a subpath export (`@samizdata/mozaic/<folder>`).
   - `core/`: `Plot`, `Svg`, `Html`, `Canvas`, `Facets`, `usePlot()`, `useChart()`, `useTheme()`, `useLocale()`, `scaled()`, `position()`, `mm()`.
   - `frame/`: `Chart`, `Header`, `Title`, `Subtitle`, `Footer`, `Source`, `Notes`, `Byline`, `Logo`, `DataTable`, `DataDownload`.
   - `marks/`: `Bars`, `Line`, `Area`, `Points`, `Rects`, `Arcs`, `Text`, `Rules`, `GeoPath`, `Voronoi`, `LineEndLabels`, `Treemap`, `Waffle`, `Dumbbell`, `Arrows`, `Slope`, `Beeswarm`, `Hemicycle`, `Intervals`.
@@ -16,7 +16,7 @@ Read `PLAN.md` for the design, `docs/adr/` for decisions and `apps/docs/src/cont
   - `styles/`: the `Theme` type, the neutral `base`, `extendTheme`, `checkTheme`, `rampSteps`, `contrastRatio`. House styles are not here: they live with each brand (`samizdata-co/brand`, `ziaruldegarda/brand`, in `datavis/mozaic/`) or project (plebiscit), and charts take one as `style={theme}`. `locale/`: en, ro, ru. `embed/`: `Embed`, resize protocol, `hostScript`, `embedCode`. `export/`: `figureToSvg`, downloads. `recipes/`: complete chart templates, `BarChart`, `ColumnChart`, `LineChart`, `ScatterChart`, `ArrowChart` (arrow plot: change between two dates per row), `BarDotChart` (bars for the latest value, dots for an earlier one, value and change at the right), `StackedBarChart` (100% stacked bars, brackets over groups of series, reference line), `MosaicChart` (Marimekko: 100% stacked rows as tall as their totals).
   - `src/tests/`: server-render tests with fixtures.
 - `packages/cli/`: `mozaic export` and `mozaic eject` (plain Node ESM + JSDoc).
-- `packages/create-mozaic/`: scaffolder; `template/` is the analysis project (placeholders like `__STYLE__`).
+- `packages/create-mozaic/`: scaffolder (`pnpm create @samizdata/mozaic`); `template/` is the analysis project (placeholders like `__PROJECT_NAME__`).
 - `apps/docs/`: docs site. Copies of the SAMIZDATA and ZdG themes in `src/lib/brands/` (update them from the brand repos; don't edit them) and the Style menu's registry in `src/lib/styles.ts`. Gallery examples in `src/lib/gallery/<slug>/` (`Chart.svelte` + `data.ts`); guides in `src/content/*.md`; the API reference is generated from component sources.
 
 ## How a chart is built
@@ -54,4 +54,4 @@ Read `PLAN.md` for the design, `docs/adr/` for decisions and `apps/docs/src/cont
 - `pnpm dev`: docs site at http://localhost:5173 (library source hot-reloads via the `mozaic-dev` condition)
 - `pnpm check` · `pnpm test` · `pnpm lint` · `pnpm format`
 - `pnpm build` then `pnpm test:e2e` (Playwright, axe) and `pnpm export`
-- `pnpm changeset` after changing a published package
+- `pnpm changeset` after changing a published package (`@samizdata/mozaic`, `@samizdata/mozaic-cli`, `@samizdata/create-mozaic`: released together, same version). To release: `pnpm release` (versions and CHANGELOGs), commit, then `pnpm release:publish` (npm; needs `npm login`) and `git push --follow-tags`.

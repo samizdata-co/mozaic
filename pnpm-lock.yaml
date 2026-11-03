@@ -196,6 +196,9 @@ importers:
 
   apps/docs:
     dependencies:
+      '@samizdata/mozaic':
+        specifier: workspace:*
+        version: link:../../packages/mozaic
       d3-array:
         specifier: ^3.2.4
         version: 3.2.4
@@ -220,9 +223,6 @@ importers:
       marked:
         specifier: ^18.1.1
         version: 18.1.1
-      mozaic:
-        specifier: workspace:*
-        version: link:../../packages/mozaic
       topojson-client:
         specifier: ^3.1.0
         version: 3.1.0
@@ -230,12 +230,12 @@ importers:
       '@axe-core/playwright':
         specifier: ^4.14.0
         version: 4.14.0(playwright-core@1.64.1)
-      '@mozaic/cli':
-        specifier: workspace:*
-        version: link:../../packages/cli
       '@playwright/test':
         specifier: 1.64.1
         version: 1.64.1
+      '@samizdata/mozaic-cli':
+        specifier: workspace:*
+        version: link:../../packages/cli
       '@sveltejs/adapter-static':
         specifier: ^4.0.0
         version: 4.0.0(@sveltejs/kit@3.1.0(@sveltejs/vite-plugin-svelte@7.3.1(svelte@5.57.2(@typescript-eslint/types@8.72.0))(vite@8.3.5(@types/node@24.19.2)))(svelte@5.57.2(@typescript-eslint/types@8.72.0))(typescript@6.0.3)(vite@8.3.5(@types/node@24.19.2)))

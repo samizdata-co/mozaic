@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { scaleLinear } from 'd3-scale';
-	import { Chart, Header, Title, Subtitle, Footer, Notes, Source } from 'mozaic/frame';
-	import { Plot, Svg } from 'mozaic/core';
-	import { Slope } from 'mozaic/marks';
-	import { createLocale } from 'mozaic/locale';
+	import { Chart, Header, Title, Subtitle, Footer, Notes, Source } from '@samizdata/mozaic/frame';
+	import { Plot, Svg } from '@samizdata/mozaic/core';
+	import { Slope } from '@samizdata/mozaic/marks';
+	import { createLocale } from '@samizdata/mozaic/locale';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { messages, rows } from './data';

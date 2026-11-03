@@ -1,4 +1,4 @@
-// Everything, for convenience. Subpath imports (`mozaic/core`, `mozaic/marks`, …) work too.
+// Everything, for convenience. Subpath imports (`@samizdata/mozaic/core`, `@samizdata/mozaic/marks`, …) work too.
 export * from './core/index.js';
 export * from './frame/index.js';
 export * from './guides/index.js';

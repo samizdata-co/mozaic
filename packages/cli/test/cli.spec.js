@@ -47,7 +47,7 @@ describe('serveStatic', () => {
 describe('eject', () => {
 	it('rewrites internal imports to package imports', () => {
 		expect(rewriteImports("import { Plot } from '../core/index.js';\nimport x from './x.js';")).toBe(
-			"import { Plot } from 'mozaic/core';\nimport x from './x.js';"
+			"import { Plot } from '@samizdata/mozaic/core';\nimport x from './x.js';"
 		);
 	});
 
@@ -56,7 +56,7 @@ describe('eject', () => {
 		const mozaicDir = fileURLToPath(new URL('../../mozaic', import.meta.url));
 		const file = await eject({ name: 'BarChart', to: 'src/lib/recipes', cwd, mozaicDir });
 		const source = await readFile(file, 'utf8');
-		expect(source).toContain("from 'mozaic/frame'");
+		expect(source).toContain("from '@samizdata/mozaic/frame'");
 		expect(source).not.toContain('../core/index.js');
 		await expect(eject({ name: 'BarChart', to: 'src/lib/recipes', cwd, mozaicDir })).rejects.toThrow(/already exists/);
 		await expect(eject({ name: 'Nope', to: 'x', cwd, mozaicDir })).rejects.toThrow(/Unknown recipe/);

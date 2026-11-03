@@ -1,7 +1,16 @@
 {
-	"name": "@mozaic/cli",
-	"version": "0.1.0",
+	"name": "@samizdata/mozaic-cli",
+	"version": "0.2.0",
 	"description": "mozaic command line: export embeds to SVG, PDF and PNG; eject recipes.",
+	"license": "GPL-3.0-or-later",
+	"author": "Nicu Calcea",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/samizdata-co/mozaic.git",
+		"directory": "packages/cli"
+	},
+	"homepage": "https://github.com/samizdata-co/mozaic#readme",
+	"bugs": "https://github.com/samizdata-co/mozaic/issues",
 	"type": "module",
 	"bin": {
 		"mozaic": "./bin/mozaic.js"

@@ -20,7 +20,7 @@ Copy the brand's `datavis/mozaic/` folder into the project, for example to `src/
 
 ```svelte
 <script lang="ts">
-	import { Chart } from 'mozaic/frame';
+	import { Chart } from '@samizdata/mozaic/frame';
 	import { samizdata } from '../lib/brand/theme';
 </script>
 
@@ -69,7 +69,7 @@ Text never uses a data colour. A coloured swatch, dot or line next to the text c
 A style extends `base` (or another style) with `extendTheme()`. Put it in the outlet's brand repository, next to its other design tokens, or in the project (`src/lib/theme.ts`) when only one project uses it:
 
 ```ts
-import { extendTheme } from 'mozaic/styles';
+import { extendTheme } from '@samizdata/mozaic/styles';
 import { acmeLogo } from './logo.js';
 
 export const acme = extendTheme({

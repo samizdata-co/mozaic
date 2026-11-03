@@ -14,7 +14,8 @@
 		"format:check": "prettier --check .",
 		"export": "pnpm --filter docs export",
 		"changeset": "changeset",
-		"release": "changeset version"
+		"release": "changeset version",
+		"release:publish": "changeset publish"
 	},
 	"devDependencies": {
 		"@changesets/cli": "^2.29.0",

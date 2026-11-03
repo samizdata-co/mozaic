@@ -1,5 +1,5 @@
-import { base } from 'mozaic/styles';
-import type { Theme } from 'mozaic/styles';
+import { base } from '@samizdata/mozaic/styles';
+import type { Theme } from '@samizdata/mozaic/styles';
 // Copied from samizdata-co/brand and ziaruldegarda/brand (datavis/mozaic/); do not edit the copies.
 import { samizdata } from './brands/samizdata/theme.js';
 import { zdg } from './brands/zdg/theme.js';

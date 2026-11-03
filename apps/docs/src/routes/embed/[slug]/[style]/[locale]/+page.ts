@@ -1,5 +1,5 @@
 import { error } from '@sveltejs/kit';
-import type { LocaleCode } from 'mozaic/locale';
+import type { LocaleCode } from '@samizdata/mozaic/locale';
 import { styles, type StyleName } from '#lib/styles.ts';
 import { examples, getExample } from '#lib/gallery/index.ts';
 import { embedLocales, embedStyles } from '#lib/embeds.ts';

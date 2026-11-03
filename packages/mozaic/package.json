@@ -1,7 +1,16 @@
 {
-	"name": "mozaic",
-	"version": "0.1.0",
-	"description": "A personal library of chart components for the web and print, built on Svelte 5 and d3.",
+	"name": "@samizdata/mozaic",
+	"version": "0.2.0",
+	"description": "Chart components for the web and print, built on Svelte 5 and d3.",
+	"license": "GPL-3.0-or-later",
+	"author": "Nicu Calcea",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/samizdata-co/mozaic.git",
+		"directory": "packages/mozaic"
+	},
+	"homepage": "https://github.com/samizdata-co/mozaic#readme",
+	"bugs": "https://github.com/samizdata-co/mozaic/issues",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",

@@ -3,7 +3,7 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { defaultClientConditions, defaultServerConditions } from 'vite';
 import { defineConfig } from 'vitest/config';
 
-// `mozaic-dev` makes workspace imports of `mozaic` resolve to its source
+// `mozaic-dev` makes workspace imports of `@samizdata/mozaic` resolve to its source
 // (packages/mozaic/src/lib) instead of the built dist, so edits hot-reload.
 const conditions = ['mozaic-dev'];
 

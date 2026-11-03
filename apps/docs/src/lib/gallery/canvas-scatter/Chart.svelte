@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { scaleLinear } from 'd3-scale';
 	import { extent } from 'd3-array';
-	import { Chart, Header, Title, Subtitle, Footer, Notes, Source } from 'mozaic/frame';
-	import { Canvas, Plot, Svg } from 'mozaic/core';
-	import { Points } from 'mozaic/marks';
-	import { AxisX, AxisY, GridX, GridY, Legend } from 'mozaic/guides';
+	import { Chart, Header, Title, Subtitle, Footer, Notes, Source } from '@samizdata/mozaic/frame';
+	import { Canvas, Plot, Svg } from '@samizdata/mozaic/core';
+	import { Points } from '@samizdata/mozaic/marks';
+	import { AxisX, AxisY, GridX, GridY, Legend } from '@samizdata/mozaic/guides';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { messages, points } from './data';

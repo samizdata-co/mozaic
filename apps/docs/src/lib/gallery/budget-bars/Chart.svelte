@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { scaleBand, scaleLinear } from 'd3-scale';
 	import { max, min } from 'd3-array';
-	import { Chart, Header, Title, Subtitle, Footer, Source, Notes } from 'mozaic/frame';
-	import { Plot, Svg, Html, estimateTextWidth, scaled } from 'mozaic/core';
-	import { Bars, Rules, Text } from 'mozaic/marks';
-	import { AxisX, AxisY, GridX } from 'mozaic/guides';
-	import { Callout } from 'mozaic/annotations';
-	import { Tooltip } from 'mozaic/interactive';
-	import { createLocale } from 'mozaic/locale';
+	import { Chart, Header, Title, Subtitle, Footer, Source, Notes } from '@samizdata/mozaic/frame';
+	import { Plot, Svg, Html, estimateTextWidth, scaled } from '@samizdata/mozaic/core';
+	import { Bars, Rules, Text } from '@samizdata/mozaic/marks';
+	import { AxisX, AxisY, GridX } from '@samizdata/mozaic/guides';
+	import { Callout } from '@samizdata/mozaic/annotations';
+	import { Tooltip } from '@samizdata/mozaic/interactive';
+	import { createLocale } from '@samizdata/mozaic/locale';
 	import type { ExampleProps } from '../types';
 	import { messages, rows } from './data';
 

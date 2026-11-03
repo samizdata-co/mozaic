@@ -1,8 +1,8 @@
 <!-- A chart on a docs page: width control, print preview, downloads and embed code. -->
 <script lang="ts">
-	import { mm } from 'mozaic/core';
-	import { embedCode } from 'mozaic/embed';
-	import { downloadPng, downloadSvg } from 'mozaic/export';
+	import { mm } from '@samizdata/mozaic/core';
+	import { embedCode } from '@samizdata/mozaic/embed';
+	import { downloadPng, downloadSvg } from '@samizdata/mozaic/export';
 	import { styles } from '../styles';
 	import type { Example } from '../gallery/types';
 	import { settings } from '../settings.svelte';

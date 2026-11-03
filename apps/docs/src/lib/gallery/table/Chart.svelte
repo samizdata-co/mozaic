@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { scaleDiverging } from 'd3-scale';
 	import { interpolateRgbBasis } from 'd3-interpolate';
-	import { Chart, Header, Title, Subtitle, Footer, Notes, Source, DataDownload } from 'mozaic/frame';
-	import { Table, type Column } from 'mozaic/table';
-	import { createLocale } from 'mozaic/locale';
+	import { Chart, Header, Title, Subtitle, Footer, Notes, Source, DataDownload } from '@samizdata/mozaic/frame';
+	import { Table, type Column } from '@samizdata/mozaic/table';
+	import { createLocale } from '@samizdata/mozaic/locale';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { messages, rows, type Row } from './data';

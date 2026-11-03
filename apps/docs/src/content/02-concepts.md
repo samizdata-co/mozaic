@@ -27,15 +27,15 @@ mozaic keeps the ideas of the grammar of graphics (data → scales → marks →
 </Chart>
 ```
 
-| ggplot                 | mozaic                                                                                |
-| ---------------------- | ------------------------------------------------------------------------------------- |
-| `data` + `aes()`       | `data` prop + accessor props (`x={(d) => d.year}`)                                    |
-| `scale_*`              | d3 scales passed to `<Plot>` (`x`, `y`, `scales`)                                     |
-| `geom_*`               | marks (`Bars`, `Line`, `Area`, `Points`, `Rects`, `Text`, `GeoPath`, …)               |
-| `stat_*`, `position_*` | functions in `mozaic/transforms` (`stack`, `bin`, `rollup`, `dodge`, `treemapLayout`) |
-| `facet_*`              | `<Facets>`                                                                            |
-| `theme()`              | house styles                                                                          |
-| `annotate()`           | `mozaic/annotations`                                                                  |
+| ggplot                 | mozaic                                                                                           |
+| ---------------------- | ------------------------------------------------------------------------------------------------ |
+| `data` + `aes()`       | `data` prop + accessor props (`x={(d) => d.year}`)                                               |
+| `scale_*`              | d3 scales passed to `<Plot>` (`x`, `y`, `scales`)                                                |
+| `geom_*`               | marks (`Bars`, `Line`, `Area`, `Points`, `Rects`, `Text`, `GeoPath`, …)                          |
+| `stat_*`, `position_*` | functions in `@samizdata/mozaic/transforms` (`stack`, `bin`, `rollup`, `dodge`, `treemapLayout`) |
+| `facet_*`              | `<Facets>`                                                                                       |
+| `theme()`              | house styles                                                                                     |
+| `annotate()`           | `@samizdata/mozaic/annotations`                                                                  |
 
 ## Chart
 
@@ -112,7 +112,7 @@ When no mark fits, write SVG directly with `usePlot()`. See [Writing marks](../w
 Data preparation happens before data reaches a mark, in plain functions:
 
 ```ts
-import { stack, bin, groupBy, rollup, indexTo, dodge, treemapLayout, avoidOverlap } from 'mozaic/transforms';
+import { stack, bin, groupBy, rollup, indexTo, dodge, treemapLayout, avoidOverlap } from '@samizdata/mozaic/transforms';
 
 const segments = stack(rows, { key: (d) => d.year, series: (d) => d.source, value: (d) => d.twh, offset: 'expand' });
 // → [{ key, series, value, start, end, datum }]  →  <Bars x={(d) => d.key} y={(d) => d.end} base={(d) => d.start} />
@@ -130,7 +130,7 @@ Annotations: `Callout` (text with a curved arrow), `Arrow`, `Label`, `RefLine` a
 
 ## Recipes
 
-Recipes are complete charts with sensible defaults: `BarChart`, `ColumnChart`, `LineChart`, `ScatterChart`, `ArrowChart` (an arrow plot: how each row changed between two dates), `BarDotChart` (bars for the latest value with a dot for an earlier one and the change written beside them), `StackedBarChart` (100% stacked bars, with optional brackets grouping series and a reference line) and `MosaicChart` (a Marimekko chart: 100% stacked bars as tall as their totals, so each cell’s area is its value) from `mozaic/recipes`. Each takes the data, accessors and the frame text, plus an `annotations` snippet for extra SVG.
+Recipes are complete charts with sensible defaults: `BarChart`, `ColumnChart`, `LineChart`, `ScatterChart`, `ArrowChart` (an arrow plot: how each row changed between two dates), `BarDotChart` (bars for the latest value with a dot for an earlier one and the change written beside them), `StackedBarChart` (100% stacked bars, with optional brackets grouping series and a reference line) and `MosaicChart` (a Marimekko chart: 100% stacked bars as tall as their totals, so each cell’s area is its value) from `@samizdata/mozaic/recipes`. Each takes the data, accessors and the frame text, plus an `annotations` snippet for extra SVG.
 
 When you need to change more than the props allow, run `mozaic eject BarChart`. It copies the recipe's source into `src/lib/recipes/` with imports rewritten, and you edit it like any other file.
 

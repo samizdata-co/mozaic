@@ -15,7 +15,7 @@ export function GET() {
 						`  - ${p.name}${p.optional ? '?' : ''}: ${p.type}${p.default ? ` = ${p.default}` : ''}${p.description ? ` — ${p.description}` : ''}`
 				)
 				.join('\n');
-			return `### ${c.name} (mozaic/${c.module})\n${c.description}\n${props}`;
+			return `### ${c.name} (@samizdata/mozaic/${c.module})\n${c.description}\n${props}`;
 		})
 		.join('\n\n');
 	const gallery = examples

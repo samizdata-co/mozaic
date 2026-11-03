@@ -36,7 +36,7 @@ Copy it from the preview page:
 <script src="https://charts.example.com/budget/embed.js" async></script>
 ```
 
-The iframe keeps the CMS's CSS away from the chart. `embedCode({ src, title, height, scriptSrc })` from `mozaic/embed` generates the snippet.
+The iframe keeps the CMS's CSS away from the chart. `embedCode({ src, title, height, scriptSrc })` from `@samizdata/mozaic/embed` generates the snippet.
 
 ### Under the chart
 
@@ -48,7 +48,7 @@ Give `<Chart>` (or any recipe) its embed page and readers get the code where the
 
 Paths are resolved against the page the chart is on. The iframe's title defaults to the chart's title and its height to the chart's height on that page. The button is hidden in print, in exports and inside `<Embed>`, so the embedded chart does not offer its own code.
 
-A "Download" icon button beside it saves the chart as PNG or SVG (see [Print and export](../print-and-export/)). Turn it on for one chart with `<Chart download>` (a string is the file name; otherwise it comes from the title), or for every chart on a site by calling `setDownloads()` from `mozaic/frame` in the layout; `download={false}` leaves one chart out.
+A "Download" icon button beside it saves the chart as PNG or SVG (see [Print and export](../print-and-export/)). Turn it on for one chart with `<Chart download>` (a string is the file name; otherwise it comes from the title), or for every chart on a site by calling `setDownloads()` from `@samizdata/mozaic/frame` in the layout; `download={false}` leaves one chart out.
 
 ## Resizing
 
@@ -70,7 +70,7 @@ Scroll stories need the page itself to scroll, so they cannot live in an auto-he
 
 ```svelte
 <script lang="ts">
-	import { Embed, useEmbedParams } from 'mozaic/embed';
+	import { Embed, useEmbedParams } from '@samizdata/mozaic/embed';
 	const params = useEmbedParams(); // ?medium=print&width=208
 </script>
 

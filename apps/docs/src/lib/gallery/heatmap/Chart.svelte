@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { scaleBand, scaleDiverging } from 'd3-scale';
 	import { interpolateRgbBasis } from 'd3-interpolate';
-	import { Chart, Header, Title, Subtitle, Footer, Notes, Source } from 'mozaic/frame';
-	import { Plot, Svg, Html, scaled } from 'mozaic/core';
-	import { Rects } from 'mozaic/marks';
-	import { AxisX, AxisY, ColorRamp } from 'mozaic/guides';
-	import { Tooltip } from 'mozaic/interactive';
-	import { createLocale } from 'mozaic/locale';
+	import { Chart, Header, Title, Subtitle, Footer, Notes, Source } from '@samizdata/mozaic/frame';
+	import { Plot, Svg, Html, scaled } from '@samizdata/mozaic/core';
+	import { Rects } from '@samizdata/mozaic/marks';
+	import { AxisX, AxisY, ColorRamp } from '@samizdata/mozaic/guides';
+	import { Tooltip } from '@samizdata/mozaic/interactive';
+	import { createLocale } from '@samizdata/mozaic/locale';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { cells, messages, years, type Cell } from './data';

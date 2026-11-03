@@ -1,7 +1,7 @@
 <!-- Built with the BarDotChart recipe: a ready-made chart you can also eject and edit. -->
 <script lang="ts">
-	import { BarDotChart } from 'mozaic/recipes';
-	import { createLocale } from 'mozaic/locale';
+	import { BarDotChart } from '@samizdata/mozaic/recipes';
+	import { createLocale } from '@samizdata/mozaic/locale';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { messages, rows, type Row } from './data';

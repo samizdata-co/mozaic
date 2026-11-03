@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { scaleLinear } from 'd3-scale';
 	import { max, median } from 'd3-array';
-	import { Chart, Header, Title, Subtitle, Footer, Notes, Source } from 'mozaic/frame';
-	import { Plot, Svg, Html } from 'mozaic/core';
-	import { Rects } from 'mozaic/marks';
-	import { AxisX, AxisY, GridY } from 'mozaic/guides';
-	import { RefLine } from 'mozaic/annotations';
-	import { Tooltip } from 'mozaic/interactive';
-	import { bin, type Bin } from 'mozaic/transforms';
-	import { createLocale } from 'mozaic/locale';
+	import { Chart, Header, Title, Subtitle, Footer, Notes, Source } from '@samizdata/mozaic/frame';
+	import { Plot, Svg, Html } from '@samizdata/mozaic/core';
+	import { Rects } from '@samizdata/mozaic/marks';
+	import { AxisX, AxisY, GridY } from '@samizdata/mozaic/guides';
+	import { RefLine } from '@samizdata/mozaic/annotations';
+	import { Tooltip } from '@samizdata/mozaic/interactive';
+	import { bin, type Bin } from '@samizdata/mozaic/transforms';
+	import { createLocale } from '@samizdata/mozaic/locale';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { incomes, messages } from './data';

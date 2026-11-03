@@ -1,5 +1,5 @@
 import { json } from '@sveltejs/kit';
-import type { EmbedManifest } from 'mozaic/embed';
+import type { EmbedManifest } from '@samizdata/mozaic/embed';
 import { styles } from '#lib/styles.ts';
 import { examples } from '#lib/gallery/index.ts';
 import { embedLocales, embedStyles } from '#lib/embeds.ts';

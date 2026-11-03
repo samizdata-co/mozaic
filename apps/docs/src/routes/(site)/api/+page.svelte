@@ -15,13 +15,13 @@
 	<h1>API reference</h1>
 	<p class="lead">
 		Generated from the component sources, so it always matches the code. Import components from the module shown, e.g.
-		<code>import &lbrace; Bars &rbrace; from 'mozaic/marks'</code>. Functions (transforms, locale, styles, export) are
-		covered in the
+		<code>import &lbrace; Bars &rbrace; from '@samizdata/mozaic/marks'</code>. Functions (transforms, locale, styles,
+		export) are covered in the
 		<a href={link('docs/concepts/')}>docs</a>.
 	</p>
 	{#each modules as module (module.name)}
 		<section>
-			<h2><code>mozaic/{module.name}</code></h2>
+			<h2><code>@samizdata/mozaic/{module.name}</code></h2>
 			<p class="summary">{module.summary}</p>
 			<dl>
 				{#each components.filter((c) => c.module === module.name) as component (component.name)}

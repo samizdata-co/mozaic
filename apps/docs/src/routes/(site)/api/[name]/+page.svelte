@@ -13,11 +13,12 @@
 <svelte:head><title>{component.name} · API · mozaic</title></svelte:head>
 
 <main>
-	<p class="crumbs"><a href={link('api/')}>API</a> / <code>mozaic/{component.module}</code></p>
+	<p class="crumbs"><a href={link('api/')}>API</a> / <code>@samizdata/mozaic/{component.module}</code></p>
 	<h1>
 		{component.name}{#if component.generics}<span class="generics">&lt;{component.generics}&gt;</span>{/if}
 	</h1>
-	<pre class="import"><code>import &lbrace; {component.name} &rbrace; from 'mozaic/{component.module}';</code></pre>
+	<pre class="import"><code>import &lbrace; {component.name} &rbrace; from '@samizdata/mozaic/{component.module}';</code
+		></pre>
 	<div class="description">
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -- the library's own doc comments, rendered at build time -->
 		{@html data.description}

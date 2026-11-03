@@ -7,7 +7,7 @@ A mark is a Svelte component that calls `usePlot()` and draws SVG. There is no r
 ```svelte
 <!-- Lollipops.svelte -->
 <script lang="ts" generics="T">
-	import { usePlot, useTheme, scaled } from 'mozaic/core';
+	import { usePlot, useTheme, scaled } from '@samizdata/mozaic/core';
 
 	interface Props {
 		data: T[];
@@ -33,7 +33,7 @@ A mark is a Svelte component that calls `usePlot()` and draws SVG. There is no r
 ## Conventions
 
 - **Accessors in, pixels out.** Take data and accessor functions; turn them into pixels with `plot.x`, `plot.y` or `position(plot, x, y)`. Use `scaled()` for band scales.
-- **No data preparation inside marks.** Sort, stack and aggregate before the data reaches the mark (in the chart file or `mozaic/transforms`).
+- **No data preparation inside marks.** Sort, stack and aggregate before the data reaches the mark (in the chart file or `@samizdata/mozaic/transforms`).
 - **Colours.** Data colours come from `useTheme().palettes`. Text, gridlines and outlines use CSS tokens: `var(--mz-color-text)`, `--mz-color-muted`, `--mz-color-grid`, `--mz-color-axis`, `--mz-color-bg`.
 - **Theme defaults must be derived.** Write `const r = $derived(radius ?? theme.plot.barRadius)`, not `let { radius = theme.plot.barRadius }`. Destructuring defaults are not reactive, so they would not follow a style change.
 - **Use `Accessor<T, Value>`, not `Accessor<T, any>`.** A union with `any` collapses to `any` and erases the callback's types.

@@ -10,7 +10,7 @@ The same chart file renders for print. Print mode:
 
 ```svelte
 <script>
-	import { mm } from 'mozaic/core';
+	import { mm } from '@samizdata/mozaic/core';
 </script>
 
 <MyChart style={theme} locale="ro" medium="print" width={mm(55)} />
@@ -42,7 +42,7 @@ The exporter uses, in order: `--browser`, `$MOZAIC_BROWSER`, Playwright's Chromi
 
 ## SVG details
 
-`figureToSvg(figure)` (from `mozaic/export`, also behind the SVG buttons) converts the rendered chart:
+`figureToSvg(figure)` (from `@samizdata/mozaic/export`, also behind the SVG buttons) converts the rendered chart:
 
 - SVG layers are copied with computed styles inlined, so no CSS is needed.
 - HTML text (title, subtitle, legend, footer) becomes SVG `<text>`, one element per rendered line with words positioned exactly, so it stays editable.

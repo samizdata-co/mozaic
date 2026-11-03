@@ -19,10 +19,10 @@
 		"d3-scale": "^4.0.2",
 		"d3-shape": "^3.2.0",
 		"d3-time-format": "^4.1.0",
-		"mozaic": "__MOZAIC_SPEC__"
+		"@samizdata/mozaic": "__MOZAIC_SPEC__"
 	},
 	"devDependencies": {
-		"@mozaic/cli": "__CLI_SPEC__",
+		"@samizdata/mozaic-cli": "__CLI_SPEC__",
 		"@sveltejs/adapter-static": "^4.0.0",
 		"@sveltejs/kit": "^3.1.0",
 		"@sveltejs/vite-plugin-svelte": "^7.3.1",

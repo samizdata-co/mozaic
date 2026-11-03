@@ -1,4 +1,4 @@
-import type { LocaleCode } from 'mozaic/locale';
+import type { LocaleCode } from '@samizdata/mozaic/locale';
 
 /** Project settings. Charts are registered in src/charts/index.ts. */
 export const config = {

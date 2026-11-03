@@ -1,4 +1,4 @@
-# @mozaic/cli
+# @samizdata/mozaic-cli
 
 ```bash
 mozaic export [dir]   # export every embed in a built site (default: build) to SVG, PDF and PNG

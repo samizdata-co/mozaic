@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Embed, useEmbedParams } from 'mozaic/embed';
+	import { Embed, useEmbedParams } from '@samizdata/mozaic/embed';
 	import { getExample } from '#lib/gallery/index.ts';
 	import { styles } from '#lib/styles.ts';
 	import type { PageProps } from './$types';

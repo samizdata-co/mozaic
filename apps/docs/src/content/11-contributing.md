@@ -25,7 +25,7 @@ pnpm test:e2e       # Playwright: pages, embeds, accessibility (after build)
 pnpm export         # export every docs embed with mozaic export
 ```
 
-The docs app resolves `mozaic` to the library source through a `mozaic-dev` export condition, so library changes hot-reload without a build.
+The docs app resolves `@samizdata/mozaic` to the library source through a `mozaic-dev` export condition, so library changes hot-reload without a build.
 
 ## Tests
 

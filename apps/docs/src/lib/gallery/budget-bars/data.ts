@@ -1,4 +1,4 @@
-import type { LocaleCode } from 'mozaic/locale';
+import type { LocaleCode } from '@samizdata/mozaic/locale';
 
 export interface Row {
 	id: string;

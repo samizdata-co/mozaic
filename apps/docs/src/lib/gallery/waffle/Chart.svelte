@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { Chart, Header, Title, Subtitle, Footer, Notes, Source } from 'mozaic/frame';
-	import { Plot, Svg } from 'mozaic/core';
-	import { Waffle } from 'mozaic/marks';
-	import { Legend } from 'mozaic/guides';
+	import { Chart, Header, Title, Subtitle, Footer, Notes, Source } from '@samizdata/mozaic/frame';
+	import { Plot, Svg } from '@samizdata/mozaic/core';
+	import { Waffle } from '@samizdata/mozaic/marks';
+	import { Legend } from '@samizdata/mozaic/guides';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { messages, rows } from './data';

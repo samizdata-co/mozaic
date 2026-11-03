@@ -1,6 +1,6 @@
 <!-- Built with the ArrowChart recipe: a ready-made chart you can also eject and edit. -->
 <script lang="ts">
-	import { ArrowChart } from 'mozaic/recipes';
+	import { ArrowChart } from '@samizdata/mozaic/recipes';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { messages, rows, type Row } from './data';

@@ -5,7 +5,7 @@
 Each story gets its own repository, created with `create-mozaic`:
 
 ```bash
-pnpm create mozaic <dir> --locales ro,ru --title "…"
+pnpm create @samizdata/mozaic <dir> --locales ro,ru --title "…"
 ```
 
 Options: `--locales` (comma-separated), `--title`, `--name`, `--mozaic` and `--cli` (a version, or a local path), `--no-git` and `--install`.

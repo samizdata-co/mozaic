@@ -16,7 +16,7 @@
 	},
 	"devDependencies": {
 		"@axe-core/playwright": "^4.14.0",
-		"@mozaic/cli": "workspace:*",
+		"@samizdata/mozaic-cli": "workspace:*",
 		"@playwright/test": "1.64.1",
 		"@sveltejs/adapter-static": "^4.0.0",
 		"@sveltejs/kit": "^3.0.0",
@@ -50,7 +50,7 @@
 		"d3-scale-chromatic": "^3.1.0",
 		"d3-shape": "^3.2.0",
 		"marked": "^18.1.1",
-		"mozaic": "workspace:*",
+		"@samizdata/mozaic": "workspace:*",
 		"topojson-client": "^3.1.0"
 	}
 }

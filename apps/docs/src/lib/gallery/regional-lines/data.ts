@@ -1,4 +1,4 @@
-import type { LocaleCode } from 'mozaic/locale';
+import type { LocaleCode } from '@samizdata/mozaic/locale';
 import { seeded } from '../../random';
 
 export interface Point {

@@ -43,7 +43,7 @@ describe('scaffold', () => {
 		expect(config).toContain("locales: ['ro','ru']");
 		const pkg = JSON.parse(await readFile(join(dir, 'package.json'), 'utf8'));
 		expect(pkg.name).toBe('budget-2026');
-		expect(pkg.dependencies.mozaic).toBe('^0.2.0');
+		expect(pkg.dependencies['@samizdata/mozaic']).toBe('^0.2.0');
 		expect(await readFile(join(dir, 'README.md'), 'utf8')).toContain('# Budget 2026');
 	});
 
@@ -51,7 +51,7 @@ describe('scaffold', () => {
 		const dir = join(await temp(), 'linked');
 		await scaffold({ dir, mozaic: '/opt/mozaic/packages/mozaic' });
 		const pkg = JSON.parse(await readFile(join(dir, 'package.json'), 'utf8'));
-		expect(pkg.dependencies.mozaic).toBe('link:/opt/mozaic/packages/mozaic');
+		expect(pkg.dependencies['@samizdata/mozaic']).toBe('link:/opt/mozaic/packages/mozaic');
 	});
 
 	it('rejects bad options and non-empty folders', async () => {

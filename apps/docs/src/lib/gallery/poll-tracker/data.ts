@@ -1,4 +1,4 @@
-import { kernelSmooth } from 'mozaic/transforms';
+import { kernelSmooth } from '@samizdata/mozaic/transforms';
 import { seeded } from '../../random';
 import type { Messages } from '../types';
 

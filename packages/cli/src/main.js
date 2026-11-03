@@ -70,7 +70,7 @@ export async function main(argv) {
 			cwd: process.cwd(),
 			force: options.force === true
 		});
-		console.log(`Ejected ${name} to ${file}. Import it from there instead of 'mozaic/recipes'.`);
+		console.log(`Ejected ${name} to ${file}. Import it from there instead of '@samizdata/mozaic/recipes'.`);
 		return 0;
 	}
 

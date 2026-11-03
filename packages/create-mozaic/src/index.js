@@ -2,9 +2,12 @@ import { spawn } from 'node:child_process';
 import { cp, readdir, readFile, rename, stat, writeFile } from 'node:fs/promises';
 import { basename, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
 
 export const LOCALES = ['en', 'ro', 'ru'];
 const TEMPLATE = fileURLToPath(new URL('../template', import.meta.url));
+// mozaic, @samizdata/mozaic-cli and create-mozaic are released together with the same version.
+const { version } = createRequire(import.meta.url)('../package.json');
 const TEXT = /\.(svelte|ts|js|json|md|yml|yaml|toml|R|py|csv|html|txt)$|^(justfile|_gitignore)$/;
 
 /**
@@ -69,8 +72,8 @@ export async function scaffold(options) {
 		__PROJECT_NAME__: name,
 		__PROJECT_TITLE__: options.title ?? name,
 		__LOCALES__: JSON.stringify(locales).replace(/"/g, "'"),
-		__MOZAIC_SPEC__: spec(options.mozaic ?? '^0.1.0'),
-		__CLI_SPEC__: spec(options.cli ?? '^0.1.0')
+		__MOZAIC_SPEC__: spec(options.mozaic ?? `^${version}`),
+		__CLI_SPEC__: spec(options.cli ?? `^${version}`)
 	};
 	for await (const file of walk(dir)) {
 		if (!TEXT.test(basename(file))) continue;
@@ -97,14 +100,14 @@ function exec(command, args, cwd) {
 const HELP = `create-mozaic — start a new mozaic analysis project
 
 Usage:
-  pnpm create mozaic <dir> [options]
+  pnpm create @samizdata/mozaic <dir> [options]
 
 Options:
   --locales <list>      comma-separated: ${LOCALES.join(',')} (default: en)
   --title <text>        project title (default: the folder name)
   --name <slug>         package name (default: from the folder name)
   --mozaic <spec|path>  mozaic version, or a local path to packages/mozaic
-  --cli <spec|path>     @mozaic/cli version, or a local path to packages/cli
+  --cli <spec|path>     @samizdata/mozaic-cli version, or a local path to packages/cli
   --git / --no-git      initialise a git repository (default: yes)
   --install             run pnpm install afterwards
 `;

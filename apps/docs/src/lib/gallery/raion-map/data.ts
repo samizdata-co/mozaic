@@ -1,7 +1,7 @@
 import { feature } from 'topojson-client';
 import type { Feature, FeatureCollection, Geometry } from 'geojson';
 import type { GeometryCollection, Topology } from 'topojson-specification';
-import type { LocaleCode } from 'mozaic/locale';
+import type { LocaleCode } from '@samizdata/mozaic/locale';
 import topology from '../../data/moldova-adm1.topo.json';
 import { seeded } from '../../random';
 

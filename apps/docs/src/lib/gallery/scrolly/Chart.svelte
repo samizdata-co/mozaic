@@ -1,11 +1,11 @@
 <!-- A scrollytelling story: a full page, not an embed. The chart reacts to the active step. -->
 <script lang="ts">
 	import { scaleLinear } from 'd3-scale';
-	import { Chart, Header, Title, Footer, Notes, Source } from 'mozaic/frame';
-	import { Plot, Svg } from 'mozaic/core';
-	import { Line, LineEndLabels } from 'mozaic/marks';
-	import { AxisX, AxisY, GridY } from 'mozaic/guides';
-	import { Scroller } from 'mozaic/interactive';
+	import { Chart, Header, Title, Footer, Notes, Source } from '@samizdata/mozaic/frame';
+	import { Plot, Svg } from '@samizdata/mozaic/core';
+	import { Line, LineEndLabels } from '@samizdata/mozaic/marks';
+	import { AxisX, AxisY, GridY } from '@samizdata/mozaic/guides';
+	import { Scroller } from '@samizdata/mozaic/interactive';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { messages, steps } from './data';

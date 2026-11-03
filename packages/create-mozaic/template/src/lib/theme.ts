@@ -1,4 +1,4 @@
-import { extendTheme } from 'mozaic/styles';
+import { extendTheme } from '@samizdata/mozaic/styles';
 
 /**
  * The house style for every chart in this project. It starts from mozaic's

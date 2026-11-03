@@ -1,4 +1,4 @@
-import type { LocaleCode } from 'mozaic/locale';
+import type { LocaleCode } from '@samizdata/mozaic/locale';
 import type { StyleName } from './styles';
 
 /** Styles and languages the docs site builds embeds for. */

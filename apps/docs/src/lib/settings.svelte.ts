@@ -1,4 +1,4 @@
-import type { LocaleCode } from 'mozaic/locale';
+import type { LocaleCode } from '@samizdata/mozaic/locale';
 import { styles, type StyleName } from './styles';
 
 const KEY = 'mozaic-docs-settings';

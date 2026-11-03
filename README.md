@@ -11,12 +11,12 @@ A chart library for the web and print, built on Svelte 5 and d3: small, composab
 
 ## Packages
 
-| Package                                            | What                                                                                                                                                                       |
-| -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`packages/mozaic`](packages/mozaic)               | The library (`mozaic/core`, `/frame`, `/marks`, `/guides`, `/annotations`, `/interactive`, `/table`, `/transforms`, `/styles`, `/locale`, `/embed`, `/export`, `/recipes`) |
-| [`packages/cli`](packages/cli)                     | `mozaic export` (SVG/PDF/PNG) and `mozaic eject`                                                                                                                           |
-| [`packages/create-mozaic`](packages/create-mozaic) | Project scaffolder and template                                                                                                                                            |
-| [`apps/docs`](apps/docs)                           | Docs site: guides, API reference, gallery of 20 examples, embeds, `llms.txt`                                                                                               |
+| Package                                            | What                                                                                                                                                                                  |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`packages/mozaic`](packages/mozaic)               | The library (`@samizdata/mozaic/core`, `/frame`, `/marks`, `/guides`, `/annotations`, `/interactive`, `/table`, `/transforms`, `/styles`, `/locale`, `/embed`, `/export`, `/recipes`) |
+| [`packages/cli`](packages/cli)                     | `mozaic export` (SVG/PDF/PNG) and `mozaic eject`                                                                                                                                      |
+| [`packages/create-mozaic`](packages/create-mozaic) | Project scaffolder and template                                                                                                                                                       |
+| [`apps/docs`](apps/docs)                           | Docs site: guides, API reference, gallery of 20 examples, embeds, `llms.txt`                                                                                                          |
 
 ## Quick start
 
@@ -38,10 +38,10 @@ node packages/create-mozaic/bin/create-mozaic.js ../budget-2026 --locales ro,ru 
 ```svelte
 <script lang="ts">
 	import { scaleBand, scaleLinear } from 'd3-scale';
-	import { Chart, Header, Title, Footer, Source } from 'mozaic/frame';
-	import { Plot, Svg } from 'mozaic/core';
-	import { Bars } from 'mozaic/marks';
-	import { AxisX, AxisY, GridX } from 'mozaic/guides';
+	import { Chart, Header, Title, Footer, Source } from '@samizdata/mozaic/frame';
+	import { Plot, Svg } from '@samizdata/mozaic/core';
+	import { Bars } from '@samizdata/mozaic/marks';
+	import { AxisX, AxisY, GridX } from '@samizdata/mozaic/guides';
 	import { theme } from '../lib/theme'; // the project's house style
 
 	const data = [

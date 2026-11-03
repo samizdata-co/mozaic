@@ -2,12 +2,12 @@
 	import { scaleLinear, scaleTime } from 'd3-scale';
 	import { bisector, extent, max, min } from 'd3-array';
 	import { curveMonotoneX } from 'd3-shape';
-	import { Chart, Header, Title, Subtitle, Footer, Source, Notes } from 'mozaic/frame';
-	import { Plot, Svg, Html } from 'mozaic/core';
-	import { Line, LineEndLabels } from 'mozaic/marks';
-	import { AxisX, AxisY, GridY, Legend } from 'mozaic/guides';
-	import { PointerArea, Tooltip } from 'mozaic/interactive';
-	import { createLocale } from 'mozaic/locale';
+	import { Chart, Header, Title, Subtitle, Footer, Source, Notes } from '@samizdata/mozaic/frame';
+	import { Plot, Svg, Html } from '@samizdata/mozaic/core';
+	import { Line, LineEndLabels } from '@samizdata/mozaic/marks';
+	import { AxisX, AxisY, GridY, Legend } from '@samizdata/mozaic/guides';
+	import { PointerArea, Tooltip } from '@samizdata/mozaic/interactive';
+	import { createLocale } from '@samizdata/mozaic/locale';
 	import type { ExampleProps } from '../types';
 	import { messages, series, type Point } from './data';
 

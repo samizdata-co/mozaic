@@ -3,7 +3,7 @@
 Scaffold a mozaic analysis project: R/Python data scripts plus Svelte charts built as static embeds.
 
 ```bash
-pnpm create mozaic budget-2026 --locales ro,ru --title "Budget 2026"
+pnpm create @samizdata/mozaic budget-2026 --locales ro,ru --title "Budget 2026"
 ```
 
 | Option              |                                                                                 |

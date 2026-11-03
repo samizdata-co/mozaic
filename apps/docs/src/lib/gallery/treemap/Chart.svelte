@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { Chart, Header, Title, Subtitle, Footer, Notes, Source } from 'mozaic/frame';
-	import { Plot, Svg, Html } from 'mozaic/core';
-	import { Treemap } from 'mozaic/marks';
-	import { Legend } from 'mozaic/guides';
-	import { Tooltip } from 'mozaic/interactive';
-	import { createLocale } from 'mozaic/locale';
-	import { contrastRatio } from 'mozaic/styles';
+	import { Chart, Header, Title, Subtitle, Footer, Notes, Source } from '@samizdata/mozaic/frame';
+	import { Plot, Svg, Html } from '@samizdata/mozaic/core';
+	import { Treemap } from '@samizdata/mozaic/marks';
+	import { Legend } from '@samizdata/mozaic/guides';
+	import { Tooltip } from '@samizdata/mozaic/interactive';
+	import { createLocale } from '@samizdata/mozaic/locale';
+	import { contrastRatio } from '@samizdata/mozaic/styles';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { messages, rows, type Row } from './data';
