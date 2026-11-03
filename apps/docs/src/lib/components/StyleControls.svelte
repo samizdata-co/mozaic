@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { styles } from 'mozaic/styles';
+	import { styles } from '../styles';
 	import { settings, saveSettings } from '../settings.svelte';
 </script>
 

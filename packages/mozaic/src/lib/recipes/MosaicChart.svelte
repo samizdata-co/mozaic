@@ -21,7 +21,7 @@ project and change anything.
 	import { RefLine } from '../annotations/index.js';
 	import { avoidOverlap } from '../transforms/index.js';
 	import { createLocale, type LocaleCode } from '../locale/index.js';
-	import { contrastRatio, resolveStyle, type Breakpoint, type StyleName, type Medium } from '../styles/index.js';
+	import { base, contrastRatio, type Breakpoint, type Medium, type Theme } from '../styles/index.js';
 
 	interface Props {
 		/** Long format: one datum per row × series. */
@@ -44,7 +44,7 @@ project and change anything.
 		/** Vertical reference line at this share (0–1), e.g. 0.5. */
 		reference?: number;
 		referenceLabel?: string;
-		style?: StyleName;
+		style?: Theme;
 		locale?: LocaleCode;
 		medium?: Medium;
 		width?: number;
@@ -77,7 +77,7 @@ project and change anything.
 		labelSeries = [],
 		reference,
 		referenceLabel,
-		style = 'base',
+		style = base,
 		locale,
 		medium,
 		width,
@@ -92,7 +92,7 @@ project and change anything.
 		annotations
 	}: Props = $props();
 
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	const loc = $derived(createLocale(locale ?? theme.defaultLocale));
 	const fmt = $derived(format ?? ((s: number) => loc.format('.1%')(s)));
 	const fontSize = $derived(theme.plot.fontSize);

@@ -2,6 +2,7 @@
 	import { link } from '#lib/link.ts';
 	import { examples } from '#lib/gallery/index.ts';
 	import { settings } from '#lib/settings.svelte.ts';
+	import { styles } from '#lib/styles.ts';
 
 	const tags = [...new Set(examples.flatMap((e) => e.tags))].sort();
 	let tag = $state<string | null>(null);
@@ -28,7 +29,7 @@
 					{#if example.kind === 'story'}
 						<div class="story">Scroll story ↗</div>
 					{:else}
-						<example.component style={settings.style} locale={settings.locale} />
+						<example.component style={styles[settings.style]} locale={settings.locale} />
 					{/if}
 				</div>
 				<h2><a href={link(`gallery/${example.slug}/`)}>{example.title}</a></h2>

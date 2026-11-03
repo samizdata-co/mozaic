@@ -8,7 +8,6 @@
 	import { Label } from 'mozaic/annotations';
 	import { Tooltip } from 'mozaic/interactive';
 	import { createLocale } from 'mozaic/locale';
-	import { resolveStyle } from 'mozaic/styles';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { messages, rows, type Row } from './data';
@@ -17,7 +16,7 @@
 
 	const t = $derived(messages[locale]);
 	const fmt = $derived(createLocale(locale));
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	const highlighted = new Set(['Chișinău', 'Bălți']);
 	const x = scaleLinear()
 		.domain(extent(rows, (d) => d.perResident) as [number, number])

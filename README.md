@@ -1,9 +1,9 @@
 # mozaic
 
-A chart library for the web and print, built on Svelte 5 and d3: small, composable components on top of plain d3 scales, house styles for **SAMIZDATA**, **Ziarul de Gardă** and **Plebiscit.md**, self-sizing static embeds, and SVG/PDF/PNG export.
+A chart library for the web and print, built on Svelte 5 and d3: small, composable components on top of plain d3 scales, any house style, self-sizing static embeds, and SVG/PDF/PNG export.
 
 - **Any chart.** `Chart` → `Plot` → layers → marks. Scales are d3 scales; marks, axes, legends and annotations are ordinary components you can copy and change, or replace with raw SVG.
-- **Styles and languages.** One prop switches the house style (fonts, colours, palettes) and the language (en, ro, ru: number and date formats, UI strings).
+- **Styles and languages.** One prop switches the house style (fonts, colours, palettes: a `Theme` that lives with each outlet's brand) and the language (en, ro, ru: number and date formats, UI strings).
 - **Embeds.** Each chart prerenders to a static page that shows without JavaScript and resizes its iframe through `embed.js`.
 - **Print.** The same chart renders at print widths in millimetres; `mozaic export` writes SVG with editable text, vector PDF and PNG.
 - **One repo per story.** `create-mozaic` scaffolds R/Python data scripts plus charts, a preview page, embed routes and a deploy workflow.
@@ -29,7 +29,7 @@ Start an analysis project from a local checkout:
 
 ```bash
 pnpm --filter mozaic package
-node packages/create-mozaic/bin/create-mozaic.js ../budget-2026 --style zdg --locales ro,ru \
+node packages/create-mozaic/bin/create-mozaic.js ../budget-2026 --locales ro,ru \
   --mozaic ./packages/mozaic --cli ./packages/cli
 ```
 
@@ -42,6 +42,7 @@ node packages/create-mozaic/bin/create-mozaic.js ../budget-2026 --style zdg --lo
 	import { Plot, Svg } from 'mozaic/core';
 	import { Bars } from 'mozaic/marks';
 	import { AxisX, AxisY, GridX } from 'mozaic/guides';
+	import { theme } from '../lib/theme'; // the project's house style
 
 	const data = [
 		{ city: 'Chișinău', value: 30 },
@@ -53,7 +54,7 @@ node packages/create-mozaic/bin/create-mozaic.js ../budget-2026 --style zdg --lo
 		.padding(0.25);
 </script>
 
-<Chart style="zdg" locale="ro" alt="Two cities compared">
+<Chart style={theme} locale="ro" alt="Two cities compared">
 	<Header><Title>Chișinău is far ahead</Title></Header>
 	<Plot {x} {y} height={80} padding={{ left: 70 }}>
 		<Svg>
@@ -79,4 +80,4 @@ pnpm export       # export every docs embed to SVG/PDF/PNG
 
 See [AGENTS.md](AGENTS.md) for conventions, [PLAN.md](PLAN.md) for the design, and [docs/adr](docs/adr) for decisions. The written guides are in [apps/docs/src/content](apps/docs/src/content).
 
-> The SAMIZDATA style follows the SAMIZDATA brand system (v1.0.0); the Ziarul de Gardă style follows the zdg.md site design. See the Styles guide for the sources and documented adaptations. All example data is synthetic.
+> mozaic ships only the neutral `base` style. House styles live with each outlet's brand: SAMIZDATA in `samizdata-co/brand` and Ziarul de Gardă in `ziaruldegarda/brand` (both in `datavis/mozaic/`), Plebiscit.md in its own repository. The docs site shows copies of the first two. [maia](https://github.com/samizdata-co/maia) creates analysis projects with an outlet's style. All example data is synthetic.

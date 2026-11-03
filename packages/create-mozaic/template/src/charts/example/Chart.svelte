@@ -7,7 +7,6 @@
 	import { AxisX, AxisY, GridY, Legend } from 'mozaic/guides';
 	import { PointerArea, Tooltip } from 'mozaic/interactive';
 	import { createLocale } from 'mozaic/locale';
-	import { resolveStyle } from 'mozaic/styles';
 	import type { ChartProps } from '../index';
 	import { messages } from './messages';
 	import { regions, rows, type Row } from './data';
@@ -16,7 +15,7 @@
 
 	const t = $derived(messages[locale]);
 	const fmt = $derived(createLocale(locale));
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	// Colour follows the region, in palette order.
 	const color = $derived(Object.fromEntries(regions.map((r, i) => [r, theme.palettes.categorical[i]])));
 

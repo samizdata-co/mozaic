@@ -2,14 +2,14 @@
 
 # Getting started
 
-mozaic is a chart library for the web and print. You build each chart from small Svelte components on top of plain d3 scales, in one of the house styles (SAMIZDATA, Ziarul de Gardă), and publish it as a static embed or export it for print.
+mozaic is a chart library for the web and print. You build each chart from small Svelte components on top of plain d3 scales, in your outlet's house style, and publish it as a static embed or export it for print.
 
 ## Start a new analysis project
 
 Each piece of analysis lives in its own repository: R or Python scripts for the data, and Svelte files for one or two charts.
 
 ```bash
-pnpm create mozaic budget-2026 --style zdg --locales ro,ru --title "Budget 2026"
+pnpm create mozaic budget-2026 --locales ro,ru --title "Budget 2026"
 cd budget-2026
 pnpm install
 pnpm dev
@@ -21,7 +21,7 @@ Open http://localhost:5173 to see the preview page with the example chart. Until
 pnpm create mozaic budget-2026 --mozaic ../mozaic/packages/mozaic --cli ../mozaic/packages/cli
 ```
 
-Then build `mozaic` once in the library checkout (`pnpm --filter mozaic package`).
+Then build `mozaic` once in the library checkout (`pnpm --filter mozaic package`). The project's house style is in `src/lib/theme.ts`; see [Styles](../styles/) to use an outlet's style. For SAMIZDATA and Ziarul de Gardă projects, maia sets that up for you.
 
 ## What you get
 
@@ -63,7 +63,7 @@ A chart is a `<Chart>` frame around a `<Plot>`, with layers of marks:
 		.padding(0.25);
 </script>
 
-<Chart style="zdg" locale="ro" alt="Bars comparing three cities">
+<Chart locale="ro" alt="Bars comparing three cities">
 	<Header><Title>Chișinău is far ahead</Title></Header>
 	<Plot {x} {y} height={120} padding={{ left: 70 }}>
 		<Svg>

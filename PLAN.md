@@ -537,6 +537,7 @@ Phases 0–4 and most of 5–6 are built. The SAMIZDATA style uses the SAMIZDATA
 
 **Changed from the plan:**
 
+- House styles moved out of the library (2026-11-03, [ADR 0002](docs/adr/0002-house-styles-outside.md)): mozaic ships only `base`; SAMIZDATA and ZdG live in their brand repositories, Plebiscit.md in its own. Earlier sections that describe built-in `samizdata` and `zdg` styles are historical.
 - Style tokens live in each theme's TypeScript and are applied inline on `<Chart>` (no separate CSS files).
 - Maps use `<Plot projection={…} fit={…}>` rather than a separate `GeoPlot`.
 - `Bars` covers both orientations, stacking (`base`) and grouping (`group`); there is no separate `Columns` mark.

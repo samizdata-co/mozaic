@@ -6,7 +6,6 @@
 	import { Line, LineEndLabels } from 'mozaic/marks';
 	import { AxisX, AxisY, GridY } from 'mozaic/guides';
 	import { Scroller } from 'mozaic/interactive';
-	import { resolveStyle } from 'mozaic/styles';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { messages, steps } from './data';
@@ -14,7 +13,7 @@
 	let { style, locale, medium = 'web', width }: ExampleProps = $props();
 
 	const t = $derived(messages[locale]);
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	const series = [
 		{ id: 'capital', values: [100, 104, 108, 113, 118, 106, 115, 124, 131, 138, 146] },
 		{ id: 'north', values: [100, 103, 106, 109, 112, 101, 106, 110, 113, 116, 119] },

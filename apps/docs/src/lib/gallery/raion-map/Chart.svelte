@@ -7,7 +7,7 @@
 	import { Legend } from 'mozaic/guides';
 	import { Tooltip } from 'mozaic/interactive';
 	import { createLocale } from 'mozaic/locale';
-	import { rampSteps, resolveStyle } from 'mozaic/styles';
+	import { rampSteps } from 'mozaic/styles';
 	import type { ExampleProps } from '../types';
 	import { displayName, messages, outline, raions, type Raion } from './data';
 
@@ -15,7 +15,7 @@
 
 	const t = $derived(messages[locale]);
 	const fmt = $derived(createLocale(locale));
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 
 	const color = $derived(
 		scaleThreshold<number, string>()

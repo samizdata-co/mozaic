@@ -6,11 +6,11 @@
 	import { AxisX, AxisY } from '../../lib/guides/index.js';
 	import { Tooltip } from '../../lib/interactive/index.js';
 	import type { LocaleCode } from '../../lib/locale/index.js';
-	import type { Medium, StyleName } from '../../lib/styles/index.js';
+	import { base, type Medium, type Theme } from '../../lib/styles/index.js';
 	import type { ChartEmbed } from '../../lib/embed/index.js';
 
 	let {
-		style = 'base',
+		style = base,
 		locale = 'en',
 		medium = 'web',
 		orientation = 'horizontal',
@@ -18,7 +18,7 @@
 		embed,
 		download
 	}: {
-		style?: StyleName;
+		style?: Theme;
 		locale?: LocaleCode;
 		medium?: Medium;
 		orientation?: 'horizontal' | 'vertical';

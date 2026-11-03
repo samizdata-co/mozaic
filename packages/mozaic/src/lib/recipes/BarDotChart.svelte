@@ -17,7 +17,7 @@ anything.
 	import { Bars, Points } from '../marks/index.js';
 	import { AxisX, AxisY, GridX, Legend } from '../guides/index.js';
 	import { createLocale, type LocaleCode } from '../locale/index.js';
-	import { resolveStyle, type StyleName, type Medium } from '../styles/index.js';
+	import { base, type Medium, type Theme } from '../styles/index.js';
 
 	type Maybe = number | null | undefined;
 
@@ -31,7 +31,7 @@ anything.
 		/** Legend names for the bars and the dots (e.g. the two fieldwork dates). */
 		valueLabel?: string;
 		previousLabel?: string;
-		style?: StyleName;
+		style?: Theme;
 		locale?: LocaleCode;
 		medium?: Medium;
 		width?: number;
@@ -68,7 +68,7 @@ anything.
 		previous,
 		valueLabel,
 		previousLabel,
-		style = 'base',
+		style = base,
 		locale,
 		medium,
 		width,
@@ -89,7 +89,7 @@ anything.
 		annotations
 	}: Props = $props();
 
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	const numbers = $derived(createLocale(locale ?? theme.defaultLocale));
 	const fmt = $derived(format ?? numbers.number);
 	const signed = $derived(

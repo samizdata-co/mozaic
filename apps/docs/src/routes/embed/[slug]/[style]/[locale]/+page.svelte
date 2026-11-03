@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Embed, useEmbedParams } from 'mozaic/embed';
 	import { getExample } from '#lib/gallery/index.ts';
+	import { styles } from '#lib/styles.ts';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -14,5 +15,5 @@
 </svelte:head>
 
 <Embed>
-	<example.component style={data.style} locale={data.locale} medium={params.medium} width={params.width} />
+	<example.component style={styles[data.style]} locale={data.locale} medium={params.medium} width={params.width} />
 </Embed>

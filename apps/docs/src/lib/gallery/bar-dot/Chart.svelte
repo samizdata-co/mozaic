@@ -2,7 +2,6 @@
 <script lang="ts">
 	import { BarDotChart } from 'mozaic/recipes';
 	import { createLocale } from 'mozaic/locale';
-	import { resolveStyle } from 'mozaic/styles';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { messages, rows, type Row } from './data';
@@ -11,7 +10,7 @@
 
 	const t = $derived(messages[locale]);
 	const fmt = $derived(createLocale(locale));
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	// "Don't know" is not an issue: grey, and kept last (the rows are in display order, so no sort).
 	// Other bars keep the recipe's default, the middle sequential step.
 	const bar = $derived(theme.palettes.sequential[Math.floor(theme.palettes.sequential.length / 2)]);

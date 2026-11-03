@@ -1,21 +1,20 @@
 import { json } from '@sveltejs/kit';
 import type { EmbedManifest } from 'mozaic/embed';
-import { resolveStyle } from 'mozaic/styles';
 import { charts } from '../../../charts';
 import { config } from '../../../../mozaic.config';
+import { theme } from '../../../lib/theme';
 
 export const prerender = true;
 export const trailingSlash = 'never';
 
 /** Lists every embed page for `mozaic export`. */
 export function GET() {
-	const theme = resolveStyle(config.style);
 	const manifest: EmbedManifest = {
 		project: config.project,
 		embeds: charts.flatMap((chart) =>
 			config.locales.map((locale) => ({
 				slug: chart.slug,
-				style: config.style,
+				style: theme.name,
 				locale,
 				title: chart.title(locale),
 				path: `embed/${chart.slug}/${locale}/`,

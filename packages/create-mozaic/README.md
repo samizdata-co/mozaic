@@ -3,12 +3,11 @@
 Scaffold a mozaic analysis project: R/Python data scripts plus Svelte charts built as static embeds.
 
 ```bash
-pnpm create mozaic budget-2026 --style zdg --locales ro,ru --title "Budget 2026"
+pnpm create mozaic budget-2026 --locales ro,ru --title "Budget 2026"
 ```
 
 | Option              |                                                                                 |
 | ------------------- | ------------------------------------------------------------------------------- |
-| `--style`           | `samizdata`, `zdg` or `base` (default `base`)                                   |
 | `--locales`         | comma-separated `en`, `ro`, `ru` (default `en`)                                 |
 | `--title`           | project title                                                                   |
 | `--name`            | package name (default: from the folder)                                         |
@@ -17,5 +16,5 @@ pnpm create mozaic budget-2026 --style zdg --locales ro,ru --title "Budget 2026"
 | `--install`         | run `pnpm install`                                                              |
 
 The generated project contains `analysis/` (R and Python), `data/`, `src/charts/` with an example chart,
-a preview page, embed routes, `mozaic.config.ts`, a `justfile`, `AGENTS.md`, a Claude Code skill and a
+a preview page, embed routes, `mozaic.config.ts`, a house style in `src/lib/theme.ts` (mozaic's `base`; swap in an outlet's brand theme), a `justfile`, `AGENTS.md`, a Claude Code skill and a
 GitHub Pages deploy workflow.

@@ -4,7 +4,6 @@
 	import { Plot, Svg } from 'mozaic/core';
 	import { Slope } from 'mozaic/marks';
 	import { createLocale } from 'mozaic/locale';
-	import { resolveStyle } from 'mozaic/styles';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { messages, rows } from './data';
@@ -13,7 +12,7 @@
 
 	const t = $derived(messages[locale]);
 	const fmt = $derived(createLocale(locale));
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	const y = scaleLinear().domain([0.2, 0.6]);
 	// Highlight the exception; everything else in the context grey.
 	const color = $derived((d: (typeof rows)[number]) =>

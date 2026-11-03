@@ -75,7 +75,7 @@ Scroll stories need the page itself to scroll, so they cannot live in an auto-he
 </script>
 
 <Embed>
-	<MyChart style="zdg" locale="ro" medium={params.medium} width={params.width} />
+	<MyChart style={theme} locale="ro" medium={params.medium} width={params.width} />
 </Embed>
 ```
 

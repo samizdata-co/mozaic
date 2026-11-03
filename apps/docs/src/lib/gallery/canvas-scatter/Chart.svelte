@@ -5,7 +5,6 @@
 	import { Canvas, Plot, Svg } from 'mozaic/core';
 	import { Points } from 'mozaic/marks';
 	import { AxisX, AxisY, GridX, GridY, Legend } from 'mozaic/guides';
-	import { resolveStyle } from 'mozaic/styles';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { messages, points } from './data';
@@ -13,7 +12,7 @@
 	let { style, locale, medium = 'web', width }: ExampleProps = $props();
 
 	const t = $derived(messages[locale]);
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	const colors = $derived([theme.palettes.categorical[0], theme.palettes.categorical[1]]);
 	const x = scaleLinear()
 		.domain(extent(points, (d) => d.x) as [number, number])

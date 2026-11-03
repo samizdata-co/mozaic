@@ -1,7 +1,7 @@
 # __PROJECT_TITLE__
 
-Charts for one piece of analysis, built with mozaic in the
-**__STYLE__** style.
+Charts for one piece of analysis, built with mozaic. The house style is in
+`src/lib/theme.ts`.
 
 ## Layout
 
@@ -10,8 +10,9 @@ analysis/        R and Python scripts: data/raw → data/processed
 data/raw/        source files (not committed)
 data/processed/  tidy CSV the charts read (committed)
 src/charts/      one folder per chart (Chart.svelte, data.ts, messages.ts) + index.ts registry
+src/lib/theme.ts the house style
 src/routes/      preview page, embed pages, manifest, embed.js (no need to edit)
-mozaic.config.ts project name, style, languages, public URL
+mozaic.config.ts project name, languages, public URL
 ```
 
 ## Workflow

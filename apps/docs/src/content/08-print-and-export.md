@@ -13,7 +13,7 @@ The same chart file renders for print. Print mode:
 	import { mm } from 'mozaic/core';
 </script>
 
-<MyChart style="zdg" locale="ro" medium="print" width={mm(55)} />
+<MyChart style={theme} locale="ro" medium="print" width={mm(55)} />
 ```
 
 The preview page and the docs gallery have a print switch.

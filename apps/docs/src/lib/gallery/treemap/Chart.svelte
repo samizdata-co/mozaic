@@ -5,7 +5,7 @@
 	import { Legend } from 'mozaic/guides';
 	import { Tooltip } from 'mozaic/interactive';
 	import { createLocale } from 'mozaic/locale';
-	import { contrastRatio, resolveStyle } from 'mozaic/styles';
+	import { contrastRatio } from 'mozaic/styles';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { messages, rows, type Row } from './data';
@@ -14,7 +14,7 @@
 
 	const t = $derived(messages[locale]);
 	const fmt = $derived(createLocale(locale));
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	const groups: Row['group'][] = ['social', 'economy', 'state'];
 	// White labels sit on the fills, so use the first style colours dark enough for them (≥ 4.5:1),
 	// falling back to the dark end of the sequential ramp.

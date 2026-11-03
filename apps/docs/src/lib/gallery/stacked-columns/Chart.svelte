@@ -8,7 +8,6 @@
 	import { ButtonGroup, Tooltip } from 'mozaic/interactive';
 	import { stack, type StackedRow } from 'mozaic/transforms';
 	import { createLocale } from 'mozaic/locale';
-	import { resolveStyle } from 'mozaic/styles';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { messages, rows, sources, type Row } from './data';
@@ -17,7 +16,7 @@
 
 	const t = $derived(messages[locale]);
 	const fmt = $derived(createLocale(locale));
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	const color = $derived(Object.fromEntries(sources.map((s, i) => [s, theme.palettes.categorical[i]])));
 
 	let measure = $state<'total' | 'share'>('total');

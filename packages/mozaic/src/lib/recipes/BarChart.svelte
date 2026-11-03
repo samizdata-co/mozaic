@@ -15,13 +15,13 @@ file into your project and change anything.
 	import { AxisY } from '../guides/index.js';
 	import { Tooltip } from '../interactive/index.js';
 	import { createLocale, type LocaleCode } from '../locale/index.js';
-	import { resolveStyle, type StyleName, type Medium } from '../styles/index.js';
+	import { base, type Medium, type Theme } from '../styles/index.js';
 
 	interface Props {
 		data: T[];
 		label: (d: T) => string;
 		value: (d: T) => number;
-		style?: StyleName;
+		style?: Theme;
 		locale?: LocaleCode;
 		medium?: Medium;
 		width?: number;
@@ -47,7 +47,7 @@ file into your project and change anything.
 		data,
 		label,
 		value,
-		style = 'base',
+		style = base,
 		locale,
 		medium,
 		width,
@@ -64,7 +64,7 @@ file into your project and change anything.
 		annotations
 	}: Props = $props();
 
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	const fmt = $derived(format ?? createLocale(locale ?? theme.defaultLocale).number);
 	const rows = $derived(sort ? data.toSorted((a, b) => value(b) - value(a)) : data);
 	const x = $derived(

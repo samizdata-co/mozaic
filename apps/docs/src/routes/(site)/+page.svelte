@@ -2,6 +2,7 @@
 	import { link } from '#lib/link.ts';
 	import { examples } from '#lib/gallery/index.ts';
 	import { settings } from '#lib/settings.svelte.ts';
+	import { styles } from '#lib/styles.ts';
 
 	const featured = ['regional-lines', 'raion-map', 'stacked-columns'].map((slug) =>
 		examples.find((e) => e.slug === slug)!
@@ -15,8 +16,8 @@
 		<h1>mozaic</h1>
 		<p class="lead">
 			A chart library for the web and print, built on Svelte 5 and d3. Plain d3 scales and small composable components,
-			so you can build any chart; house styles for <strong>SAMIZDATA</strong> and <strong>Ziarul de Gardă</strong>;
-			embeds that resize themselves; and SVG, PDF and PNG export for print.
+			so you can build any chart; house styles you bring from each outlet's brand; embeds that resize themselves; and
+			SVG, PDF and PNG export for print.
 		</p>
 		<p class="links">
 			<a class="primary" href={link('docs/getting-started/')}>Get started</a>
@@ -29,7 +30,7 @@
 		{#each featured as example (example.slug)}
 			<div class="card">
 				<div class="thumb" aria-hidden="true" inert>
-					<example.component style={settings.style} locale={settings.locale} />
+					<example.component style={styles[settings.style]} locale={settings.locale} />
 				</div>
 				<a href={link(`gallery/${example.slug}/`)}>{example.title}</a>
 			</div>

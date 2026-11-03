@@ -2,7 +2,7 @@
 <script lang="ts">
 	import { Embed, useEmbedParams } from 'mozaic/embed';
 	import { charts } from '../../../../charts';
-	import { config } from '../../../../../mozaic.config';
+	import { theme } from '../../../../lib/theme';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -16,5 +16,5 @@
 </svelte:head>
 
 <Embed>
-	<chart.component style={config.style} locale={data.locale} medium={params.medium} width={params.width} />
+	<chart.component style={theme} locale={data.locale} medium={params.medium} width={params.width} />
 </Embed>

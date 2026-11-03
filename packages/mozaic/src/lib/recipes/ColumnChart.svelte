@@ -15,14 +15,14 @@ copies this file into your project.
 	import { AxisX, AxisY, GridY } from '../guides/index.js';
 	import { Tooltip } from '../interactive/index.js';
 	import { createLocale, type LocaleCode } from '../locale/index.js';
-	import { resolveStyle, type StyleName, type Medium } from '../styles/index.js';
+	import { base, type Medium, type Theme } from '../styles/index.js';
 
 	interface Props {
 		data: T[];
 		/** Category on the x axis (e.g. the year). */
 		label: (d: T) => string;
 		value: (d: T) => number;
-		style?: StyleName;
+		style?: Theme;
 		locale?: LocaleCode;
 		medium?: Medium;
 		width?: number;
@@ -45,7 +45,7 @@ copies this file into your project.
 		data,
 		label,
 		value,
-		style = 'base',
+		style = base,
 		locale,
 		medium,
 		width,
@@ -62,7 +62,7 @@ copies this file into your project.
 		annotations
 	}: Props = $props();
 
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	const fmt = $derived(format ?? createLocale(locale ?? theme.defaultLocale).number);
 	const x = $derived(scaleBand<string>().domain(data.map(label)).paddingInner(0.2).paddingOuter(0.1));
 	const y = $derived(

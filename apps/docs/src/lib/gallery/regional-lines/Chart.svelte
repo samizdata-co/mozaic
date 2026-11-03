@@ -8,7 +8,6 @@
 	import { AxisX, AxisY, GridY, Legend } from 'mozaic/guides';
 	import { PointerArea, Tooltip } from 'mozaic/interactive';
 	import { createLocale } from 'mozaic/locale';
-	import { resolveStyle } from 'mozaic/styles';
 	import type { ExampleProps } from '../types';
 	import { messages, series, type Point } from './data';
 
@@ -16,7 +15,7 @@
 
 	const t = $derived(messages[locale]);
 	const fmt = $derived(createLocale(locale));
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 
 	// Colour follows the entity: each region keeps its slot whatever is shown.
 	const color = $derived(Object.fromEntries(series.map((s, i) => [s.id, theme.palettes.categorical[i]])));

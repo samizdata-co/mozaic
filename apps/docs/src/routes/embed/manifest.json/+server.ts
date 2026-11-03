@@ -1,6 +1,6 @@
 import { json } from '@sveltejs/kit';
 import type { EmbedManifest } from 'mozaic/embed';
-import { resolveStyle } from 'mozaic/styles';
+import { styles } from '#lib/styles.ts';
 import { examples } from '#lib/gallery/index.ts';
 import { embedLocales, embedStyles } from '#lib/embeds.ts';
 
@@ -20,9 +20,7 @@ export function GET() {
 						locale,
 						title: example.title,
 						path: `embed/${example.slug}/${style}/${locale}/`,
-						print: Object.fromEntries(
-							(example.print ?? []).map((name) => [name, resolveStyle(style).print.widths[name]])
-						)
+						print: Object.fromEntries((example.print ?? []).map((name) => [name, styles[style].print.widths[name]]))
 					}))
 				)
 			)

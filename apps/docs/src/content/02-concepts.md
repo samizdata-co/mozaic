@@ -7,7 +7,7 @@ mozaic keeps the ideas of the grammar of graphics (data → scales → marks →
 ## The pieces
 
 ```svelte
-<Chart style="samizdata" locale="en" alt="…">
+<Chart style={theme} locale="en" alt="…">
 	← frame: style, language, width, title, footer
 	<Header>…</Header>
 	<Plot x={xScale} y={yScale} height={300}>

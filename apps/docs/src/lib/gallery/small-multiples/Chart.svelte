@@ -5,7 +5,6 @@
 	import { Facets, Plot, Svg } from 'mozaic/core';
 	import { Area, Line } from 'mozaic/marks';
 	import { AxisX, AxisY, GridY } from 'mozaic/guides';
-	import { resolveStyle } from 'mozaic/styles';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { messages, series } from './data';
@@ -13,7 +12,7 @@
 	let { style, locale, medium = 'web', width }: ExampleProps = $props();
 
 	const t = $derived(messages[locale]);
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	// One set of scales for every panel, so the panels are comparable.
 	const all = series.flatMap((s) => s.values);
 	const x = scaleLinear().domain([2015, 2025]);

@@ -1,7 +1,7 @@
 # AGENTS.md
 
 This repository holds the data analysis and charts for one story, built with
-the mozaic chart library (Svelte 5 + d3). Style: `__STYLE__`. Languages: see
+the mozaic chart library (Svelte 5 + d3). House style: `src/lib/theme.ts`. Languages: see
 `mozaic.config.ts`.
 
 ## Where things go
@@ -18,7 +18,7 @@ the mozaic chart library (Svelte 5 + d3). Style: `__STYLE__`. Languages: see
 - Scales are plain d3 scales. Set the domain; `<Plot>` sets the range.
 - Draw in `<Svg>`; tooltips go in `<Html>`. Use `{#snippet children(plot)}` on `<Plot>`
   to get ranged scales for tooltip positions.
-- Colours: `resolveStyle(style).palettes`; assign categorical colours by entity in order.
+- Colours: `style.palettes` (the theme each chart receives); assign categorical colours by entity in order.
   Text uses text colours (`var(--mz-color-text)`), never data colours.
 - Every chart needs `alt` text, a legend for 2+ series, and strings in every language.
 - Use the theme's breakpoints (`plot.breakpoint`) for small-screen layouts.

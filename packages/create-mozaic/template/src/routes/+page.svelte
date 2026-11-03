@@ -3,15 +3,14 @@
 	import { embedCode } from 'mozaic/embed';
 	import { downloadPng, downloadSvg } from 'mozaic/export';
 	import { mm } from 'mozaic/core';
-	import { resolveStyle } from 'mozaic/styles';
 	import type { LocaleCode } from 'mozaic/locale';
 	import { charts } from '../charts';
 	import { config } from '../../mozaic.config';
+	import { theme } from '../lib/theme';
 
 	let locale = $state<LocaleCode>(config.locales[0]);
 	let width = $state(640);
 	let medium = $state<'web' | 'print'>('web');
-	const theme = resolveStyle(config.style);
 	const frames: Record<string, HTMLElement> = $state({});
 
 	const figure = (slug: string) => frames[slug]?.querySelector('.mz-chart') as HTMLElement;
@@ -50,7 +49,7 @@
 		<section>
 			<h2>{chart.title(locale)} <a href="embed/{chart.slug}/{locale}/">embed page</a></h2>
 			<div class="frame" style:width="{width}px" bind:this={frames[chart.slug]}>
-				<chart.component style={config.style} {locale} {medium} width={medium === 'print' ? width : undefined} />
+				<chart.component style={theme} {locale} {medium} width={medium === 'print' ? width : undefined} />
 			</div>
 			<div class="actions">
 				<button onclick={() => downloadSvg(figure(chart.slug), `${chart.slug}-${locale}.svg`)}>Download SVG</button>

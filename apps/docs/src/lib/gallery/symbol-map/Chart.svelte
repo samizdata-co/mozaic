@@ -8,7 +8,6 @@
 	import { SizeLegend } from 'mozaic/guides';
 	import { Tooltip } from 'mozaic/interactive';
 	import { createLocale } from 'mozaic/locale';
-	import { resolveStyle } from 'mozaic/styles';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { displayName } from '../raion-map/data';
@@ -18,7 +17,7 @@
 
 	const t = $derived(messages[locale]);
 	const fmt = $derived(createLocale(locale));
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	const projection = geoConicConformal().parallels([46, 48]).rotate([-28.5, 0]);
 	// Area-true circles: radius grows with the square root of the count.
 	const r = scaleSqrt()

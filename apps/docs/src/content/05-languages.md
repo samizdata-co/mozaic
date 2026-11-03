@@ -2,7 +2,7 @@
 
 # Languages
 
-Locale is separate from style: a ZDG chart can be built in Romanian and in Russian, a SAMIZDATA chart in English.
+Locale is separate from style: a Ziarul de Gardă chart can be built in Romanian and in Russian, a SAMIZDATA chart in English.
 
 Built-in locales: `en` (en-GB), `ro` (ro-MD) and `ru` (ru-MD). In `ro` and `ru` the currency is the Moldovan leu.
 

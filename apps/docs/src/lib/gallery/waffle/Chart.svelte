@@ -3,7 +3,6 @@
 	import { Plot, Svg } from 'mozaic/core';
 	import { Waffle } from 'mozaic/marks';
 	import { Legend } from 'mozaic/guides';
-	import { resolveStyle } from 'mozaic/styles';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { messages, rows } from './data';
@@ -11,7 +10,7 @@
 	let { style, locale, medium = 'web', width }: ExampleProps = $props();
 
 	const t = $derived(messages[locale]);
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	// "Neither" is the story: it gets the highlight; the other two get the first categorical colours that differ from it.
 	const colors = $derived([
 		...theme.palettes.categorical.filter((c) => c !== theme.palettes.semantic.highlight).slice(0, 2),

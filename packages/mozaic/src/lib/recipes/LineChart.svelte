@@ -17,7 +17,7 @@ project.
 	import { AxisX, AxisY, GridY, Legend } from '../guides/index.js';
 	import { PointerArea, Tooltip } from '../interactive/index.js';
 	import { createLocale, type LocaleCode } from '../locale/index.js';
-	import { resolveStyle, type StyleName, type Medium } from '../styles/index.js';
+	import { base, type Medium, type Theme } from '../styles/index.js';
 
 	interface Props {
 		series: S[];
@@ -26,7 +26,7 @@ project.
 		name: (s: S) => string;
 		x: (p: P) => Date;
 		y: (p: P) => number;
-		style?: StyleName;
+		style?: Theme;
 		locale?: LocaleCode;
 		medium?: Medium;
 		width?: number;
@@ -53,7 +53,7 @@ project.
 		name,
 		x: xValue,
 		y: yValue,
-		style = 'base',
+		style = base,
 		locale,
 		medium,
 		width,
@@ -71,7 +71,7 @@ project.
 		annotations
 	}: Props = $props();
 
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	const loc = $derived(createLocale(locale ?? theme.defaultLocale));
 	const fmt = $derived(format ?? loc.number);
 	const colour = (s: S, i: number) =>

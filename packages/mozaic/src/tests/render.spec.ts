@@ -14,14 +14,15 @@ import EdgeAxisFixture from './fixtures/EdgeAxisFixture.svelte';
 import ElectionFixture from './fixtures/ElectionFixture.svelte';
 import EmbeddedFixture from './fixtures/EmbeddedFixture.svelte';
 import DownloadsFixture from './fixtures/DownloadsFixture.svelte';
+import { gazeta, paper } from './fixtures/themes.js';
 
 const finite = (value: string | null) => value !== null && !/NaN|undefined/.test(value);
 
 describe('Chart frame', () => {
 	it('sets style, language and ARIA wiring', () => {
-		const { $ } = renderDocument(BarsFixture, { style: 'zdg', locale: 'ro' });
+		const { $ } = renderDocument(BarsFixture, { style: gazeta, locale: 'ro' });
 		const figure = $('figure.mz-chart')!;
-		expect(figure.getAttribute('data-mz-style')).toBe('zdg');
+		expect(figure.getAttribute('data-mz-style')).toBe('gazeta');
 		expect(figure.getAttribute('lang')).toBe('ro-MD');
 		const titleId = $('h2.mz-title')!.getAttribute('id');
 		expect(titleId).toBeTruthy();
@@ -33,22 +34,20 @@ describe('Chart frame', () => {
 	});
 
 	it('applies the style tokens inline', () => {
-		const { $ } = renderDocument(BarsFixture, { style: 'samizdata' });
+		const { $ } = renderDocument(BarsFixture, { style: paper });
 		expect($('figure')!.getAttribute('style')).toContain('--mz-color-accent: #9f1853');
 	});
 
 	it('loads the style fonts and shows the house logo', () => {
-		const sz = renderDocument(BarsFixture, { style: 'samizdata' });
-		expect(sz.$('.mz-logo')!.getAttribute('aria-label')).toBe('SAMIZDATA');
-		expect(sz.$('.mz-logo svg')).not.toBeNull();
-		expect(sz.$('.mz-logo-text')!.textContent).toBe('SAMIZDATA');
-		const zdg = renderDocument(BarsFixture, { style: 'zdg' });
-		expect(zdg.$('.mz-logo')!.getAttribute('aria-label')).toBe('Ziarul de Gardă');
-		expect(zdg.$('.mz-logo-text')).toBeNull();
-		expect(render(BarsFixture, { props: { style: 'zdg' } }).head).toContain(
-			'fonts.bunny.net/css?family=source-sans-pro'
-		);
-		expect(render(BarsFixture, { props: { style: 'base' } }).head).not.toContain('fonts.bunny.net');
+		const withText = renderDocument(BarsFixture, { style: paper });
+		expect(withText.$('.mz-logo')!.getAttribute('aria-label')).toBe('PAPER');
+		expect(withText.$('.mz-logo svg')).not.toBeNull();
+		expect(withText.$('.mz-logo-text')!.textContent).toBe('PAPER');
+		const svgOnly = renderDocument(BarsFixture, { style: gazeta });
+		expect(svgOnly.$('.mz-logo')!.getAttribute('aria-label')).toBe('Gazeta');
+		expect(svgOnly.$('.mz-logo-text')).toBeNull();
+		expect(render(BarsFixture, { props: { style: paper } }).head).toContain('fonts.bunny.net/css?family=work-sans');
+		expect(render(BarsFixture).head).not.toContain('fonts.bunny.net');
 	});
 
 	it('translates frame labels', () => {

@@ -1,10 +1,11 @@
-import { extendTheme } from './base.js';
-import { zdgLogo } from './logos/zdg.js';
-
 /**
- * Ziarul de Gardă (zdg.md), from the live site (October 2026): Source Serif Pro
- * 600 headlines, Source Sans Pro text, blue #0158B5, navy #002853, coral #FF595A,
- * blue-grey meta text #718BA7 and pale blue panels #CDD7EE.
+ * Ziarul de Gardă house style for mozaic charts — brand v0.1.0.
+ * Source: ../tokens.yml and ../../_brand.yml. Copy this folder into a mozaic
+ * project (do not edit the copy) and pass the theme to `<Chart style={zdg}>`.
+ *
+ * From the zdg.md site design (October 2026): Source Serif Pro 600 headlines,
+ * Source Sans Pro text, blue #0158B5, navy #002853, coral #FF595A, blue-grey
+ * meta text #718BA7 and pale blue panels #CDD7EE.
  *
  * The site has no published chart palette. The categorical palette starts with
  * the brand blue and coral and adds amber, teal, violet and a light blue; slots
@@ -12,6 +13,9 @@ import { zdgLogo } from './logos/zdg.js';
  * ramp runs from a pale blue (≥ 2:1 on white) through the brand blue to the
  * site's navies.
  */
+import { extendTheme } from 'mozaic/styles';
+import { zdgLogo } from './logo.js';
+
 export const zdg = extendTheme({
 	name: 'zdg',
 	label: 'Ziarul de Gardă',

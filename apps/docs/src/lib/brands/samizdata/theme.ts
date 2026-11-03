@@ -1,9 +1,8 @@
-import { extendTheme } from './base.js';
-import { samizdataMark } from './logos/samizdata.js';
-
 /**
- * SAMIZDATA (samizdata.co), from the brand system in samizdata/brand:
- * `_brand.yml`, `css/tokens.css` and `datavis/tokens.yml` (v1.0.0).
+ * SAMIZDATA house style for mozaic charts — brand v1.0.0.
+ * Source: ../tokens.yml, ../../_brand.yml and ../../css/tokens.css. Copy this
+ * folder into a mozaic project (do not edit the copy) and pass the theme to
+ * `<Chart style={samizdata}>`.
  *
  * Documented adaptations for charts:
  * - Title weight 700: Space Grotesk on Bunny Fonts stops at 700 (the brand lists 900).
@@ -12,6 +11,9 @@ import { samizdataMark } from './logos/samizdata.js';
  * - Work Sans 700 is loaded for the data-vis "strong" weight (datavis tokens: 700).
  * - Space Grotesk and Work Sans have no Cyrillic: Russian text falls back to the system sans.
  */
+import { extendTheme } from 'mozaic/styles';
+import { samizdataMark } from './logo.js';
+
 export const samizdata = extendTheme({
 	name: 'samizdata',
 	label: 'SAMIZDATA',

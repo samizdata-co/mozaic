@@ -1,7 +1,6 @@
 <!-- Built with the ArrowChart recipe: a ready-made chart you can also eject and edit. -->
 <script lang="ts">
 	import { ArrowChart } from 'mozaic/recipes';
-	import { resolveStyle } from 'mozaic/styles';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { messages, rows, type Row } from './data';
@@ -9,7 +8,7 @@
 	let { style, locale, medium = 'web', width }: ExampleProps = $props();
 
 	const t = $derived(messages[locale]);
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	// The president stands out; the other rows recede.
 	const color = $derived((d: Row) =>
 		d.institution === 'president' ? theme.palettes.categorical[0] : theme.palettes.semantic.context

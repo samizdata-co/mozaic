@@ -9,7 +9,6 @@
 	import { Tooltip } from 'mozaic/interactive';
 	import { bin, type Bin } from 'mozaic/transforms';
 	import { createLocale } from 'mozaic/locale';
-	import { resolveStyle } from 'mozaic/styles';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { incomes, messages } from './data';
@@ -18,7 +17,7 @@
 
 	const t = $derived(messages[locale]);
 	const fmt = $derived(createLocale(locale));
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	const edges = Array.from({ length: 21 }, (_, i) => i * 2000);
 	const bins = bin(incomes, (d) => d, { thresholds: edges });
 	const mid = median(incomes) ?? 0;

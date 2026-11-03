@@ -1,23 +1,10 @@
-import { base, extendTheme } from './base.js';
-import { samizdata } from './samizdata.js';
-import { zdg } from './zdg.js';
-import { plebiscit } from './plebiscit.js';
 import type { Breakpoint, Theme } from './types.js';
 
 export type { Breakpoint, Medium, Padding, Theme, ThemeOverrides } from './types.js';
-export { base, extendTheme, plebiscit, samizdata, zdg };
+/** House styles live with each brand (e.g. `datavis/mozaic/` in a brand repo) and extend `base`. */
+export { base, extendTheme } from './base.js';
 export { contrastRatio, luminance, rampSteps } from './color.js';
-
-/** Registry of built-in house styles. Add a style by adding a file and an entry here. */
-export const styles = { base, samizdata, zdg, plebiscit: plebiscit } satisfies Record<string, Theme>;
-export type StyleName = keyof typeof styles;
-
-export function resolveStyle(style: StyleName | Theme): Theme {
-	if (typeof style !== 'string') return style;
-	const theme = styles[style];
-	if (!theme) throw new Error(`Unknown mozaic style "${style}". Known styles: ${Object.keys(styles).join(', ')}`);
-	return theme;
-}
+export { checkTheme } from './check.js';
 
 /** Serialise theme tokens into an inline `style` attribute value. */
 export function tokensToStyle(tokens: Theme['tokens']): string {

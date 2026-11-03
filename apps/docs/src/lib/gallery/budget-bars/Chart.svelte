@@ -8,7 +8,6 @@
 	import { Callout } from 'mozaic/annotations';
 	import { Tooltip } from 'mozaic/interactive';
 	import { createLocale } from 'mozaic/locale';
-	import { resolveStyle } from 'mozaic/styles';
 	import type { ExampleProps } from '../types';
 	import { messages, rows } from './data';
 
@@ -18,7 +17,7 @@
 
 	const t = $derived(messages[locale]);
 	const fmt = $derived(createLocale(locale));
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 
 	const data = $derived<Datum[]>(
 		rows.map((d) => ({ ...d, name: t.sectors[d.id] })).toSorted((a, b) => b.change - a.change)

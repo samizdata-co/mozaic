@@ -3,13 +3,12 @@ import { cp, readdir, readFile, rename, stat, writeFile } from 'node:fs/promises
 import { basename, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-export const STYLES = ['samizdata', 'zdg', 'plebiscit', 'base'];
 export const LOCALES = ['en', 'ro', 'ru'];
 const TEMPLATE = fileURLToPath(new URL('../template', import.meta.url));
 const TEXT = /\.(svelte|ts|js|json|md|yml|yaml|toml|R|py|csv|html|txt)$|^(justfile|_gitignore)$/;
 
 /**
- * @typedef {{ dir: string, name?: string, title?: string, style?: string, locales?: string[], mozaic?: string, cli?: string }} ScaffoldOptions
+ * @typedef {{ dir: string, name?: string, title?: string, locales?: string[], mozaic?: string, cli?: string }} ScaffoldOptions
  */
 
 /** @param {string} value */
@@ -51,8 +50,6 @@ export async function scaffold(options) {
 	const dir = resolve(options.dir);
 	const name = slugify(options.name ?? basename(dir));
 	if (!name) throw new Error('Could not derive a project name; pass --name.');
-	const style = options.style ?? 'base';
-	if (!STYLES.includes(style)) throw new Error(`Unknown style "${style}". Styles: ${STYLES.join(', ')}.`);
 	const locales = options.locales ?? ['en'];
 	const unknown = locales.filter((l) => !LOCALES.includes(l));
 	if (unknown.length || !locales.length)
@@ -71,7 +68,6 @@ export async function scaffold(options) {
 	const replacements = {
 		__PROJECT_NAME__: name,
 		__PROJECT_TITLE__: options.title ?? name,
-		__STYLE__: style,
 		__LOCALES__: JSON.stringify(locales).replace(/"/g, "'"),
 		__MOZAIC_SPEC__: spec(options.mozaic ?? '^0.1.0'),
 		__CLI_SPEC__: spec(options.cli ?? '^0.1.0')
@@ -104,7 +100,6 @@ Usage:
   pnpm create mozaic <dir> [options]
 
 Options:
-  --style <name>        ${STYLES.join(' | ')} (default: base)
   --locales <list>      comma-separated: ${LOCALES.join(',')} (default: en)
   --title <text>        project title (default: the folder name)
   --name <slug>         package name (default: from the folder name)
@@ -142,7 +137,6 @@ export async function run(argv) {
 		dir: positionals[0],
 		name: str('name'),
 		title: str('title'),
-		style: str('style'),
 		locales: str('locales')?.split(','),
 		mozaic: str('mozaic'),
 		cli: str('cli')

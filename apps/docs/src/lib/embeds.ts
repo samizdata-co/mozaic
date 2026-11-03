@@ -1,5 +1,5 @@
 import type { LocaleCode } from 'mozaic/locale';
-import type { StyleName } from 'mozaic/styles';
+import type { StyleName } from './styles';
 
 /** Styles and languages the docs site builds embeds for. */
 export const embedStyles: StyleName[] = ['samizdata', 'zdg'];

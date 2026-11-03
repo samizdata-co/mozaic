@@ -16,7 +16,7 @@ copies this file into your project.
 	import { Label } from '../annotations/index.js';
 	import { Tooltip } from '../interactive/index.js';
 	import { createLocale, type LocaleCode } from '../locale/index.js';
-	import { resolveStyle, type StyleName, type Medium } from '../styles/index.js';
+	import { base, type Medium, type Theme } from '../styles/index.js';
 
 	interface Props {
 		data: T[];
@@ -30,7 +30,7 @@ copies this file into your project.
 		group?: (d: T) => string;
 		/** Points to label permanently. */
 		labelled?: (d: T) => boolean;
-		style?: StyleName;
+		style?: Theme;
 		locale?: LocaleCode;
 		medium?: Medium;
 		width?: number;
@@ -57,7 +57,7 @@ copies this file into your project.
 		size,
 		group,
 		labelled,
-		style = 'base',
+		style = base,
 		locale,
 		medium,
 		width,
@@ -75,7 +75,7 @@ copies this file into your project.
 		annotations
 	}: Props = $props();
 
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	const loc = $derived(createLocale(locale ?? theme.defaultLocale));
 	const x = $derived(
 		scaleLinear()

@@ -9,7 +9,6 @@
 	import { RefBand, RefLine } from 'mozaic/annotations';
 	import { PointerArea, Tooltip } from 'mozaic/interactive';
 	import { createLocale } from 'mozaic/locale';
-	import { resolveStyle } from 'mozaic/styles';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { messages, points, type Point } from './data';
@@ -18,7 +17,7 @@
 
 	const t = $derived(messages[locale]);
 	const fmt = $derived(createLocale(locale));
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	const stroke = $derived(theme.palettes.categorical[0]);
 
 	const x = scaleTime().domain(extent(points, (d) => d.date) as [Date, Date]);

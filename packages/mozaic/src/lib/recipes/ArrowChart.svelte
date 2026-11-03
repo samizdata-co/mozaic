@@ -17,7 +17,7 @@ project and change anything.
 	import { Arrows } from '../marks/index.js';
 	import { AxisX, AxisY, GridX } from '../guides/index.js';
 	import { createLocale, type LocaleCode } from '../locale/index.js';
-	import { resolveStyle, type StyleName, type Medium } from '../styles/index.js';
+	import { base, type Medium, type Theme } from '../styles/index.js';
 
 	type Maybe = number | null | undefined;
 
@@ -31,7 +31,7 @@ project and change anything.
 		/** Names of the two dates, shown above the first complete arrow (e.g. "2013" and "2023"). */
 		startLabel?: string;
 		endLabel?: string;
-		style?: StyleName;
+		style?: Theme;
 		locale?: LocaleCode;
 		medium?: Medium;
 		width?: number;
@@ -66,7 +66,7 @@ project and change anything.
 		end,
 		startLabel,
 		endLabel,
-		style = 'base',
+		style = base,
 		locale,
 		medium,
 		width,
@@ -86,7 +86,7 @@ project and change anything.
 		annotations
 	}: Props = $props();
 
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	const fmt = $derived(format ?? createLocale(locale ?? theme.defaultLocale).number);
 	const fontSize = $derived(theme.plot.fontSize);
 	const has = (v: Maybe): v is number => v !== null && v !== undefined && Number.isFinite(v);

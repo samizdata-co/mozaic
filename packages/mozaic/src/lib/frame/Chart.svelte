@@ -11,14 +11,14 @@ a map or a table.
 	import type { Snippet } from 'svelte';
 	import { setChartContext, useDownloads } from '../core/context.js';
 	import { createLocale, type LocaleCode } from '../locale/index.js';
-	import { breakpointFor, resolveStyle, tokensToStyle, type StyleName } from '../styles/index.js';
+	import { base, breakpointFor, tokensToStyle } from '../styles/index.js';
 	import type { Medium, Theme } from '../styles/types.js';
 	import type { ChartEmbed } from '../embed/code.js';
 	import ChartTools from './ChartTools.svelte';
 
 	interface Props {
-		/** House style name or a Theme object. */
-		style?: StyleName | Theme;
+		/** House style: a Theme, from a brand or `extendTheme()`. Defaults to the neutral `base`. */
+		style?: Theme;
 		/** Defaults to the style's default locale. */
 		locale?: LocaleCode;
 		medium?: Medium;
@@ -40,7 +40,7 @@ a map or a table.
 	}
 
 	let {
-		style = 'base',
+		style = base,
 		locale,
 		medium = 'web',
 		alt,
@@ -55,7 +55,7 @@ a map or a table.
 	const uid = $props.id();
 	const downloads = useDownloads();
 	const tools = $state<{ table: Snippet | null }>({ table: null });
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	const loc = $derived(createLocale(locale ?? theme.defaultLocale));
 
 	let measuredWidth = $state(0);

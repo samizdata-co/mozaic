@@ -1,6 +1,6 @@
 # AGENTS.md: working on mozaic
 
-mozaic is a Svelte 5 + d3 chart library with house styles (SAMIZDATA, ZDG), embeds and print export.
+mozaic is a Svelte 5 + d3 chart library with swappable house styles, embeds and print export.
 Read `PLAN.md` for the design, `docs/adr/` for decisions and `apps/docs/src/content/` for the guides.
 
 ## Layout
@@ -13,11 +13,11 @@ Read `PLAN.md` for the design, `docs/adr/` for decisions and `apps/docs/src/cont
   - `annotations/`: `Callout`, `Arrow`, `Label`, `RefLine`, `RefBand`.
   - `interactive/`: `PointerArea`, `Tooltip`, `ButtonGroup`, `Scroller`.
   - `table/`: `Table`, `Sparkline`, `toCSV`. `transforms/`: `stack`, `bin`, `groupBy`, `rollup`, `indexTo`, `dodge`, `treemapLayout`, `avoidOverlap`, `hemicycleLayout`, `kernelSmooth`, `loess`.
-  - `styles/`: themes (`samizdata` from the SAMIZDATA brand system, `zdg` from zdg.md, `plebiscit` for the Plebiscit.md poll tracker), `rampSteps`, `contrastRatio`, logos in `styles/logos/`. `locale/`: en, ro, ru. `embed/`: `Embed`, resize protocol, `hostScript`, `embedCode`. `export/`: `figureToSvg`, downloads. `recipes/`: complete chart templates, `BarChart`, `ColumnChart`, `LineChart`, `ScatterChart`, `ArrowChart` (arrow plot: change between two dates per row), `BarDotChart` (bars for the latest value, dots for an earlier one, value and change at the right), `StackedBarChart` (100% stacked bars, brackets over groups of series, reference line), `MosaicChart` (Marimekko: 100% stacked rows as tall as their totals).
+  - `styles/`: the `Theme` type, the neutral `base`, `extendTheme`, `checkTheme`, `rampSteps`, `contrastRatio`. House styles are not here: they live with each brand (`samizdata-co/brand`, `ziaruldegarda/brand`, in `datavis/mozaic/`) or project (plebiscit), and charts take one as `style={theme}`. `locale/`: en, ro, ru. `embed/`: `Embed`, resize protocol, `hostScript`, `embedCode`. `export/`: `figureToSvg`, downloads. `recipes/`: complete chart templates, `BarChart`, `ColumnChart`, `LineChart`, `ScatterChart`, `ArrowChart` (arrow plot: change between two dates per row), `BarDotChart` (bars for the latest value, dots for an earlier one, value and change at the right), `StackedBarChart` (100% stacked bars, brackets over groups of series, reference line), `MosaicChart` (Marimekko: 100% stacked rows as tall as their totals).
   - `src/tests/`: server-render tests with fixtures.
 - `packages/cli/`: `mozaic export` and `mozaic eject` (plain Node ESM + JSDoc).
 - `packages/create-mozaic/`: scaffolder; `template/` is the analysis project (placeholders like `__STYLE__`).
-- `apps/docs/`: docs site. Gallery examples in `src/lib/gallery/<slug>/` (`Chart.svelte` + `data.ts`); guides in `src/content/*.md`; the API reference is generated from component sources.
+- `apps/docs/`: docs site. Copies of the SAMIZDATA and ZdG themes in `src/lib/brands/` (update them from the brand repos; don't edit them) and the Style menu's registry in `src/lib/styles.ts`. Gallery examples in `src/lib/gallery/<slug>/` (`Chart.svelte` + `data.ts`); guides in `src/content/*.md`; the API reference is generated from component sources.
 
 ## How a chart is built
 

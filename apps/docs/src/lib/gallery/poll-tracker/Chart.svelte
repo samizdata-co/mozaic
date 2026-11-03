@@ -8,7 +8,6 @@
 	import { RefLine } from 'mozaic/annotations';
 	import { PointerArea, Tooltip } from 'mozaic/interactive';
 	import { createLocale } from 'mozaic/locale';
-	import { resolveStyle } from 'mozaic/styles';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { messages, partyIds, polls, series, type PartyId } from './data';
@@ -17,7 +16,7 @@
 
 	const t = $derived(messages[locale]);
 	const fmt = $derived(createLocale(locale));
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	// Colour follows the party, in palette order.
 	const color = $derived(Object.fromEntries(partyIds.map((id, i) => [id, theme.palettes.categorical[i]])));
 

@@ -5,7 +5,6 @@
 	import { Legend } from 'mozaic/guides';
 	import { Tooltip } from 'mozaic/interactive';
 	import { createLocale } from 'mozaic/locale';
-	import { resolveStyle } from 'mozaic/styles';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { messages, parties, total, type Party } from './data';
@@ -14,7 +13,7 @@
 
 	const t = $derived(messages[locale]);
 	const fmt = $derived(createLocale(locale));
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	// Colour follows the party, in palette order.
 	const color = $derived(Object.fromEntries(parties.map((p, i) => [p.id, theme.palettes.categorical[i]])));
 

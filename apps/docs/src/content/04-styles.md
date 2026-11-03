@@ -2,46 +2,32 @@
 
 # Styles
 
-A house style is a `Theme` object: CSS tokens for type and colours, palettes for data, defaults for plots, breakpoints, print settings, web fonts, a logo and a default language. Charts pick one with `<Chart style="zdg">`.
+A house style is a `Theme` object: CSS tokens for type and colours, palettes for data, defaults for plots, breakpoints, print settings, web fonts, a logo and a default language. Charts take one with `<Chart style={theme}>`.
 
-Built-in styles: `samizdata`, `zdg`, `plebiscit` and the neutral `base`.
+mozaic ships only the neutral `base` style. Each outlet keeps its house style with its own brand, so a project can use any style without changing the library:
 
-## SAMIZDATA
+| Style           | Where it lives                               |
+| --------------- | -------------------------------------------- |
+| SAMIZDATA       | `samizdata-co/brand`, in `datavis/mozaic/`   |
+| Ziarul de Gardă | `ziaruldegarda/brand`, in `datavis/mozaic/`  |
+| Plebiscit.md    | the Plebiscit.md site, in `src/lib/theme.ts` |
 
-From the SAMIZDATA brand system (`samizdata/brand`, v1.0.0): `_brand.yml`, `css/tokens.css` and `datavis/tokens.yml`.
+The docs site shows the SAMIZDATA and Ziarul de Gardă styles from copies in `apps/docs/src/lib/brands/`: pick one in the Style menu. Each brand's README describes its style and the adaptations it makes for charts.
 
-- **Type:** Space Grotesk for titles and labels, Work Sans for text, axes and tooltips (loaded from Bunny Fonts).
-- **Colour:** warm paper background `#fbf9f4`, ink `#1b1c19`, muted `#574146`, dried-raspberry accent `#9f1853`.
-- **Data palettes:** the brand's categorical (8), sequential (7, raspberry) and diverging (teal ↔ raspberry) scales, unchanged.
-- **Shape:** sharp corners everywhere, dotted gridlines (`2 2`), uppercase tracked "data label" voice for Source/Note labels, table headers, facet titles and buttons.
-- **Logo:** the three-bar mark with the uppercase `SAMIZDATA` wordmark.
+## Using a house style
 
-Documented chart adaptations (see `styles/samizdata.ts`):
+Copy the brand's `datavis/mozaic/` folder into the project, for example to `src/lib/brand/`, and pass its theme to every chart:
 
-- Titles use weight 700: Space Grotesk on Bunny Fonts stops at 700, although the brand lists 900.
-- Titles use line height 1 and −0.02em tracking (the brand's display settings are 0.95 and −0.04em) because chart titles wrap and carry Romanian diacritics.
-- Work Sans 700 is loaded for the data-vis "strong" weight.
+```svelte
+<script lang="ts">
+	import { Chart } from 'mozaic/frame';
+	import { samizdata } from '../lib/brand/theme';
+</script>
 
-> **Known brand issues.** The brand's first two categorical colours, raspberry `#9f1853` and teal `#28666e`, are hard to tell apart with deuteranopia (ΔE 5.3; the floor is 6), and they are also the diverging poles. Slots 5–6 and 7–8 are close for colour-blind readers too, and the lightest sequential step is almost invisible on the paper background (1.09:1). mozaic uses the palette as defined. Always pair colour with labels, and fix the palette in the brand system if needed. Space Grotesk and Work Sans have no Cyrillic, so Russian charts set Cyrillic letters in the system sans.
+<Chart style={samizdata} locale="en" alt="…">…</Chart>
+```
 
-## Ziarul de Gardă
-
-From the zdg.md site design (October 2026).
-
-- **Type:** Source Serif Pro 600 for titles (the site's headlines), Source Sans Pro for everything else, with Cyrillic support.
-- **Colour:** white background, near-black text `#171717`, grey `#585858` for secondary text, brand blue `#0158b5`, pale blue `#cdd7ee` gridlines, blue-grey `#718ba7` axes.
-- **Data palettes:** the site has no published chart palette. The categorical palette starts with the brand blue and coral (`#0158b5`, `#ff595a`) and adds amber, teal, violet and light blue; slots 1–4 pass the colour-blindness checks for all pairs. The sequential ramp runs from a pale blue (at least 2:1 on white) through the brand blue to the site's navies (`#10357f`, `#002853`). The diverging scale is blue ↔ coral with a neutral grey midpoint.
-- **Shape:** pill-shaped buttons with uppercase labels, as on the site.
-- **Logo:** the "spune adevărul / zdg / ZIARUL de GARDĂ" wordmark from the site, optimised to 5.5 KB.
-
-## Plebiscit.md
-
-For the Plebiscit.md poll tracker, where party colours carry the meaning in nearly every chart.
-
-- **Type:** IBM Plex Serif 600 for titles, IBM Plex Sans for everything else (Romanian diacritics and Cyrillic), from Bunny Fonts.
-- **Colour:** white background, ink `#161a22`, slate `#4b5262` for secondary text and a dark slate accent `#2b3a55`. The chrome stays neutral on purpose: yellow, red, blue, teal and plum all belong to parties.
-- **Data palettes:** party colours are not in the style; projects key them by party. The categorical palette is for everything else: slots 1–4 (blue, orange, teal, plum) pass the colour-blindness checks for all pairs on white, slots 5–6 (light blue, amber) are below 3:1 and need labels. The diverging scale is orange ↔ blue with a warm grey midpoint, not red ↔ green, because a yes or no on a political question is not good or bad. The sequential ramp is blue.
-- **Logo:** a small parliament of 24 seats with the majority side in ink, and the `Plebiscit.md` wordmark.
+Don't edit the copy: update it from a brand release and review the change. Projects created with maia for an outlet get the copy automatically and update it with `copier update`. A chart without a `style` uses `base`.
 
 ## Fonts
 
@@ -78,12 +64,13 @@ Text never uses a data colour. A coloured swatch, dot or line next to the text c
 
 `theme.plot` holds `padding`, `ticks`, `tickSize`, `tickPadding`, `axisLine`, `lineWidth`, `barRadius`, `barMaxThickness`, `fontSize` (used for text-width estimates), `initialWidth` (server rendering) and `height`.
 
-## Adding a style
+## Writing a style
+
+A style extends `base` (or another style) with `extendTheme()`. Put it in the outlet's brand repository, next to its other design tokens, or in the project (`src/lib/theme.ts`) when only one project uses it:
 
 ```ts
-// packages/mozaic/src/lib/styles/acme.ts
-import { extendTheme } from './base.js';
-import { acmeLogo } from './logos/acme.js';
+import { extendTheme } from 'mozaic/styles';
+import { acmeLogo } from './logo.js';
 
 export const acme = extendTheme({
 	name: 'acme',
@@ -96,9 +83,7 @@ export const acme = extendTheme({
 });
 ```
 
-Register it in `styles/index.ts` (`styles = { base, samizdata, zdg, acme }`). Unit tests check that every token is defined and that text colours are readable on the background.
-
-You can also pass a theme object directly: `<Chart style={acme}>`.
+`name` is set as `data-mz-style` on the chart and names the export folders. `checkTheme(acme)` lists its problems as sentences (missing tokens, short or invalid palettes, unreadable text colours); add `expect(checkTheme(acme)).toEqual([])` to the tests where the style lives.
 
 ### Logos
 

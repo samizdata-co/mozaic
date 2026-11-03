@@ -13,9 +13,10 @@ pnpm add mozaic d3-scale d3-array d3-shape
 	import { Plot, Svg } from 'mozaic/core';
 	import { Bars } from 'mozaic/marks';
 	import { AxisX, AxisY } from 'mozaic/guides';
+	import { theme } from '../lib/theme'; // your house style: a Theme from extendTheme()
 </script>
 
-<Chart style="samizdata" locale="en" alt="…">
+<Chart style={theme} locale="en" alt="…">
 	<Header><Title>…</Title></Header>
 	<Plot x={scaleLinear().domain([0, 100])} y={scaleBand().domain(['a', 'b'])} height={80}>
 		<Svg><AxisX /><AxisY /><Bars data={rows} x={(d) => d.value} y={(d) => d.name} /></Svg>
@@ -35,7 +36,7 @@ pnpm add mozaic d3-scale d3-array d3-shape
 | `mozaic/interactive` | `PointerArea`, `Tooltip`, `ButtonGroup`, `Scroller`                                                                                                                                                 |
 | `mozaic/table`       | `Table`, `Sparkline`, `toCSV`                                                                                                                                                                       |
 | `mozaic/transforms`  | `stack`, `bin`, `groupBy`, `rollup`, `indexTo`, `dodge`, `treemapLayout`, `avoidOverlap`, `hemicycleLayout`, `kernelSmooth`, `loess`                                                                |
-| `mozaic/styles`      | `samizdata`, `zdg`, `plebiscit`, `base`, `extendTheme`, `resolveStyle`                                                                                                                              |
+| `mozaic/styles`      | `base`, `extendTheme`, `checkTheme`, `rampSteps`, `contrastRatio` (house styles live with each brand)                                                                                               |
 | `mozaic/locale`      | `createLocale` (`en`, `ro`, `ru`)                                                                                                                                                                   |
 | `mozaic/embed`       | `Embed`, `useEmbedParams`, `embedCode`, `hostScript`, `observeHeight`                                                                                                                               |
 | `mozaic/export`      | `figureToSvg`, `downloadSvg`, `downloadPng`, `figureToPng`                                                                                                                                          |

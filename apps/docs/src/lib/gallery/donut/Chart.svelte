@@ -3,7 +3,6 @@
 	import { Plot, Svg } from 'mozaic/core';
 	import { Arcs } from 'mozaic/marks';
 	import { createLocale } from 'mozaic/locale';
-	import { resolveStyle } from 'mozaic/styles';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { messages, rows, type Row } from './data';
@@ -12,7 +11,7 @@
 
 	const t = $derived(messages[locale]);
 	const fmt = $derived(createLocale(locale));
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	const color = $derived<Record<Row['id'], string>>({
 		yes: theme.palettes.semantic.positive,
 		no: theme.palettes.semantic.negative,

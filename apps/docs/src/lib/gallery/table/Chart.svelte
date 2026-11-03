@@ -4,7 +4,6 @@
 	import { Chart, Header, Title, Subtitle, Footer, Notes, Source, DataDownload } from 'mozaic/frame';
 	import { Table, type Column } from 'mozaic/table';
 	import { createLocale } from 'mozaic/locale';
-	import { resolveStyle } from 'mozaic/styles';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { messages, rows, type Row } from './data';
@@ -13,7 +12,7 @@
 
 	const t = $derived(messages[locale]);
 	const fmt = $derived(createLocale(locale));
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	const heat = $derived(
 		scaleDiverging(interpolateRgbBasis(theme.palettes.diverging)).domain([-0.1, 0, 0.1]).clamp(true)
 	);

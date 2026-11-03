@@ -1,12 +1,12 @@
 import type { Component } from 'svelte';
 import type { LocaleCode } from 'mozaic/locale';
-import type { Medium, StyleName } from 'mozaic/styles';
+import type { Medium, Theme } from 'mozaic/styles';
 import Example from './example/Chart.svelte';
 import { messages as exampleMessages } from './example/messages';
 
 /** Props every chart component accepts. */
 export interface ChartProps {
-	style: StyleName;
+	style: Theme;
 	locale: LocaleCode;
 	medium?: Medium;
 	width?: number;

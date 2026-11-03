@@ -19,7 +19,7 @@ your project and change anything.
 	import { RefLine } from '../annotations/index.js';
 	import { stack } from '../transforms/index.js';
 	import { createLocale, type LocaleCode } from '../locale/index.js';
-	import { contrastRatio, resolveStyle, type StyleName, type Medium } from '../styles/index.js';
+	import { base, contrastRatio, type Medium, type Theme } from '../styles/index.js';
 
 	interface Group {
 		label: string;
@@ -49,7 +49,7 @@ your project and change anything.
 		referenceLabel?: string;
 		/** Smallest share that gets a label inside its segment (it must also fit). */
 		labelMin?: number;
-		style?: StyleName;
+		style?: Theme;
 		locale?: LocaleCode;
 		medium?: Medium;
 		width?: number;
@@ -80,7 +80,7 @@ your project and change anything.
 		reference,
 		referenceLabel,
 		labelMin = 0.08,
-		style = 'base',
+		style = base,
 		locale,
 		medium,
 		width,
@@ -95,7 +95,7 @@ your project and change anything.
 		annotations
 	}: Props = $props();
 
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	const loc = $derived(createLocale(locale ?? theme.defaultLocale));
 	const fmt = $derived(format ?? ((s: number) => loc.format('.1%')(s)));
 	const fontSize = $derived(theme.plot.fontSize);

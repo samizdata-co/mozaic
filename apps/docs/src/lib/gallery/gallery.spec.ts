@@ -3,22 +3,27 @@ import { render } from 'svelte/server';
 import { examples } from './index';
 import { components } from '../api';
 import * as mozaic from 'mozaic';
+import { checkTheme } from 'mozaic/styles';
+import { styles } from '../styles';
 
-const styles = ['base', 'samizdata', 'zdg', 'plebiscit'] as const;
 const locales = ['en', 'ro', 'ru'] as const;
 
 describe('gallery examples', () => {
 	for (const example of examples) {
 		it(`${example.slug} renders in every style, language and medium`, () => {
-			for (const style of styles)
+			for (const [name, style] of Object.entries(styles))
 				for (const locale of locales)
 					for (const medium of ['web', 'print'] as const) {
 						const { body } = render(example.component, { props: { style, locale, medium } });
-						expect(body, `${style}/${locale}/${medium}`).toContain('mz-chart');
-						expect(body, `${style}/${locale}/${medium}`).not.toMatch(/NaN|undefined|\[object Object\]/);
+						expect(body, `${name}/${locale}/${medium}`).toContain('mz-chart');
+						expect(body, `${name}/${locale}/${medium}`).not.toMatch(/NaN|undefined|\[object Object\]/);
 					}
 		});
 	}
+
+	it('shows house styles that pass the theme checks', () => {
+		for (const style of Object.values(styles)) expect(checkTheme(style), style.name).toEqual([]);
+	});
 
 	it('every example has a description, tags and its source', () => {
 		for (const e of examples) {

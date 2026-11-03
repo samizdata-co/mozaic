@@ -3,7 +3,7 @@
 	import { mm } from 'mozaic/core';
 	import { embedCode } from 'mozaic/embed';
 	import { downloadPng, downloadSvg } from 'mozaic/export';
-	import { resolveStyle } from 'mozaic/styles';
+	import { styles } from '../styles';
 	import type { Example } from '../gallery/types';
 	import { settings } from '../settings.svelte';
 
@@ -13,7 +13,7 @@
 	let medium = $state<'web' | 'print'>('web');
 	let printWidth = $state('double');
 	let frame = $state<HTMLElement>();
-	const theme = $derived(resolveStyle(settings.style));
+	const theme = $derived(styles[settings.style]);
 	const figure = () => frame?.querySelector('.mz-chart') as HTMLElement;
 	const fixedWidth = $derived(medium === 'print' ? Math.round(mm(theme.print.widths[printWidth] ?? 115)) : undefined);
 	const embedPath = $derived(`embed/${example.slug}/${settings.style}/${settings.locale}/`);
@@ -61,7 +61,7 @@
 	style:width={example.kind === 'story' ? undefined : `${fixedWidth ? fixedWidth + 34 : width}px`}
 	bind:this={frame}
 >
-	<example.component style={settings.style} locale={settings.locale} {medium} width={fixedWidth} />
+	<example.component style={theme} locale={settings.locale} {medium} width={fixedWidth} />
 </div>
 
 {#if controls && example.kind !== 'story'}

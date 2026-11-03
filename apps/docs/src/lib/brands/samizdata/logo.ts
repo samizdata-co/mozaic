@@ -1,5 +1,5 @@
 /**
- * SAMIZDATA mark: three horizontal data bars (brand/assets/logos/mark.svg).
+ * SAMIZDATA mark: three horizontal data bars (assets/logos/mark.svg).
  * The title element is dropped (the logo component supplies the accessible name).
  */
 export const samizdataMark =

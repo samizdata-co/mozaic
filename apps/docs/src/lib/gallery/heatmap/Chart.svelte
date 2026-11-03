@@ -7,7 +7,6 @@
 	import { AxisX, AxisY, ColorRamp } from 'mozaic/guides';
 	import { Tooltip } from 'mozaic/interactive';
 	import { createLocale } from 'mozaic/locale';
-	import { resolveStyle } from 'mozaic/styles';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { cells, messages, years, type Cell } from './data';
@@ -16,7 +15,7 @@
 
 	const t = $derived(messages[locale]);
 	const fmt = $derived(createLocale(locale));
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	// Diverging: the style's two poles with a neutral grey at zero.
 	const color = $derived(scaleDiverging(interpolateRgbBasis(theme.palettes.diverging)).domain([-2, 0, 2]).clamp(true));
 	const monthName = $derived((m: number) => fmt.timeFormat('%b')(new Date(2020, m, 1)));

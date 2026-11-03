@@ -30,14 +30,16 @@ describe('slugify', () => {
 describe('scaffold', () => {
 	it('copies the template and fills every placeholder', async () => {
 		const dir = join(await temp(), 'budget-2026');
-		await scaffold({ dir, title: 'Budget 2026', style: 'zdg', locales: ['ro', 'ru'], mozaic: '^0.2.0' });
+		await scaffold({ dir, title: 'Budget 2026', locales: ['ro', 'ru'], mozaic: '^0.2.0' });
 		const all = await files(dir);
 		expect(all.some((f) => f.endsWith('.gitignore'))).toBe(true);
 		expect(all.some((f) => f.endsWith('_gitignore'))).toBe(false);
 		for (const file of all) expect(await readFile(file, 'utf8'), file).not.toMatch(/__[A-Z_]+__/);
 		const config = await readFile(join(dir, 'mozaic.config.ts'), 'utf8');
 		expect(config).toContain("project: 'budget-2026'");
-		expect(config).toContain("style: 'zdg'");
+		expect(await readFile(join(dir, 'src/lib/theme.ts'), 'utf8')).toContain(
+			"name: 'budget-2026', label: 'Budget 2026'"
+		);
 		expect(config).toContain("locales: ['ro','ru']");
 		const pkg = JSON.parse(await readFile(join(dir, 'package.json'), 'utf8'));
 		expect(pkg.name).toBe('budget-2026');
@@ -54,7 +56,6 @@ describe('scaffold', () => {
 
 	it('rejects bad options and non-empty folders', async () => {
 		const base = await temp();
-		await expect(scaffold({ dir: join(base, 'a'), style: 'nyt' })).rejects.toThrow(/Unknown style/);
 		await expect(scaffold({ dir: join(base, 'b'), locales: ['fr'] })).rejects.toThrow(/Unknown locale/);
 		await writeFile(join(base, 'file.txt'), 'x');
 		await expect(scaffold({ dir: base })).rejects.toThrow(/not empty/);

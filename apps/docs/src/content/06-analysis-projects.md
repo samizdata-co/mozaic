@@ -5,10 +5,10 @@
 Each story gets its own repository, created with `create-mozaic`:
 
 ```bash
-pnpm create mozaic <dir> --style zdg --locales ro,ru --title "…"
+pnpm create mozaic <dir> --locales ro,ru --title "…"
 ```
 
-Options: `--style` (`samizdata`, `zdg`, `base`), `--locales` (comma-separated), `--title`, `--name`, `--mozaic` and `--cli` (a version, or a local path), `--no-git` and `--install`.
+Options: `--locales` (comma-separated), `--title`, `--name`, `--mozaic` and `--cli` (a version, or a local path), `--no-git` and `--install`.
 
 ## Layout
 
@@ -19,8 +19,9 @@ data/raw/                 source files, not committed
 data/processed/           tidy CSV, committed; the contract between analysis and charts
 src/charts/<slug>/        Chart.svelte, data.ts, messages.ts
 src/charts/index.ts       chart registry: slug, title, component, print widths
+src/lib/theme.ts          the house style (mozaic's base; swap in a brand's theme)
 src/routes/               preview page, embed pages, manifest.json, embed.js (generic)
-mozaic.config.ts          project, style, locales, baseUrl
+mozaic.config.ts          project, locales, baseUrl
 justfile                  data, dev, check, build, export, all
 AGENTS.md, .claude/       instructions for AI agents
 .github/workflows/        deploy to GitHub Pages

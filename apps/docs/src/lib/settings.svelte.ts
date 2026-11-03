@@ -1,5 +1,5 @@
 import type { LocaleCode } from 'mozaic/locale';
-import type { StyleName } from 'mozaic/styles';
+import { styles, type StyleName } from './styles';
 
 const KEY = 'mozaic-docs-settings';
 
@@ -9,7 +9,7 @@ export const settings = $state<{ style: StyleName; locale: LocaleCode }>({ style
 export function loadSettings(): void {
 	try {
 		const saved = JSON.parse(localStorage.getItem(KEY) ?? '{}');
-		if (saved.style) settings.style = saved.style;
+		if (saved.style in styles) settings.style = saved.style;
 		if (saved.locale) settings.locale = saved.locale;
 	} catch {
 		// Storage unavailable (private mode, blocked): keep defaults.

@@ -6,7 +6,6 @@
 	import { AxisX, AxisY, GridX, Key } from 'mozaic/guides';
 	import { Tooltip } from 'mozaic/interactive';
 	import { createLocale } from 'mozaic/locale';
-	import { resolveStyle } from 'mozaic/styles';
 	import type { ExampleProps } from '../types';
 	import { illustrative } from '../common';
 	import { groups, messages, rows, type Row } from './data';
@@ -15,7 +14,7 @@
 
 	const t = $derived(messages[locale]);
 	const fmt = $derived(createLocale(locale));
-	const theme = $derived(resolveStyle(style));
+	const theme = $derived(style);
 	const color = $derived({ women: theme.palettes.categorical[0], men: theme.palettes.categorical[1] });
 
 	const ages = [...new Set(rows.map((d) => d.age))];

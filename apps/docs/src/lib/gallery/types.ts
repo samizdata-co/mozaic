@@ -1,10 +1,10 @@
 import type { Component } from 'svelte';
 import type { LocaleCode } from 'mozaic/locale';
-import type { Medium, StyleName } from 'mozaic/styles';
+import type { Medium, Theme } from 'mozaic/styles';
 
 /** Props every gallery chart accepts. */
 export interface ExampleProps {
-	style: StyleName;
+	style: Theme;
 	locale: LocaleCode;
 	medium?: Medium;
 	width?: number;
