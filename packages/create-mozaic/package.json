@@ -1,6 +1,6 @@
 {
 	"name": "@samizdata/create-mozaic",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"description": "Scaffold a mozaic analysis project: R/Python data scripts plus Svelte charts built as static embeds.",
 	"license": "GPL-3.0-or-later",
 	"author": "Nicu Calcea",
