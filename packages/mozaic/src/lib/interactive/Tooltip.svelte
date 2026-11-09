@@ -78,6 +78,9 @@ values aligned in a column. `children` follow the rows.
 	.mz-tooltip {
 		position: absolute;
 		z-index: 1;
+		/* Size to the content, not to the room left of `left`: otherwise moving the card changes
+		   its width, which moves it again (a ResizeObserver loop near the right edge). */
+		width: max-content;
 		min-width: 6rem;
 		max-width: 16rem;
 		padding: 0.5rem 0.625rem;
