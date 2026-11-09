@@ -1,5 +1,11 @@
 # @samizdata/mozaic
 
+## 0.4.1
+
+### Patch Changes
+
+- 35d8235: `PercentileChart`: the "you" line is drawn under the rows and group names get a background halo, so the line no longer cuts through the names.
+
 ## 0.4.0
 
 ### Minor Changes
