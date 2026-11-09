@@ -1,5 +1,11 @@
 # @samizdata/mozaic
 
+## 0.4.2
+
+### Patch Changes
+
+- 1503740: `Title`: headlines wrap normally instead of with `text-wrap: balance`.
+
 ## 0.4.1
 
 ### Patch Changes
