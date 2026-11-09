@@ -1,6 +1,6 @@
 {
 	"name": "@samizdata/mozaic-cli",
-	"version": "0.5.0",
+	"version": "0.5.1",
 	"description": "mozaic command line: export embeds to SVG, PDF and PNG; eject recipes.",
 	"license": "GPL-3.0-or-later",
 	"author": "Nicu Calcea",

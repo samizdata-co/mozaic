@@ -1,5 +1,11 @@
 # @samizdata/mozaic
 
+## 0.5.1
+
+### Patch Changes
+
+- dc6872c: `Tooltip`: the card keeps its width as it moves. It used to shrink to the room left of its position, which moved it again and set off "ResizeObserver loop" errors when hovering near the right side of narrow charts.
+
 ## 0.5.0
 
 ### Minor Changes
