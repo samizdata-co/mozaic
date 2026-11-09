@@ -2,3 +2,4 @@ export { default as PointerArea, type PointerPosition } from './PointerArea.svel
 export { default as Tooltip } from './Tooltip.svelte';
 export { default as ButtonGroup } from './ButtonGroup.svelte';
 export { default as Scroller } from './Scroller.svelte';
+export { touchHold } from './touch-hold.js';

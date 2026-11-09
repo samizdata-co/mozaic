@@ -3,9 +3,13 @@
 A row of swatches with labels. Pass `items` directly, or a d3 ordinal or
 threshold colour `scale` (with `format` for threshold values). Text uses
 text colours; only the swatch carries the data colour.
+Bind `active` (start it at `null`) to link the legend to a mark: pointing at an
+item sets `active` to its index, and an active item stays at full strength
+while the others are dimmed.
 -->
 <script lang="ts">
 	import { useChart } from '../core/context.js';
+	import { touchHold } from '../interactive/touch-hold.js';
 
 	type Item = { label: string; color: string };
 	type ColorScale = {
@@ -21,10 +25,26 @@ text colours; only the swatch carries the data colour.
 		format?: (value: any) => string;
 		shape?: 'square' | 'line' | 'circle';
 		title?: string;
+		/**
+		 * Index of the highlighted item, or null for none. Leave it undefined for a static legend;
+		 * bind it (`bind:active`, starting at null) to highlight items under the pointer.
+		 */
+		active?: number | null;
+		/** Opacity of the other items while one is highlighted. */
+		dim?: number;
 		class?: string;
 	}
 
-	let { items, scale, format, shape = 'square', title, class: className = '' }: Props = $props();
+	let {
+		items,
+		scale,
+		format,
+		shape = 'square',
+		title,
+		active = $bindable(),
+		dim = 0.35,
+		class: className = ''
+	}: Props = $props();
 
 	const chart = useChart();
 
@@ -48,13 +68,30 @@ text colours; only the swatch carries the data colour.
 	}
 
 	const resolved = $derived(items ?? (scale ? fromScale(scale) : []));
+
+	const live = $derived(active !== undefined && chart.medium !== 'print');
+	let list = $state<HTMLUListElement>();
+	const hold = touchHold(
+		() => list,
+		() => (active = null)
+	);
+	$effect(() => hold.destroy);
 </script>
 
 <div class="mz-legend {className}">
 	{#if title}<span class="mz-legend-title">{title}</span>{/if}
-	<ul>
-		{#each resolved as item (item.label)}
-			<li>
+	<ul
+		bind:this={list}
+		class:mz-legend-live={live}
+		onpointerdown={live ? hold.down : undefined}
+		onpointercancel={live ? hold.cancel : undefined}
+		onpointerleave={live ? hold.leave : undefined}
+	>
+		{#each resolved as item, i (item.label)}
+			<li
+				style:opacity={active !== null && active !== undefined && active !== i ? dim : undefined}
+				onpointerenter={live ? () => (active = i) : undefined}
+			>
 				<span class="mz-swatch mz-swatch-{shape}" style:background={item.color}></span>
 				{item.label}
 			</li>
@@ -84,6 +121,10 @@ text colours; only the swatch carries the data colour.
 		margin: 0;
 		padding: 0;
 		list-style: none;
+	}
+	.mz-legend-live li {
+		cursor: default;
+		transition: opacity 120ms;
 	}
 	li {
 		display: flex;

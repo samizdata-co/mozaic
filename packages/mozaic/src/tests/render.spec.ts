@@ -229,11 +229,20 @@ describe('compound marks', () => {
 	});
 
 	it('waffle: total squares', () => {
-		expect(renderDocument(CompoundFixture, { kind: 'waffle' }).$$('.mz-waffle rect')).toHaveLength(40);
+		expect(renderDocument(CompoundFixture, { kind: 'waffle' }).$$('.mz-waffle-square')).toHaveLength(40);
+	});
+
+	it('waffle: an active category keeps full strength and dims the rest', () => {
+		const squares = renderDocument(CompoundFixture, { kind: 'waffle', active: 1 }).$$('.mz-waffle-square');
+		const opacity = squares.map((r) => r.getAttribute('opacity'));
+		// Alpha has 10 squares, Beta (index 1) the next 6.
+		expect(opacity.slice(10, 16).every((o) => o === '1')).toBe(true);
+		expect(opacity.filter((o) => o !== '1')).toHaveLength(34);
 	});
 
 	it('waffle: fills from the bottom row with origin="bottom"', () => {
-		const rects = (kind: 'waffle' | 'waffle-bottom') => renderDocument(CompoundFixture, { kind }).$$('.mz-waffle rect');
+		const rects = (kind: 'waffle' | 'waffle-bottom') =>
+			renderDocument(CompoundFixture, { kind }).$$('.mz-waffle-square');
 		const ys = (kind: 'waffle' | 'waffle-bottom') => rects(kind).map((r) => Number(r.getAttribute('y')));
 		const top = ys('waffle');
 		const bottom = ys('waffle-bottom');

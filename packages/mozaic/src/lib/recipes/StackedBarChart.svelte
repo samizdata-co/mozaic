@@ -5,6 +5,8 @@ of each series, with the series name and share written inside segments wide
 enough to hold them. Optional: a reference line (e.g. at 50%), brackets above
 the first bar that group neighbouring series ("pro-European", "pro-Russian"),
 and a legend that lists groups of series instead of every series.
+Pointing at (or tapping) a segment highlights its series in every bar and in
+the default legend; pointing at a legend item does the same.
 Use it as is, or run `mozaic eject StackedBarChart` to copy this file into
 your project and change anything.
 -->
@@ -17,6 +19,7 @@ your project and change anything.
 	import { Rects } from '../marks/index.js';
 	import { AxisX, AxisY, Legend } from '../guides/index.js';
 	import { RefLine } from '../annotations/index.js';
+	import { touchHold } from '../interactive/index.js';
 	import { stack } from '../transforms/index.js';
 	import { createLocale, type LocaleCode } from '../locale/index.js';
 	import { base, contrastRatio, type Medium, type Theme } from '../styles/index.js';
@@ -63,6 +66,8 @@ your project and change anything.
 		/** Share format (0–1); defaults to a locale percentage with one decimal. */
 		format?: (share: number) => string;
 		rowHeight?: number;
+		/** Highlight the series under the pointer. Off in print. */
+		interactive?: boolean;
 		/** Extra SVG drawn on top of the bars; receives the plot context. */
 		annotations?: Snippet<[PlotContext]>;
 	}
@@ -92,6 +97,7 @@ your project and change anything.
 		embed,
 		format,
 		rowHeight = 64,
+		interactive = true,
 		annotations
 	}: Props = $props();
 
@@ -110,6 +116,17 @@ your project and change anything.
 	/** Ink or paper, whichever reads better on the segment. */
 	const textOn = (fill: string) => (contrastRatio(fill, paper) >= contrastRatio(fill, ink) ? paper : ink);
 	const legendItems = $derived(legend ?? order.map((s) => ({ label: seriesLabel(s), color: colorOf(s) })));
+
+	// The highlighted series, shared by the bars and (when it lists the series) the legend.
+	let active = $state<string | null>(null);
+	const live = $derived(interactive && medium !== 'print');
+	const dimmed = (s: string) => active !== null && s !== active;
+	let bars = $state<SVGGElement>();
+	const hold = touchHold(
+		() => bars,
+		() => (active = null)
+	);
+	$effect(() => hold.destroy);
 
 	const rows = $derived([...new Set(data.map(row))]);
 	const single = $derived(rows.length === 1);
@@ -150,7 +167,19 @@ your project and change anything.
 		<Header>
 			{#if title}<Title>{title}</Title>{/if}
 			{#if subtitle}<Subtitle>{subtitle}</Subtitle>{/if}
-			{#if legendItems.length > 1}<Legend items={legendItems} />{/if}
+			{#if legendItems.length > 1}
+				{#if live && !legend}
+					<Legend
+						items={legendItems}
+						bind:active={
+							() => (active === null ? null : order.indexOf(active)),
+							(i) => (active = i === null || i === undefined ? null : (order[i] ?? null))
+						}
+					/>
+				{:else}
+					<Legend items={legendItems} />
+				{/if}
+			{/if}
 		</Header>
 	{/if}
 
@@ -159,25 +188,44 @@ your project and change anything.
 			<Svg>
 				<AxisX ticks={4} format={(v) => loc.format('.0%')(v)} />
 				{#if !single}<AxisY />{/if}
-				<Rects
-					data={segments}
-					x={(s) => s.start}
-					x2={(s) => s.end}
-					y={(s) => s.key as string}
-					fill={(s) => colorOf(s.series)}
-					stroke={paper}
-					title={(s) => `${single ? '' : `${s.key} · `}${seriesLabel(s.series)}: ${fmt(s.end - s.start)}`}
-				/>
-				{#each segments as s (`${s.key}\u0000${s.series}`)}
-					{@const l = segmentLabel(plot, s)}
-					{#if l}
-						{@const cy = scaled(plot.y, s.key)}
-						<text class="mz-stacked-label" x={l.x} y={cy} fill={textOn(colorOf(s.series))} text-anchor="middle">
-							<tspan x={l.x} dy="-0.25em">{l.name}</tspan>
-							<tspan class="strong" x={l.x} dy="1.2em">{l.share}</tspan>
-						</text>
-					{/if}
-				{/each}
+				<!-- svelte-ignore a11y_no_static_element_interactions -->
+				<g
+					bind:this={bars}
+					class="mz-stacked-bars"
+					class:mz-stacked-live={live}
+					onpointerdown={live ? hold.down : undefined}
+					onpointercancel={live ? hold.cancel : undefined}
+					onpointerleave={live ? hold.leave : undefined}
+				>
+					<Rects
+						data={segments}
+						x={(s) => s.start}
+						x2={(s) => s.end}
+						y={(s) => s.key as string}
+						fill={(s) => colorOf(s.series)}
+						stroke={paper}
+						opacity={(s) => (dimmed(s.series) ? 0.25 : 1)}
+						title={(s) => `${single ? '' : `${s.key} · `}${seriesLabel(s.series)}: ${fmt(s.end - s.start)}`}
+						onpointerenter={live ? (s) => (active = s.series) : undefined}
+					/>
+					{#each segments as s (`${s.key}\u0000${s.series}`)}
+						{@const l = segmentLabel(plot, s)}
+						{#if l}
+							{@const cy = scaled(plot.y, s.key)}
+							<text
+								class="mz-stacked-label"
+								x={l.x}
+								y={cy}
+								fill={textOn(colorOf(s.series))}
+								opacity={dimmed(s.series) ? 0.25 : 1}
+								text-anchor="middle"
+							>
+								<tspan x={l.x} dy="-0.25em">{l.name}</tspan>
+								<tspan class="strong" x={l.x} dy="1.2em">{l.share}</tspan>
+							</text>
+						{/if}
+					{/each}
+				</g>
 				{#if reference !== undefined}
 					<RefLine x={reference} label={referenceLabel} />
 				{/if}
@@ -201,6 +249,16 @@ your project and change anything.
 </Chart>
 
 <style>
+	.mz-stacked-label {
+		/* Let the pointer reach the segment under the label. */
+		pointer-events: none;
+	}
+	.mz-stacked-live :global(rect),
+	.mz-stacked-live .mz-stacked-label {
+		transition:
+			fill-opacity 120ms,
+			opacity 120ms;
+	}
 	.mz-stacked-label,
 	.mz-stacked-bracket text {
 		font-family: var(--mz-font-body);

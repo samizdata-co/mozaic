@@ -5,9 +5,12 @@
 	import { Arcs, Arrows, Beeswarm, Dumbbell, Slope, Treemap, Waffle } from '../../lib/marks/index.js';
 
 	let {
-		kind
-	}: { kind: 'treemap' | 'waffle' | 'waffle-bottom' | 'dumbbell' | 'arrows' | 'slope' | 'beeswarm' | 'arcs' } =
-		$props();
+		kind,
+		active = null
+	}: {
+		kind: 'treemap' | 'waffle' | 'waffle-bottom' | 'dumbbell' | 'arrows' | 'slope' | 'beeswarm' | 'arcs';
+		active?: number | null;
+	} = $props();
 
 	const items = [
 		{ name: 'Alpha', group: 'g1', a: 10, b: 14 },
@@ -50,7 +53,7 @@
 				{#if kind === 'treemap'}
 					<Treemap data={items} value={(d) => d.a} group={(d) => d.group} label={(d) => d.name} />
 				{:else if kind === 'waffle'}
-					<Waffle data={items} value={(d) => d.a} total={40} />
+					<Waffle data={items} value={(d) => d.a} total={40} {active} />
 				{:else if kind === 'waffle-bottom'}
 					<Waffle data={items} value={(d) => d.a} total={40} origin="bottom" />
 				{:else}
