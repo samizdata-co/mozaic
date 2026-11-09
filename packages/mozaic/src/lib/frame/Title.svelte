@@ -26,6 +26,5 @@ The chart headline. Its id labels the chart's SVG for screen readers.
 		line-height: var(--mz-line-title);
 		letter-spacing: var(--mz-tracking-title);
 		color: var(--mz-color-text);
-		text-wrap: balance;
 	}
 </style>
