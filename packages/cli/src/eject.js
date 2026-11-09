@@ -10,7 +10,8 @@ export const RECIPES = [
 	'ArrowChart',
 	'BarDotChart',
 	'StackedBarChart',
-	'MosaicChart'
+	'MosaicChart',
+	'PercentileChart'
 ];
 
 /**

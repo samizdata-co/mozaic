@@ -69,6 +69,9 @@ import ArrowPlotData from './arrow-plot/data.ts?raw';
 import BarDot from './bar-dot/Chart.svelte';
 import BarDotSource from './bar-dot/Chart.svelte?raw';
 import BarDotData from './bar-dot/data.ts?raw';
+import PayPercentiles from './pay-percentiles/Chart.svelte';
+import PayPercentilesSource from './pay-percentiles/Chart.svelte?raw';
+import PayPercentilesData from './pay-percentiles/data.ts?raw';
 import ScrollySource from './scrolly/Chart.svelte?raw';
 import ScrollyData from './scrolly/data.ts?raw';
 
@@ -187,6 +190,17 @@ export const examples: Example[] = [
 		component: BarDot,
 		source: BarDotSource,
 		data: BarDotData,
+		print: ['column', 'double']
+	},
+	{
+		slug: 'pay-percentiles',
+		title: 'How do you compare? (recipe)',
+		description:
+			"The PercentileChart recipe: pay percentiles per group, a number box and slider (or a drag on the strips) for the reader's own pay, and their percentile in each group at the right.",
+		tags: ['distribution', 'interactive', 'comparison', 'recipe'],
+		component: PayPercentiles,
+		source: PayPercentilesSource,
+		data: PayPercentilesData,
 		print: ['column', 'double']
 	},
 	{

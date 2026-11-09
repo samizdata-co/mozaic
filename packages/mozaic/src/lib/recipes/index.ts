@@ -6,6 +6,7 @@ export { default as ArrowChart } from './ArrowChart.svelte';
 export { default as BarDotChart } from './BarDotChart.svelte';
 export { default as StackedBarChart } from './StackedBarChart.svelte';
 export { default as MosaicChart } from './MosaicChart.svelte';
+export { default as PercentileChart } from './PercentileChart.svelte';
 
 /** Recipe names accepted by `mozaic eject`. */
 export const recipes = [
@@ -16,5 +17,6 @@ export const recipes = [
 	'ArrowChart',
 	'BarDotChart',
 	'StackedBarChart',
-	'MosaicChart'
+	'MosaicChart',
+	'PercentileChart'
 ] as const;

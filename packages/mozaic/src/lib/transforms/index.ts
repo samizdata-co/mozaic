@@ -13,3 +13,4 @@ export {
 	type LoessOptions,
 	type Smoothed
 } from './smooth.js';
+export { percentileRank, type PercentilePoint, type PercentileRank } from './percentile.js';

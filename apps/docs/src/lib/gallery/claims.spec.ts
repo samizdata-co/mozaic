@@ -16,6 +16,7 @@ import { cells } from './heatmap/data';
 import { majority, parties } from './parliament/data';
 import { rows as trust } from './arrow-plot/data';
 import { rows as worries } from './bar-dot/data';
+import { rows as pay } from './pay-percentiles/data';
 import { series as pollSeries } from './poll-tracker/data';
 
 // The gallery data is synthetic, but each headline must still be true of it.
@@ -128,5 +129,14 @@ describe('gallery headlines match their data', () => {
 		expect(issues[0].autumn!).toBeGreaterThan(issues[0].spring!);
 		const both = issues.filter((r) => r.spring !== undefined);
 		expect(both.toSorted((a, b) => a.autumn! - a.spring! - (b.autumn! - b.spring!))[0].worry).toBe('war');
+	});
+
+	it('pay-percentiles: nurses have the narrowest middle half, narrower than all employees', () => {
+		const iqr = (g: string) => {
+			const points = pay.find((r) => r.group === g)!.percentiles;
+			return points.find((q) => q.p === 75)!.value! - points.find((q) => q.p === 25)!.value!;
+		};
+		expect(iqr('nurses')).toBeLessThan(iqr('teachers'));
+		expect(iqr('nurses') * 2).toBeLessThan(iqr('all'));
 	});
 });

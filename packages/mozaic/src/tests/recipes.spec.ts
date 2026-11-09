@@ -7,6 +7,7 @@ import {
 	ColumnChart,
 	LineChart,
 	MosaicChart,
+	PercentileChart,
 	ScatterChart,
 	StackedBarChart
 } from '../lib/recipes/index.js';
@@ -200,5 +201,80 @@ describe('recipes', () => {
 		const south = rects.filter((r) => r.querySelector('title')?.textContent?.startsWith('South'));
 		expect(Number(south[0].getAttribute('height'))).toBeCloseTo(300, 0);
 		expect($$('.mz-mosaic-series').map((t) => t.textContent)).toEqual(['Ion']);
+	});
+
+	it('PercentileChart: a strip per group, a "you" line and a percentile readout per group', () => {
+		const groups = [
+			{
+				name: 'Housing officers',
+				points: [
+					{ p: 25, value: 30000 },
+					{ p: 50, value: 34000 },
+					{ p: 75, value: 40000 }
+				]
+			},
+			{
+				name: 'All employees',
+				points: [
+					{ p: 10, value: 20000 },
+					{ p: 50, value: 40000 },
+					{ p: 90, value: 80000 }
+				]
+			}
+		];
+		type G = (typeof groups)[number];
+		const { $, $$ } = renderDocument(PercentileChart, {
+			data: groups,
+			label: (d: G) => d.name,
+			percentiles: (d: G) => d.points,
+			highlight: (d: G) => d.name === 'Housing officers',
+			value: 37000,
+			inputLabel: 'Your salary',
+			readoutLabel: 'More than',
+			summary: (r: { percentile: number }, d: G) => `More than ${Math.round(r.percentile)}% of ${d.name}`,
+			medianLabel: 'Median',
+			width: 500
+		});
+		expect($$('.mz-percentile-name').map((t) => t.textContent)).toEqual(['Housing officers', 'All employees']);
+		// 37,000 is halfway from the median to p75 (62.5%) and 85% of the way from p10 to the median (44%).
+		expect($$('.mz-percentile-readout').map((t) => t.textContent)).toEqual(['63%', '44%']);
+		expect($('.mz-percentile-summary')!.textContent).toBe('More than 63% of Housing officers');
+		expect($('.mz-percentile-you-label')!.textContent).toBe('37,000');
+		expect($('.mz-percentile-heading')!.textContent).toBe('More than');
+		expect($$('.mz-percentile-row.on')).toHaveLength(1);
+		expect($('.mz-percentile-controls input[type=number]')!.getAttribute('value')).toBe('37000');
+	});
+
+	it('PercentileChart: starts at the highlighted median, flags values off the range, hides controls in print', () => {
+		const groups = [
+			{
+				name: 'A',
+				points: [
+					{ p: 25, value: 10 },
+					{ p: 50, value: 20 },
+					{ p: 75, value: 30 }
+				]
+			},
+			{
+				name: 'B',
+				points: [
+					{ p: 25, value: 30 },
+					{ p: 50, value: 40 },
+					{ p: 75, value: 50 }
+				]
+			}
+		];
+		type G = (typeof groups)[number];
+		const { $, $$ } = renderDocument(PercentileChart, {
+			data: groups,
+			label: (d: G) => d.name,
+			percentiles: (d: G) => d.points,
+			highlight: (d: G) => d.name === 'B',
+			medium: 'print',
+			width: 400
+		});
+		expect($('.mz-percentile-you-label')!.textContent).toBe('40');
+		expect($$('.mz-percentile-readout').map((t) => t.textContent)).toEqual(['>75%', '50%']);
+		expect($('.mz-percentile-controls')).toBeNull();
 	});
 });
