@@ -8,7 +8,7 @@ copies this file into your project.
 	import type { Snippet } from 'svelte';
 	import { scaleBand, scaleLinear } from 'd3-scale';
 	import { max, min } from 'd3-array';
-	import { Chart, Header, Title, Subtitle, Footer, Source, Notes } from '../frame/index.js';
+	import { Chart, Header, Title, Subtitle, Footer, Source, Notes, type SourceItem } from '../frame/index.js';
 	import type { ChartEmbed } from '../embed/index.js';
 	import { Plot, Svg, Html, scaled, type PlotContext } from '../core/index.js';
 	import { Bars, Rules } from '../marks/index.js';
@@ -29,7 +29,8 @@ copies this file into your project.
 		title?: string;
 		subtitle?: string;
 		notes?: string;
-		source?: string;
+		/** Plain text, or sources with optional links (see `<Source>`). */
+		source?: string | SourceItem[];
 		alt?: string;
 		/** The chart's embed page, for the embed code under the chart (see `<Chart embed>`). */
 		embed?: ChartEmbed;
@@ -113,7 +114,7 @@ copies this file into your project.
 	{#if notes || source}
 		<Footer>
 			{#if notes}<Notes>{notes}</Notes>{/if}
-			{#if source}<Source>{source}</Source>{/if}
+			{#if source}<Source sources={source} />{/if}
 		</Footer>
 	{/if}
 </Chart>

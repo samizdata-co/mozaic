@@ -36,6 +36,28 @@ describe('recipes', () => {
 		expect($$('.mz-text text').map((t) => t.textContent?.trim())).toContain('30');
 	});
 
+	it('source: text, or linked sources joined with "; " (plain text in print)', () => {
+		const props = {
+			data: rows,
+			label: (d: (typeof rows)[number]) => d.name,
+			value: (d: (typeof rows)[number]) => d.value,
+			width: 400,
+			locale: 'en'
+		};
+		const squash = (s: string | null | undefined) => (s ?? '').replace(/\s+/g, ' ').trim();
+		const sources = [{ label: 'ANRE', href: 'https://anre.md/' }, { label: 'BNM' }];
+		const text = renderDocument(BarChart, { ...props, source: 'Src' });
+		expect(squash(text.$('.mz-source')!.textContent)).toBe('Source: Src');
+		const web = renderDocument(BarChart, { ...props, source: sources });
+		expect(squash(web.$('.mz-source')!.textContent)).toBe('Sources: ANRE; BNM');
+		expect(
+			web.$$('.mz-source a').map((a) => [a.textContent, a.getAttribute('href'), a.getAttribute('target')])
+		).toEqual([['ANRE', 'https://anre.md/', '_blank']]);
+		const print = renderDocument(BarChart, { ...props, source: sources, medium: 'print' });
+		expect(print.$$('.mz-source a')).toHaveLength(0);
+		expect(squash(print.$('.mz-source')!.textContent)).toBe('Sources: ANRE; BNM');
+	});
+
 	it('ColumnChart: one column per category', () => {
 		const { $$ } = renderDocument(ColumnChart, {
 			data: rows,

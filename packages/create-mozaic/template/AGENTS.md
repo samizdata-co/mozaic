@@ -25,6 +25,8 @@ the mozaic chart library (Svelte 5 + d3). House style: `src/lib/theme.ts`. Langu
 - Name the y unit once, on the top tick: `<AxisY unit="lei/m³" />`.
 - Tooltips: `<Tooltip title items>`, one item per series (label, value, colour), so values line up.
 - Event markers on a time axis: `<RefLine x={date} label="…" dotted labelY={-30} />`, labels above the plot.
+- Link each source to its data or document: `<Source sources={[{ label: 'ANRE', href: '…' }, …]} />`
+  (recipes take the same list as `source`).
 - No `<DataTable>` ("Show the data" button) unless asked for.
 
 ## Before you finish
