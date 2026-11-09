@@ -281,6 +281,8 @@ your project and change anything.
 						text-anchor="end">{line}</text
 					>
 				{/each}
+				<!-- Under the rows, so group names (with a background halo) and dots sit on top of it. -->
+				<line class="mz-percentile-you" x1={px} x2={px} y1={-4} y2={plot.height} />
 				{#each groups as g, i (g.name)}
 					{@const rowTop = plot.y(g.name) ?? 0}
 					{@const c = stripColor(g)}
@@ -332,7 +334,6 @@ your project and change anything.
 						>
 					</g>
 				{/each}
-				<line class="mz-percentile-you" x1={px} x2={px} y1={-4} y2={plot.height} />
 				<text class="mz-percentile-you-label" x={px} y={-8} text-anchor={anchor}>{you}</text>
 				{@render annotations?.(plot)}
 			</Svg>
@@ -428,6 +429,13 @@ your project and change anything.
 	.mz-percentile-readout,
 	.mz-percentile-you-label {
 		font-weight: var(--mz-weight-strong);
+	}
+	/* A background-coloured outline keeps names legible where the "you" line crosses them. */
+	.mz-percentile-name {
+		paint-order: stroke;
+		stroke: var(--mz-color-bg);
+		stroke-width: 4px;
+		stroke-linejoin: round;
 	}
 	.mz-percentile-readout {
 		font-variant-numeric: tabular-nums;
