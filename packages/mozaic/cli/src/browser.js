@@ -75,7 +75,7 @@ export async function launchBrowser(explicit) {
 	const candidates = explicit ? [explicit] : browserCandidates(undefined);
 	if (!candidates.length) {
 		throw new Error(
-			'No Chromium found. Install one with `npx playwright install chromium`, or pass --browser /path/to/chrome.'
+			'No Chromium found. Install one with `pnpm dlx playwright install chromium`, or pass --browser /path/to/chrome.'
 		);
 	}
 	/** @type {string[]} */
@@ -88,6 +88,6 @@ export async function launchBrowser(explicit) {
 		}
 	}
 	throw new Error(
-		`Could not start Chromium. Tried:\n${failures.join('\n')}\nInstall one with \`npx playwright install chromium\` or pass --browser.`
+		`Could not start Chromium. Tried:\n${failures.join('\n')}\nInstall one with \`pnpm dlx playwright install chromium\` or pass --browser.`
 	);
 }

@@ -38,7 +38,7 @@ Options: `--out <dir>`, `--only <slug,slug>`, `--formats svg,pdf,png`, `--web-wi
 
 ### Browser
 
-The exporter uses, in order: `--browser`, `$MOZAIC_BROWSER`, Playwright's Chromium (`npx playwright install chromium`), any other Chromium in Playwright's cache, then common system locations. It tries each until one starts.
+The exporter uses, in order: `--browser`, `$MOZAIC_BROWSER`, Playwright's Chromium (`pnpm dlx playwright install chromium`), any other Chromium in Playwright's cache, then common system locations. It tries each until one starts.
 
 ## SVG details
 

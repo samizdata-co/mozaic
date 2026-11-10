@@ -67,10 +67,12 @@ The commit subject is exactly `Release X.Y.Z` (see `git log --grep '^Release'`),
 
 ## 5. Publish (the user approves 2FA)
 
+Use pnpm for every registry command (login, whoami, publish, view), not npm. pnpm 12 keeps its own login in `~/.config/pnpm/config.yaml`, apart from npm's `~/.npmrc`, so `npm whoami` can pass while `pnpm publish` fails with a 401 or a "404 Not Found".
+
 The npm account uses two-factor authentication, so `changeset publish` needs the user to approve in the browser or enter a code. That doesn't work in the Bash tool, which has no terminal. Check the login first:
 
 ```bash
-npm whoami                        # must print nicucalcea; if not, ask the user to run `npm login`
+pnpm whoami                       # must print nicucalcea; if not, ask the user to run `pnpm login` in their Terminal panel
 ```
 
 Then run the publish in the user's Terminal panel (`run_in_terminal`, from the repo root) so they can see the prompt:
@@ -81,10 +83,10 @@ pnpm release:publish
 
 It packs the package (`prepack` builds `dist/` and runs publint), publishes the version if it isn't on npm yet, and creates the git tag `@samizdata/mozaic@X.Y.Z`. Tell the user to approve the npm prompt (press Enter to open the browser, or type the one-time code), and wait for them to confirm before reading the tab's output. If it fails with `EOTP`, have them rerun it with a code: `pnpm changeset publish --otp=<code>`. Never ask for, or type, the code or a password yourself.
 
-Then confirm that the version is on npm:
+Then confirm that the version is on npm. The registry can take five minutes or more to list a new version after pnpm prints "Published"; wait and check again before calling it a failure, and don't publish again:
 
 ```bash
-npm view @samizdata/mozaic version
+pnpm view @samizdata/mozaic@X.Y.Z version
 ```
 
 ## 6. Push the commit and tag

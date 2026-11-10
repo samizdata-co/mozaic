@@ -59,6 +59,6 @@ mozaic --help
 
 Options: `--out <dir>` (default `exports`), `--only <slug,…>`, `--formats svg,pdf,png`, `--web-width <px>`, `--browser <path>`.
 
-Chromium lookup: `--browser`, `$MOZAIC_BROWSER`, Playwright's download (`npx playwright install chromium`), any Chromium in Playwright's cache, then common system locations. Each is tried until one starts.
+Chromium lookup: `--browser`, `$MOZAIC_BROWSER`, Playwright's download (`pnpm dlx playwright install chromium`), any Chromium in Playwright's cache, then common system locations. Each is tried until one starts.
 
 Requires Svelte 5.57+. The full guides, API reference and gallery are in the repository's docs site.
