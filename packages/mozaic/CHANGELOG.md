@@ -1,5 +1,16 @@
 # @samizdata/mozaic
 
+## 0.8.0
+
+### Minor Changes
+
+- d923e43: Labels in the series colour, as in Datawrapper, so they double as the legend. A colour too light to read is darkened (or lightened on dark backgrounds) until it reaches 4.5:1 against the style's background. Without the new options, labels stay in the text colour.
+
+  - `LineEndLabels`: `colorText` colours each label like its line.
+  - `Label`: `color` colours the label and its marker ring.
+  - `Callout`: `color` colours the text and the arrow.
+  - `readableColor(color, background)` in `@samizdata/mozaic/styles` returns the colour, or the closest shade of it that is readable as text, for your own marks.
+
 ## 0.7.0
 
 ### Minor Changes
