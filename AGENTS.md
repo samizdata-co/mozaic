@@ -54,5 +54,5 @@ Read `PLAN.md` for the design, `docs/adr/` for decisions and `apps/docs/src/cont
 - `pnpm dev`: docs site at http://localhost:5173 (library source hot-reloads via the `mozaic-dev` condition)
 - `pnpm check` · `pnpm test` · `pnpm lint` · `pnpm format`
 - `pnpm build` then `pnpm test:e2e` (Playwright, axe) and `pnpm export`
-- `pnpm changeset` after changing a published package (`@samizdata/mozaic`, `@samizdata/mozaic-cli`: released together, same version). To release: `pnpm release` (versions and CHANGELOGs), commit, then `pnpm release:publish` (npm; needs `npm login`) and `git push --follow-tags`.
-- After a release, update maia (`samizdata-co/maia`, the project template, in `../maia`): set `mozaic_version` in `copier.yml`, port changes chart projects need into its `charts/` template and `mozaic-chart` skill, and release it (its `release-template` skill has the steps).
+- Add a changeset (`.changeset/<name>.md`) with every change to a published package (`@samizdata/mozaic`, `@samizdata/mozaic-cli`: released together, same version).
+- To release to npm, follow the `release` skill (`.claude/skills/release/SKILL.md`): check, `pnpm release` (versions and CHANGELOGs), commit `Release X.Y.Z`, `pnpm release:publish` in the user's terminal (npm 2FA), push `main` and the two tags by name, then update and release maia (`../maia`).
