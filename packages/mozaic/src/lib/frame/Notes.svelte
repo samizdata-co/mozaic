@@ -1,6 +1,7 @@
 <!--
 @component
-"Note: …", with the label in the chart's language. Set `plural` for several notes.
+"Note: …", with the label in the chart's language. Set `plural` for several notes. Renders
+nothing when the content is empty (`<Notes>{t.notes}</Notes>` with no `notes` string).
 -->
 <script lang="ts">
 	import type { Snippet } from 'svelte';
@@ -13,12 +14,15 @@
 
 <p class="mz-notes">
 	<span class="mz-label">{plural ? chart.locale.strings.notes : chart.locale.strings.note}:</span>
-	{@render children?.()}
+	<span class="mz-notes-body">{@render children?.()}</span>
 </p>
 
 <style>
 	.mz-notes {
 		margin: 0;
+	}
+	.mz-notes:has(> .mz-notes-body:empty) {
+		display: none;
 	}
 	.mz-label {
 		font-family: var(--mz-font-label);
