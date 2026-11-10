@@ -197,6 +197,15 @@ describe('recipes', () => {
 		expect($$('.mz-ref-line line')).toHaveLength(1);
 	});
 
+	it('StackedBarChart: a row label with a line break is drawn as two lines, centred on the tick', () => {
+		const label = (area: string) => (area === 'Abroad' ? 'Abroad\n(postal)' : area);
+		const { $$ } = renderDocument(StackedBarChart, { ...voteProps, row: (d: Vote) => label(d.area), width: 600 });
+		const tick = $$('.mz-axis-y text').find((t) => t.textContent?.includes('Abroad'));
+		expect(tick?.textContent).toBe('Abroad(postal)');
+		expect([...(tick?.querySelectorAll('tspan') ?? [])].map((t) => t.textContent)).toEqual(['(postal)']);
+		expect(tick?.getAttribute('dy')).toBe(`${0.32 - 1.15 / 2}em`);
+	});
+
 	it('StackedBarChart: a single bar has no row axis, and segments under labelMin go unlabelled', () => {
 		const { $$ } = renderDocument(StackedBarChart, {
 			...voteProps,

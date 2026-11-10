@@ -15,7 +15,7 @@ your project and change anything.
 	import { scaleBand, scaleLinear } from 'd3-scale';
 	import { Chart, Header, Title, Subtitle, Footer, Source, Notes, type SourceItem } from '../frame/index.js';
 	import type { ChartEmbed } from '../embed/index.js';
-	import { Plot, Svg, estimateTextWidth, scaled, type PlotContext } from '../core/index.js';
+	import { Plot, Svg, estimateTextWidth, useTextWidth, scaled, type PlotContext } from '../core/index.js';
 	import { Rects } from '../marks/index.js';
 	import { AxisX, AxisY, Legend } from '../guides/index.js';
 	import { RefLine } from '../annotations/index.js';
@@ -103,6 +103,9 @@ your project and change anything.
 	}: Props = $props();
 
 	const theme = $derived(style);
+	const measure = useTextWidth();
+	/** Width of a row label in the axis font, measured once mounted. */
+	const labelWidth = (s: string) => measure(s, theme.plot.fontSize, theme.tokens['--mz-font-body']);
 	const loc = $derived(createLocale(locale ?? theme.defaultLocale));
 	const fmt = $derived(format ?? ((s: number) => loc.format('.1%')(s)));
 	const fontSize = $derived(theme.plot.fontSize);
@@ -133,7 +136,7 @@ your project and change anything.
 	const single = $derived(rows.length === 1);
 	const x = scaleLinear().domain([0, 1]);
 	const y = $derived(scaleBand<string>().domain(rows).paddingInner(0.25));
-	const left = $derived(single ? 0 : Math.max(...rows.map((r) => estimateTextWidth(r, fontSize))) + 12);
+	const left = $derived(single ? 0 : Math.max(...rows.map((r) => labelWidth(r))) + 12);
 	const bracketSpace = $derived(groups.length ? fontSize + 14 : 0);
 
 	/** Segment labels: name over value, when both lines fit the segment. */

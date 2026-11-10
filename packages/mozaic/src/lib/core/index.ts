@@ -16,6 +16,7 @@ export {
 	useTheme
 } from './context.js';
 export { estimateTextWidth, isOrdinal, isScale, position, scaled } from './scales.js';
+export { measureTextWidth, useTextWidth } from './text.svelte.js';
 export { mm, pt, PX_PER_MM } from './units.js';
 export { access, type Accessor, type Value } from './accessor.js';
 export type {

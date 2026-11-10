@@ -3,7 +3,8 @@
 Vertical axis for the plot's y scale. With `inside`, labels sit just above
 the gridlines inside the plot area, which saves left padding on small screens.
 `unit` names the unit once, after the top tick label ("50 lei/m³"); on a
-left axis it runs into the plot, so it needs no extra padding.
+left axis it runs into the plot, so it needs no extra padding. A `\n` in a
+label (from `format` or a band domain) breaks it into lines, centred on the tick.
 -->
 <script lang="ts">
 	import { useChart, usePlot } from '../core/context.js';
@@ -60,7 +61,18 @@ left axis it runs into the plot, so it needs no extra padding.
 	);
 	// Outside a left axis, the unit starts where the numbers end and runs into the plot.
 	const unitApart = $derived(position === 'left' && !inside);
+	/** Line height of a label broken with `\n`, in em. */
+	const LINE = 1.15;
 </script>
+
+<!-- One `<text>` per label; extra lines are tspans, the first raised so the block centres on `dy`. -->
+{#snippet lines(text: string, x: number, dy: number)}
+	{@const parts = text.split('\n')}
+	{@const first = dy - (inside ? parts.length - 1 : (parts.length - 1) / 2) * LINE}
+	<text {x} dy="{first}em" text-anchor={anchor}
+		>{#each parts as part, j (j)}{#if j === 0}{part}{:else}<tspan {x} dy="{LINE}em">{part}</tspan>{/if}{/each}</text
+	>
+{/snippet}
 
 <g class="mz-axis mz-axis-y {className}" transform="translate({position === 'left' ? 0 : plot.width},0)">
 	{#if baseline}<line class="mz-axis-line" y2={plot.height} />{/if}
@@ -69,9 +81,9 @@ left axis it runs into the plot, so it needs no extra padding.
 		<g class="mz-tick" transform="translate(0,{scaled(plot.y, value)})">
 			{#if tickSize > 0 && !inside}<line x2={dir * tickSize} />{/if}
 			{#if inside}
-				<text x={0} dy="-0.35em" text-anchor={anchor}>{withUnit}</text>
+				{@render lines(withUnit, 0, -0.35)}
 			{:else}
-				<text x={dir * (tickSize + tickPadding)} dy="0.32em" text-anchor={anchor}>{withUnit}</text>
+				{@render lines(withUnit, dir * (tickSize + tickPadding), 0.32)}
 			{/if}
 			{#if unit && value === top && unitApart}
 				<text class="mz-axis-unit" x={-(tickSize + tickPadding) + 4} dy="0.32em" text-anchor="start">{unit}</text>

@@ -13,7 +13,7 @@ anything.
 	import { max, min } from 'd3-array';
 	import { Chart, Header, Title, Subtitle, Footer, Source, Notes, type SourceItem } from '../frame/index.js';
 	import type { ChartEmbed } from '../embed/index.js';
-	import { Plot, Svg, estimateTextWidth, scaled, type PlotContext } from '../core/index.js';
+	import { Plot, Svg, estimateTextWidth, useTextWidth, scaled, type PlotContext } from '../core/index.js';
 	import { Bars, Points } from '../marks/index.js';
 	import { AxisX, AxisY, GridX, Legend } from '../guides/index.js';
 	import { createLocale, type LocaleCode } from '../locale/index.js';
@@ -91,6 +91,9 @@ anything.
 	}: Props = $props();
 
 	const theme = $derived(style);
+	const measure = useTextWidth();
+	/** Width of a row label in the axis font, measured once mounted. */
+	const labelWidth = (s: string) => measure(s, theme.plot.fontSize, theme.tokens['--mz-font-body']);
 	const numbers = $derived(createLocale(locale ?? theme.defaultLocale));
 	const fmt = $derived(format ?? numbers.number);
 	const signed = $derived(
@@ -115,7 +118,7 @@ anything.
 		const p = previous(d);
 		return { value: has(v) ? fmt(v) : '–', change: has(v) && has(p) ? signed(v - p) : '' };
 	};
-	const left = $derived(Math.max(...rows.map((d) => estimateTextWidth(label(d), fontSize)), 0) + 12);
+	const left = $derived(Math.max(...rows.map((d) => labelWidth(label(d))), 0) + 12);
 	const right = $derived(
 		Math.max(
 			...rows.map((d) => {

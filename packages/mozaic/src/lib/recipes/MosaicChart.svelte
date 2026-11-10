@@ -15,7 +15,7 @@ project and change anything.
 	import { group, sum } from 'd3-array';
 	import { Chart, Header, Title, Subtitle, Footer, Source, Notes, type SourceItem } from '../frame/index.js';
 	import type { ChartEmbed } from '../embed/index.js';
-	import { Plot, Svg, estimateTextWidth, type PlotContext } from '../core/index.js';
+	import { Plot, Svg, estimateTextWidth, useTextWidth, type PlotContext } from '../core/index.js';
 	import { Rects } from '../marks/index.js';
 	import { AxisX, Legend } from '../guides/index.js';
 	import { RefLine } from '../annotations/index.js';
@@ -94,6 +94,9 @@ project and change anything.
 	}: Props = $props();
 
 	const theme = $derived(style);
+	const measure = useTextWidth();
+	/** Width of a row label in the axis font, measured once mounted. */
+	const labelWidth = (s: string) => measure(s, theme.plot.fontSize, theme.tokens['--mz-font-body']);
 	const loc = $derived(createLocale(locale ?? theme.defaultLocale));
 	const fmt = $derived(format ?? ((s: number) => loc.format('.1%')(s)));
 	const fontSize = $derived(theme.plot.fontSize);
@@ -157,7 +160,7 @@ project and change anything.
 			(({ width: w }: { width: number }) =>
 				Math.max(480, layout.bands.length * (fontSize + 4) * 1.4, Math.min(900, w * 1.1)))
 	);
-	const right = $derived(Math.max(...layout.bands.map((b) => estimateTextWidth(b.name, fontSize))) + 18);
+	const right = $derived(Math.max(...layout.bands.map((b) => labelWidth(b.name))) + 18);
 
 	/** Row labels at the centre of each row, nudged apart; a short tick joins a moved label to its row. */
 	function rowLabels(plot: PlotContext) {

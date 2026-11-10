@@ -10,7 +10,7 @@ file into your project and change anything.
 	import { max, min } from 'd3-array';
 	import { Chart, Header, Title, Subtitle, Footer, Source, Notes, type SourceItem } from '../frame/index.js';
 	import type { ChartEmbed } from '../embed/index.js';
-	import { Plot, Svg, Html, estimateTextWidth, scaled, type PlotContext } from '../core/index.js';
+	import { Plot, Svg, Html, estimateTextWidth, useTextWidth, scaled, type PlotContext } from '../core/index.js';
 	import { Bars, Rules, Text } from '../marks/index.js';
 	import { AxisY } from '../guides/index.js';
 	import { Tooltip } from '../interactive/index.js';
@@ -66,6 +66,9 @@ file into your project and change anything.
 	}: Props = $props();
 
 	const theme = $derived(style);
+	const measure = useTextWidth();
+	/** Width of a row label in the axis font, measured once mounted. */
+	const labelWidth = (s: string) => measure(s, theme.plot.fontSize, theme.tokens['--mz-font-body']);
 	const fmt = $derived(format ?? createLocale(locale ?? theme.defaultLocale).number);
 	const rows = $derived(sort ? data.toSorted((a, b) => value(b) - value(a)) : data);
 	const x = $derived(
@@ -74,7 +77,7 @@ file into your project and change anything.
 			.nice()
 	);
 	const y = $derived(scaleBand<string>().domain(rows.map(label)).paddingInner(0.25).paddingOuter(0.1));
-	const left = $derived(Math.max(...rows.map((d) => estimateTextWidth(label(d), theme.plot.fontSize)), 0) + 12);
+	const left = $derived(Math.max(...rows.map((d) => labelWidth(label(d))), 0) + 12);
 	const right = $derived(Math.max(...rows.map((d) => estimateTextWidth(fmt(value(d)), theme.plot.fontSize)), 0) + 12);
 	let hovered = $state<T | null>(null);
 </script>
