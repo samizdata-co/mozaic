@@ -5,8 +5,7 @@
 The monorepo uses pnpm workspaces:
 
 ```
-packages/mozaic         the library
-packages/cli            mozaic export / eject
+packages/mozaic         the library, and the mozaic CLI in cli/ (export / eject)
 apps/docs               this site: docs, gallery, API reference, embeds
 ```
 
@@ -37,9 +36,11 @@ The docs app resolves `@samizdata/mozaic` to the library source through a `mozai
 
 ## Releasing
 
-1. `pnpm changeset` after each change to a published package; describe it for readers of the changelog.
-2. `pnpm release` bumps versions and writes CHANGELOGs.
-3. Publish with `pnpm -r publish` (configure the registry first).
+1. Add a changeset after each change to `@samizdata/mozaic`; describe it for readers of the changelog.
+2. `pnpm release` bumps the version and writes the CHANGELOG; commit it as `Release X.Y.Z`.
+3. `pnpm release:publish` publishes to npm and tags the release; push `main` and the tag.
+
+The repository's `release` skill (`.claude/skills/release/SKILL.md`) has the full steps.
 
 ## Decisions
 

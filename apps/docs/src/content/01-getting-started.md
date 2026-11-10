@@ -16,7 +16,7 @@ pnpm dev
 
 Copier asks for the outlet (SAMIZDATA, Ziarul de Gardă or none), which sets the house style, and the chart languages. With `--trust` it runs `pnpm install` in `charts/`. Open http://localhost:5173 to see the preview page with the example chart. `uvx copier update --trust` later brings template changes, new mozaic versions and new brand releases into the project.
 
-The project installs `@samizdata/mozaic` and `@samizdata/mozaic-cli` from npm. To work against a local checkout of the library instead, pass its absolute path:
+The project installs `@samizdata/mozaic` (which includes the `mozaic` command) from npm. To work against a local checkout of the library instead, pass its absolute path:
 
 ```bash
 uvx copier copy --trust --data charts=mozaic --data mozaic_path=$HOME/Projects/mozaic gh:samizdata-co/maia budget-2026

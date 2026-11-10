@@ -1,11 +1,11 @@
 ---
 name: release
-description: How to release mozaic to npm — write changesets, check, version, commit, publish @samizdata/mozaic and @samizdata/mozaic-cli with Changesets (the user approves npm's 2FA), push the commit and tags, and bring the new version into maia. Use whenever there are unreleased changes to packages/mozaic or packages/cli and the user wants them on npm, or asks to release, publish, ship, cut a version, bump the version or tag — even if they don't say "npm". Also use when adding a changeset after a library change.
+description: How to release mozaic to npm — write changesets, check, version, commit, publish @samizdata/mozaic (library and mozaic CLI) with Changesets (the user approves npm's 2FA), push the commit and tag, and bring the new version into maia. Use whenever there are unreleased changes to packages/mozaic and the user wants them on npm, or asks to release, publish, ship, cut a version, bump the version or tag — even if they don't say "npm". Also use when adding a changeset after a library change.
 ---
 
 # Releasing mozaic
 
-Two packages are published to npm, together and always at the same version (a Changesets `fixed` group): **`@samizdata/mozaic`** (`packages/mozaic`) and **`@samizdata/mozaic-cli`** (`packages/cli`). The docs site (`apps/docs`) and the root are private and never published. `@samizdata/create-mozaic` is retired and deprecated on npm (ADR 0003); don't publish it.
+One package is published to npm: **`@samizdata/mozaic`** (`packages/mozaic`), the library plus the `mozaic` CLI in `packages/mozaic/cli/` (its `bin`). The docs site (`apps/docs`) and the root are private and never published. `@samizdata/create-mozaic` (ADR 0003) and `@samizdata/mozaic-cli` (ADR 0004) are retired and deprecated on npm; don't publish them.
 
 Publishing, pushing and tagging are public and permanent: npm versions can't be reused. Do them when the user asked for a release; otherwise stop after the changeset and ask.
 
@@ -13,11 +13,11 @@ Publishing, pushing and tagging are public and permanent: npm versions can't be 
 
 ```bash
 git fetch && git status -sb                     # main, clean, not behind origin
-git log --oneline "@samizdata/mozaic@$(node -p "require('./packages/mozaic/package.json').version")"..HEAD -- packages/mozaic packages/cli
+git log --oneline "@samizdata/mozaic@$(node -p "require('./packages/mozaic/package.json').version")"..HEAD -- packages/mozaic
 ls .changeset/*.md | grep -v README             # pending changesets
 ```
 
-Only changes under `packages/mozaic` or `packages/cli` need a release. Docs-site, test-only and tooling changes don't (a docs change that ships in the package, such as a component's JSDoc, does).
+Only changes under `packages/mozaic` (including `cli/`) need a release. Docs-site, test-only and tooling changes don't (a docs change that ships in the package, such as a component's JSDoc, does).
 
 ## 2. Write the changesets
 
@@ -31,7 +31,7 @@ Every user-facing change since the last release needs a changeset. Write the fil
 `Tooltip`: the card keeps its width as it moves. It used to shrink to the room left of its position, which moved it again and set off "ResizeObserver loop" errors near the right edge of narrow charts.
 ```
 
-Save it as `.changeset/<short-kebab-name>.md`. List `@samizdata/mozaic-cli` instead of, or as well as, `@samizdata/mozaic` when the CLI changed; the fixed group bumps both either way.
+Save it as `.changeset/<short-kebab-name>.md`. CLI changes are `@samizdata/mozaic` changes too; start their entry with the command (`mozaic export`).
 
 Pick the bump. mozaic is pre-1.0:
 
@@ -57,9 +57,9 @@ Run `pnpm build && pnpm test:e2e` in the background: it takes a few minutes.
 ## 4. Version and commit
 
 ```bash
-pnpm release                      # changeset version: bumps both packages, writes CHANGELOGs, deletes the changesets
+pnpm release                      # changeset version: bumps the version, writes the CHANGELOG, deletes the changesets
 pnpm install                      # refresh the lockfile if versions changed
-git diff --stat                   # package.json, CHANGELOG.md per package, removed changesets
+git diff --stat                   # package.json, CHANGELOG.md, removed changesets
 git commit -am "Release X.Y.Z"    # plus `git add -A .changeset` for the deleted files
 ```
 
@@ -79,22 +79,21 @@ Then run the publish in the user's Terminal panel (`run_in_terminal`, from the r
 pnpm release:publish
 ```
 
-It packs each package (`prepack` builds `dist/` for `@samizdata/mozaic`), publishes the versions that aren't on npm yet, and creates one git tag per package (`@samizdata/mozaic@X.Y.Z`, `@samizdata/mozaic-cli@X.Y.Z`). Tell the user to approve the npm prompt (press Enter to open the browser, or type the one-time code), and wait for them to confirm before reading the tab's output. If it fails with `EOTP`, have them rerun it with a code: `pnpm changeset publish --otp=<code>`. Never ask for, or type, the code or a password yourself.
+It packs the package (`prepack` builds `dist/` and runs publint), publishes the version if it isn't on npm yet, and creates the git tag `@samizdata/mozaic@X.Y.Z`. Tell the user to approve the npm prompt (press Enter to open the browser, or type the one-time code), and wait for them to confirm before reading the tab's output. If it fails with `EOTP`, have them rerun it with a code: `pnpm changeset publish --otp=<code>`. Never ask for, or type, the code or a password yourself.
 
-Then confirm that both versions are on npm:
+Then confirm that the version is on npm:
 
 ```bash
 npm view @samizdata/mozaic version
-npm view @samizdata/mozaic-cli version
 ```
 
-## 6. Push the commit and tags
+## 6. Push the commit and tag
 
-Changesets creates lightweight tags, which `git push --follow-tags` skips. Push them by name:
+Changesets creates a lightweight tag, which `git push --follow-tags` skips. Push it by name:
 
 ```bash
 git push origin main
-git push origin "@samizdata/mozaic@X.Y.Z" "@samizdata/mozaic-cli@X.Y.Z"
+git push origin "@samizdata/mozaic@X.Y.Z"
 git ls-remote --tags origin | grep "@X.Y.Z"
 ```
 
@@ -110,7 +109,6 @@ If `../maia` has uncommitted work that isn't yours, don't commit it: ask, or wor
 
 ## Things that trip people up
 
-- `pnpm release` versions both packages even if only one changed. That's intended.
-- `changeset publish` skips versions that are already on npm, so it is safe to rerun after a partial failure, but it only tags what it publishes. If tags are missing after a rerun, create them with `git tag "@samizdata/<name>@X.Y.Z"` on the release commit.
+- `changeset publish` skips versions that are already on npm, so it is safe to rerun after a partial failure, but it only tags what it publishes. If the tag is missing after a rerun, create it with `git tag "@samizdata/mozaic@X.Y.Z"` on the release commit.
 - `prepack` runs `publint`. A publint error stops the publish of `@samizdata/mozaic`; fix it, amend the release commit and publish again.
 - Don't publish from a dirty tree or from anything but `main` at the release commit.

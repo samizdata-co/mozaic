@@ -544,6 +544,7 @@ Phases 0–4 and most of 5–6 are built. The SAMIZDATA style uses the SAMIZDATA
 - No generic `Path` mark: raw SVG with `usePlot()` scales does that job.
 - Print SVG export converts the HTML header and footer to SVG text in the browser (`figureToSvg`) instead of rendering them as SVG in print mode.
 - Projects are created by maia, not a scaffolder in this repo (2026-11-10, [ADR 0003](docs/adr/0003-projects-from-maia.md)): `create-mozaic` is retired, and its template lives on as maia's `charts/`. Earlier sections that describe `create-mozaic` and `templates/analysis` are historical.
+- The CLI ships inside `@samizdata/mozaic` (`packages/mozaic/cli/`, the `mozaic` bin) instead of a separate `@samizdata/mozaic-cli` package (2026-11-10, [ADR 0004](docs/adr/0004-cli-in-the-library.md)). Earlier sections that mention `packages/cli` are historical.
 
 **Not done yet:**
 

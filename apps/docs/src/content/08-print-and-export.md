@@ -25,7 +25,7 @@ pnpm build
 pnpm export          # = mozaic export build
 ```
 
-For every embed listed in `build/embed/manifest.json`, `mozaic export` opens the page in a headless Chromium and writes:
+The `mozaic` command comes with `@samizdata/mozaic`. For every embed listed in `build/embed/manifest.json`, `mozaic export` opens the page in a headless Chromium and writes:
 
 | File                | What                                                               |
 | ------------------- | ------------------------------------------------------------------ |

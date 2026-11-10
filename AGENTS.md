@@ -15,7 +15,7 @@ Read `PLAN.md` for the design, `docs/adr/` for decisions and `apps/docs/src/cont
   - `table/`: `Table`, `Sparkline`, `toCSV`. `transforms/`: `stack`, `bin`, `groupBy`, `rollup`, `indexTo`, `dodge`, `treemapLayout`, `avoidOverlap`, `hemicycleLayout`, `kernelSmooth`, `loess`, `percentileRank`.
   - `styles/`: the `Theme` type, the neutral `base`, `extendTheme`, `checkTheme`, `rampSteps`, `contrastRatio`. House styles are not here: they live with each brand (`samizdata-co/brand`, `ziaruldegarda/brand`, in `datavis/mozaic/`) or project (plebiscit), and charts take one as `style={theme}`. `locale/`: en, ro, ru. `embed/`: `Embed`, resize protocol, `hostScript`, `embedCode`. `export/`: `figureToSvg`, downloads. `recipes/`: complete chart templates, `BarChart`, `ColumnChart`, `LineChart`, `ScatterChart`, `ArrowChart` (arrow plot: change between two dates per row), `BarDotChart` (bars for the latest value, dots for an earlier one, value and change at the right), `StackedBarChart` (100% stacked bars, brackets over groups of series, reference line), `MosaicChart` (Marimekko: 100% stacked rows as tall as their totals), `PercentileChart` ("how do you compare?": percentile strips per group, a number box and slider for the reader's value, their percentile in each group).
   - `src/tests/`: server-render tests with fixtures.
-- `packages/cli/`: `mozaic export` and `mozaic eject` (plain Node ESM + JSDoc).
+- `packages/mozaic/cli/`: the `mozaic` command (`bin` of `@samizdata/mozaic`): `mozaic export` and `mozaic eject`, plain Node ESM + JSDoc, tests in `cli/test/`. `eject` copies from the shipped `src/lib/recipes/`.
 - Projects (one repository per story) are not created here: [maia](https://github.com/samizdata-co/maia), a Copier template, makes them, with the charts in `charts/` (`charts: mozaic`).
 - `apps/docs/`: docs site. Copies of the SAMIZDATA and ZdG themes in `src/lib/brands/` (update them from the brand repos; don't edit them) and the Style menu's registry in `src/lib/styles.ts`. Gallery examples in `src/lib/gallery/<slug>/` (`Chart.svelte` + `data.ts`); guides in `src/content/*.md`; the API reference is generated from component sources.
 
@@ -43,7 +43,7 @@ Read `PLAN.md` for the design, `docs/adr/` for decisions and `apps/docs/src/cont
 - Anything that must print goes in `<Svg>`. `<Html>`, `<Canvas>`, tooltips and controls are hidden in print.
 - Theme-dependent defaults must be `$derived`, not destructuring defaults.
 - Use `Accessor<T, Value>`, never `Accessor<T, any>` (it erases callback types).
-- A chart form that more than one project could use (not just one dataset) belongs here as a recipe in `recipes/`, not in the project: add it to `recipes/index.ts`, `RECIPES` in `packages/cli/src/eject.js` and `src/tests/recipes.spec.ts`. Projects wrap recipes with their data and strings.
+- A chart form that more than one project could use (not just one dataset) belongs here as a recipe in `recipes/`, not in the project: add it to `recipes/index.ts` (and its `recipes` list) and `src/tests/recipes.spec.ts`; `mozaic eject` finds it by its file name. Projects wrap recipes with their data and strings.
 - Every component has an `@component` comment and typed, JSDoc-commented `Props`: the API reference is generated from them.
 - Every chart: `alt` text, a legend for 2+ series, all strings per locale, and a headline that is true of the data.
 - Never nest interactive content (a chart can contain links and buttons; don't wrap it in `<a>`).
@@ -54,5 +54,5 @@ Read `PLAN.md` for the design, `docs/adr/` for decisions and `apps/docs/src/cont
 - `pnpm dev`: docs site at http://localhost:5173 (library source hot-reloads via the `mozaic-dev` condition)
 - `pnpm check` · `pnpm test` · `pnpm lint` · `pnpm format`
 - `pnpm build` then `pnpm test:e2e` (Playwright, axe) and `pnpm export`
-- Add a changeset (`.changeset/<name>.md`) with every change to a published package (`@samizdata/mozaic`, `@samizdata/mozaic-cli`: released together, same version).
-- To release to npm, follow the `release` skill (`.claude/skills/release/SKILL.md`): check, `pnpm release` (versions and CHANGELOGs), commit `Release X.Y.Z`, `pnpm release:publish` in the user's terminal (npm 2FA), push `main` and the two tags by name, then update and release maia (`../maia`).
+- Add a changeset (`.changeset/<name>.md`) with every change to `@samizdata/mozaic` (the only published package; the CLI ships inside it).
+- To release to npm, follow the `release` skill (`.claude/skills/release/SKILL.md`): check, `pnpm release` (versions and CHANGELOGs), commit `Release X.Y.Z`, `pnpm release:publish` in the user's terminal (npm 2FA), push `main` and the tag by name, then update and release maia (`../maia`).

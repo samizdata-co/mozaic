@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 import { existsSync } from 'node:fs';
 // Reuse the CLI's browser lookup so local runs work with any cached Chromium.
-import { browserCandidates } from '../../packages/cli/src/browser.js';
+import { browserCandidates } from '../../packages/mozaic/cli/src/browser.js';
 
 const bundled = (() => {
 	try {

@@ -34,6 +34,7 @@ author's projects, so it needs no zero-setup scaffolder for outside users.
   `pnpm check` and `pnpm build` of a generated `charts/` is part of its release
   steps.
 - `@samizdata/mozaic` and `@samizdata/mozaic-cli` are released together;
-  `create-mozaic` no longer is.
+  `create-mozaic` no longer is. (Since [ADR 0004](0004-cli-in-the-library.md)
+  the CLI ships inside `@samizdata/mozaic`.)
 - Projects made with `create-mozaic` keep working (they depend only on the npm
   packages) but cannot use `copier update`.

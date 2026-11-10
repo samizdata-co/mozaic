@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { afterAll, describe, expect, it } from 'vitest';
 import { parseArgs } from '../src/args.js';
 import { serveStatic } from '../src/serve.js';
-import { eject, rewriteImports } from '../src/eject.js';
+import { eject, recipeNames, rewriteImports } from '../src/eject.js';
 import { findBrowser } from '../src/browser.js';
 import { exportEmbeds } from '../src/export.js';
 
@@ -53,13 +53,19 @@ describe('eject', () => {
 
 	it('copies a recipe and refuses to overwrite without force', async () => {
 		const cwd = await temp();
-		const mozaicDir = fileURLToPath(new URL('../../mozaic', import.meta.url));
-		const file = await eject({ name: 'BarChart', to: 'src/lib/recipes', cwd, mozaicDir });
+		const file = await eject({ name: 'BarChart', to: 'src/lib/recipes', cwd });
 		const source = await readFile(file, 'utf8');
 		expect(source).toContain("from '@samizdata/mozaic/frame'");
 		expect(source).not.toContain('../core/index.js');
-		await expect(eject({ name: 'BarChart', to: 'src/lib/recipes', cwd, mozaicDir })).rejects.toThrow(/already exists/);
-		await expect(eject({ name: 'Nope', to: 'x', cwd, mozaicDir })).rejects.toThrow(/Unknown recipe/);
+		await expect(eject({ name: 'BarChart', to: 'src/lib/recipes', cwd })).rejects.toThrow(/already exists/);
+		await expect(eject({ name: 'Nope', to: 'x', cwd })).rejects.toThrow(/Unknown recipe/);
+	});
+
+	it('lists every recipe that recipes/index.ts exports', async () => {
+		const index = await readFile(new URL('../../src/lib/recipes/index.ts', import.meta.url), 'utf8');
+		const exported = [...index.matchAll(/export \{ default as (\w+) \}/g)].map((m) => m[1]);
+		expect(exported.length).toBeGreaterThan(0);
+		expect(recipeNames()).toEqual(exported.sort());
 	});
 });
 

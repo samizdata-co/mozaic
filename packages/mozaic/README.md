@@ -1,9 +1,9 @@
 # mozaic
 
-Chart components for the web and print, built on Svelte 5 and d3.
+Chart components for the web and print, built on Svelte 5 and d3, and the `mozaic` command for exporting and ejecting.
 
 ```bash
-pnpm add mozaic d3-scale d3-array d3-shape
+pnpm add @samizdata/mozaic d3-scale d3-array d3-shape
 ```
 
 ```svelte
@@ -41,5 +41,24 @@ pnpm add mozaic d3-scale d3-array d3-shape
 | `@samizdata/mozaic/embed`       | `Embed`, `useEmbedParams`, `embedCode`, `hostScript`, `observeHeight`                                                                                                                               |
 | `@samizdata/mozaic/export`      | `figureToSvg`, `downloadSvg`, `downloadPng`, `figureToPng`                                                                                                                                          |
 | `@samizdata/mozaic/recipes`     | `BarChart`, `ColumnChart`, `LineChart`, `ScatterChart`, `ArrowChart`, `BarDotChart`, `StackedBarChart`, `MosaicChart`, `PercentileChart`                                                            |
+
+## CLI
+
+The package installs a `mozaic` command (Node 22.17+):
+
+```bash
+mozaic export [dir]   # export every embed in a built site (default: build) to SVG, PDF and PNG
+mozaic eject <recipe> # copy a recipe's source into your project (default: src/lib/recipes) to edit it
+mozaic --help
+```
+
+`export` reads `embed/manifest.json` from the built site, serves the folder locally and renders each embed in headless Chromium:
+
+- `web.png` (2×) and `web.svg` at `--web-width` (default 640 px)
+- `print-<width>.svg` and `print-<width>.pdf` for each print width in the manifest
+
+Options: `--out <dir>` (default `exports`), `--only <slug,…>`, `--formats svg,pdf,png`, `--web-width <px>`, `--browser <path>`.
+
+Chromium lookup: `--browser`, `$MOZAIC_BROWSER`, Playwright's download (`npx playwright install chromium`), any Chromium in Playwright's cache, then common system locations. Each is tried until one starts.
 
 Requires Svelte 5.57+. The full guides, API reference and gallery are in the repository's docs site.

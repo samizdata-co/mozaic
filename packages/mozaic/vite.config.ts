@@ -27,6 +27,14 @@ export default defineConfig({
 					include: ['src/**/*.{test,spec}.{js,ts}'],
 					exclude: ['src/**/*.svelte.{test,spec}.{js,ts}']
 				}
+			},
+			{
+				// The mozaic CLI (plain Node ESM), without the Svelte plugin.
+				test: {
+					name: 'cli',
+					environment: 'node',
+					include: ['cli/test/**/*.spec.js']
+				}
 			}
 		]
 	}

@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { parseArgs } from './args.js';
 import { exportEmbeds } from './export.js';
-import { eject, RECIPES } from './eject.js';
+import { eject, recipeNames } from './eject.js';
 
 const HELP = `mozaic — chart library tools
 
@@ -18,7 +18,7 @@ Usage:
       --to <dir>             Destination (default: src/lib/recipes)
       --force                Overwrite an existing file
 
-  Recipes: ${RECIPES.join(', ')}
+  Recipes: ${recipeNames().join(', ')}
 
   mozaic --version
   mozaic --help
@@ -33,7 +33,7 @@ export async function main(argv) {
 	const [command, ...rest] = positionals;
 
 	if (options.version) {
-		const pkg = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'));
+		const pkg = JSON.parse(await readFile(new URL('../../package.json', import.meta.url), 'utf8'));
 		console.log(pkg.version);
 		return 0;
 	}
@@ -63,7 +63,7 @@ export async function main(argv) {
 
 	if (command === 'eject') {
 		const name = rest[0];
-		if (!name) throw new Error(`Name a recipe: ${RECIPES.join(', ')}.`);
+		if (!name) throw new Error(`Name a recipe: ${recipeNames().join(', ')}.`);
 		const file = await eject({
 			name,
 			to: typeof options.to === 'string' ? options.to : 'src/lib/recipes',

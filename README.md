@@ -11,11 +11,10 @@ A chart library for the web and print, built on Svelte 5 and d3: small, composab
 
 ## Packages
 
-| Package                              | What                                                                                                                                                                                  |
-| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`packages/mozaic`](packages/mozaic) | The library (`@samizdata/mozaic/core`, `/frame`, `/marks`, `/guides`, `/annotations`, `/interactive`, `/table`, `/transforms`, `/styles`, `/locale`, `/embed`, `/export`, `/recipes`) |
-| [`packages/cli`](packages/cli)       | `mozaic export` (SVG/PDF/PNG) and `mozaic eject`                                                                                                                                      |
-| [`apps/docs`](apps/docs)             | Docs site: guides, API reference, gallery of 20 examples, embeds, `llms.txt`                                                                                                          |
+| Package                              | What                                                                                                                                                                                                                                          |
+| ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`packages/mozaic`](packages/mozaic) | The library (`@samizdata/mozaic/core`, `/frame`, `/marks`, `/guides`, `/annotations`, `/interactive`, `/table`, `/transforms`, `/styles`, `/locale`, `/embed`, `/export`, `/recipes`) and the `mozaic` CLI (`export` to SVG/PDF/PNG, `eject`) |
+| [`apps/docs`](apps/docs)             | Docs site: guides, API reference, gallery of 20 examples, embeds, `llms.txt`                                                                                                                                                                  |
 
 ## Quick start
 
