@@ -1,6 +1,6 @@
 {
 	"name": "@samizdata/mozaic",
-	"version": "0.9.0",
+	"version": "0.10.0",
 	"description": "Chart components for the web and print, built on Svelte 5 and d3, and the mozaic CLI (export embeds to SVG, PDF and PNG; eject recipes).",
 	"license": "GPL-3.0-or-later",
 	"author": "Nicu Calcea",
