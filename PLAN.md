@@ -543,7 +543,7 @@ Phases 0–4 and most of 5–6 are built. The SAMIZDATA style uses the SAMIZDATA
 - `Bars` covers both orientations, stacking (`base`) and grouping (`group`); there is no separate `Columns` mark.
 - No generic `Path` mark: raw SVG with `usePlot()` scales does that job.
 - Print SVG export converts the HTML header and footer to SVG text in the browser (`figureToSvg`) instead of rendering them as SVG in print mode.
-- The template lives in `packages/create-mozaic/template` (not a root `templates/` folder).
+- Projects are created by maia, not a scaffolder in this repo (2026-11-10, [ADR 0003](docs/adr/0003-projects-from-maia.md)): `create-mozaic` is retired, and its template lives on as maia's `charts/`. Earlier sections that describe `create-mozaic` and `templates/analysis` are historical.
 
 **Not done yet:**
 
@@ -551,7 +551,7 @@ Phases 0–4 and most of 5–6 are built. The SAMIZDATA style uses the SAMIZDATA
 - Ship one real chart to zdg.md or samizdata.co.
 - The "AI writes a fourth chart from the docs alone" check from Phase 0.
 - `MapLibreMap` with PMTiles basemaps; Europe and world boundaries; map insets.
-- A scrolly-story template in `create-mozaic`; the dev-mode annotation editor.
+- A scrolly-story template in maia; the dev-mode annotation editor.
 - Dark-mode chart tokens; a `<mozaic-chart>` web component build; CMYK/PDF-X output.
 - Publishing the packages to a registry.
 
@@ -604,7 +604,7 @@ Phases 0–4 and most of 5–6 are built. The SAMIZDATA style uses the SAMIZDATA
 ### Phase 6: Scrollytelling and richer interaction
 
 - `Scroller`, step-driven transitions between chart states, a mobile-first layout.
-- A scrolly story template in `create-mozaic` (a full-page embed rather than a single chart).
+- A scrolly story template in maia (a full-page embed rather than a single chart).
 - Dev-mode annotation editor.
 
 ### Ongoing

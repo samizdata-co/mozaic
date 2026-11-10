@@ -26,7 +26,7 @@
 
 	<h2>Source</h2>
 	<p>
-		Copy both files into <code>src/charts/&lt;slug&gt;/</code> of an analysis project. <code>../types</code> and
+		Copy both files into <code>charts/src/charts/&lt;slug&gt;/</code> of an analysis project. <code>../types</code> and
 		<code>../common</code>
 		are small docs-site helpers: replace them with your project's <code>ChartProps</code> and your own notes and source.
 	</p>

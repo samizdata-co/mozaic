@@ -6,38 +6,40 @@ mozaic is a chart library for the web and print. You build each chart from small
 
 ## Start a new analysis project
 
-Each piece of analysis lives in its own repository: R or Python scripts for the data, and Svelte files for one or two charts.
+Each piece of analysis lives in its own repository, created with [maia](https://github.com/samizdata-co/maia) (a [Copier](https://copier.readthedocs.io/) template): R or Python scripts and notebooks for the data, and a `charts/` folder with one or two charts.
 
 ```bash
-pnpm create @samizdata/mozaic budget-2026 --locales ro,ru --title "Budget 2026"
-cd budget-2026
-pnpm install
+uvx copier copy --trust --data charts=mozaic gh:samizdata-co/maia budget-2026
+cd budget-2026/charts
 pnpm dev
 ```
 
-Open http://localhost:5173 to see the preview page with the example chart. The project installs `@samizdata/mozaic` and `@samizdata/mozaic-cli` from npm. To work against a local checkout of the library instead, pass its paths:
+Copier asks for the outlet (SAMIZDATA, Ziarul de Gardă or none), which sets the house style, and the chart languages. With `--trust` it runs `pnpm install` in `charts/`. Open http://localhost:5173 to see the preview page with the example chart. `uvx copier update --trust` later brings template changes, new mozaic versions and new brand releases into the project.
+
+The project installs `@samizdata/mozaic` and `@samizdata/mozaic-cli` from npm. To work against a local checkout of the library instead, pass its absolute path:
 
 ```bash
-pnpm create @samizdata/mozaic budget-2026 --mozaic ../mozaic/packages/mozaic --cli ../mozaic/packages/cli
+uvx copier copy --trust --data charts=mozaic --data mozaic_path=$HOME/Projects/mozaic gh:samizdata-co/maia budget-2026
 ```
 
-and build `@samizdata/mozaic` once in the library checkout (`pnpm --filter mozaic package`). The project's house style is in `src/lib/theme.ts`; see [Styles](../styles/) to use an outlet's style. For SAMIZDATA and Ziarul de Gardă projects, maia sets that up for you.
+and build `@samizdata/mozaic` once in the library checkout (`pnpm --filter mozaic package`). The house style is in `charts/src/lib/theme.ts`; see [Styles](../styles/).
 
 ## What you get
 
 ```
-analysis/        R and Python scripts: data/raw → data/processed
-data/processed/  tidy CSV files the charts read
-src/charts/      one folder per chart, registered in src/charts/index.ts
-mozaic.config.ts project name, style, languages, public URL
+etl/                    scripts that clean and process the data
+docs/                   analysis notebook and the article
+charts/data/            tidy CSV files the charts read
+charts/src/charts/      one folder per chart, registered in charts/src/charts/index.ts
+charts/mozaic.config.ts project name, languages, public URL
 ```
 
 The workflow is:
 
-1. Wrangle data in `analysis/` and write tidy CSV to `data/processed/`.
-2. Write the chart in `src/charts/<slug>/Chart.svelte`, starting from a [gallery](../../gallery/) example.
+1. Wrangle data in `etl/` or a notebook and write tidy CSV to `charts/data/`.
+2. Write the chart in `charts/src/charts/<slug>/Chart.svelte`, starting from a [gallery](../../gallery/) example.
 3. Preview it at every width, in every language and in print (`pnpm dev`).
-4. `pnpm build` writes static embeds to `build/`; deploy that folder anywhere.
+4. `pnpm build` writes static embeds to `charts/build/`; the included workflow deploys them to GitHub Pages.
 5. `pnpm export` writes SVG, PDF and PNG files for print and social media.
 
 ## Your first chart

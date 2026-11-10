@@ -16,7 +16,7 @@ Read `PLAN.md` for the design, `docs/adr/` for decisions and `apps/docs/src/cont
   - `styles/`: the `Theme` type, the neutral `base`, `extendTheme`, `checkTheme`, `rampSteps`, `contrastRatio`. House styles are not here: they live with each brand (`samizdata-co/brand`, `ziaruldegarda/brand`, in `datavis/mozaic/`) or project (plebiscit), and charts take one as `style={theme}`. `locale/`: en, ro, ru. `embed/`: `Embed`, resize protocol, `hostScript`, `embedCode`. `export/`: `figureToSvg`, downloads. `recipes/`: complete chart templates, `BarChart`, `ColumnChart`, `LineChart`, `ScatterChart`, `ArrowChart` (arrow plot: change between two dates per row), `BarDotChart` (bars for the latest value, dots for an earlier one, value and change at the right), `StackedBarChart` (100% stacked bars, brackets over groups of series, reference line), `MosaicChart` (Marimekko: 100% stacked rows as tall as their totals), `PercentileChart` ("how do you compare?": percentile strips per group, a number box and slider for the reader's value, their percentile in each group).
   - `src/tests/`: server-render tests with fixtures.
 - `packages/cli/`: `mozaic export` and `mozaic eject` (plain Node ESM + JSDoc).
-- `packages/create-mozaic/`: scaffolder (`pnpm create @samizdata/mozaic`); `template/` is the analysis project (placeholders like `__PROJECT_NAME__`).
+- Projects (one repository per story) are not created here: [maia](https://github.com/samizdata-co/maia), a Copier template, makes them, with the charts in `charts/` (`charts: mozaic`).
 - `apps/docs/`: docs site. Copies of the SAMIZDATA and ZdG themes in `src/lib/brands/` (update them from the brand repos; don't edit them) and the Style menu's registry in `src/lib/styles.ts`. Gallery examples in `src/lib/gallery/<slug>/` (`Chart.svelte` + `data.ts`); guides in `src/content/*.md`; the API reference is generated from component sources.
 
 ## How a chart is built
@@ -54,4 +54,5 @@ Read `PLAN.md` for the design, `docs/adr/` for decisions and `apps/docs/src/cont
 - `pnpm dev`: docs site at http://localhost:5173 (library source hot-reloads via the `mozaic-dev` condition)
 - `pnpm check` · `pnpm test` · `pnpm lint` · `pnpm format`
 - `pnpm build` then `pnpm test:e2e` (Playwright, axe) and `pnpm export`
-- `pnpm changeset` after changing a published package (`@samizdata/mozaic`, `@samizdata/mozaic-cli`, `@samizdata/create-mozaic`: released together, same version). To release: `pnpm release` (versions and CHANGELOGs), commit, then `pnpm release:publish` (npm; needs `npm login`) and `git push --follow-tags`.
+- `pnpm changeset` after changing a published package (`@samizdata/mozaic`, `@samizdata/mozaic-cli`: released together, same version). To release: `pnpm release` (versions and CHANGELOGs), commit, then `pnpm release:publish` (npm; needs `npm login`) and `git push --follow-tags`.
+- After a release, update maia (`samizdata-co/maia`, the project template, in `../maia`): set `mozaic_version` in `copier.yml`, port changes chart projects need into its `charts/` template and `mozaic-chart` skill, and release it (its `release-template` skill has the steps).

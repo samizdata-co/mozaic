@@ -66,7 +66,7 @@ Text never uses a data colour. A coloured swatch, dot or line next to the text c
 
 ## Writing a style
 
-A style extends `base` (or another style) with `extendTheme()`. Put it in the outlet's brand repository, next to its other design tokens, or in the project (`src/lib/theme.ts`) when only one project uses it:
+A style extends `base` (or another style) with `extendTheme()`. Put it in the outlet's brand repository, next to its other design tokens, or in the project (`charts/src/lib/theme.ts`) when only one project uses it:
 
 ```ts
 import { extendTheme } from '@samizdata/mozaic/styles';

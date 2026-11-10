@@ -4,9 +4,6 @@ build
 .svelte-kit
 pnpm-lock.yaml
 *.topo.json
-templates/analysis/data
-packages/create-mozaic/template/mozaic.config.ts
 apps/docs/e2e/__screenshots__
 packages/mozaic/coverage
 docs/README.md
-packages/create-mozaic/template

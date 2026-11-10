@@ -6,17 +6,16 @@ A chart library for the web and print, built on Svelte 5 and d3: small, composab
 - **Styles and languages.** One prop switches the house style (fonts, colours, palettes: a `Theme` that lives with each outlet's brand) and the language (en, ro, ru: number and date formats, UI strings).
 - **Embeds.** Each chart prerenders to a static page that shows without JavaScript and resizes its iframe through `embed.js`.
 - **Print.** The same chart renders at print widths in millimetres; `mozaic export` writes SVG with editable text, vector PDF and PNG.
-- **One repo per story.** `create-mozaic` scaffolds R/Python data scripts plus charts, a preview page, embed routes and a deploy workflow.
+- **One repo per story.** [maia](https://github.com/samizdata-co/maia) creates the project: data scripts and notebooks, plus a `charts/` folder with a preview page, embed routes and a GitHub Pages deploy workflow.
 - **Built for AI authors.** Typed props with JSDoc, `AGENTS.md`, a Claude Code skill in every project, and `llms.txt`.
 
 ## Packages
 
-| Package                                            | What                                                                                                                                                                                  |
-| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`packages/mozaic`](packages/mozaic)               | The library (`@samizdata/mozaic/core`, `/frame`, `/marks`, `/guides`, `/annotations`, `/interactive`, `/table`, `/transforms`, `/styles`, `/locale`, `/embed`, `/export`, `/recipes`) |
-| [`packages/cli`](packages/cli)                     | `mozaic export` (SVG/PDF/PNG) and `mozaic eject`                                                                                                                                      |
-| [`packages/create-mozaic`](packages/create-mozaic) | Project scaffolder and template                                                                                                                                                       |
-| [`apps/docs`](apps/docs)                           | Docs site: guides, API reference, gallery of 20 examples, embeds, `llms.txt`                                                                                                          |
+| Package                              | What                                                                                                                                                                                  |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`packages/mozaic`](packages/mozaic) | The library (`@samizdata/mozaic/core`, `/frame`, `/marks`, `/guides`, `/annotations`, `/interactive`, `/table`, `/transforms`, `/styles`, `/locale`, `/embed`, `/export`, `/recipes`) |
+| [`packages/cli`](packages/cli)       | `mozaic export` (SVG/PDF/PNG) and `mozaic eject`                                                                                                                                      |
+| [`apps/docs`](apps/docs)             | Docs site: guides, API reference, gallery of 20 examples, embeds, `llms.txt`                                                                                                          |
 
 ## Quick start
 
@@ -25,12 +24,11 @@ pnpm install
 pnpm dev                 # docs site and gallery at http://localhost:5173
 ```
 
-Start an analysis project from a local checkout:
+Start a project with charts linked to this checkout (with [maia](https://github.com/samizdata-co/maia)):
 
 ```bash
 pnpm --filter mozaic package
-node packages/create-mozaic/bin/create-mozaic.js ../budget-2026 --locales ro,ru \
-  --mozaic ./packages/mozaic --cli ./packages/cli
+uvx copier copy --trust --data charts=mozaic --data mozaic_path=$PWD gh:samizdata-co/maia ../budget-2026
 ```
 
 ## A chart

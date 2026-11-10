@@ -1,6 +1,0 @@
-[project]
-name = "__PROJECT_NAME__-analysis"
-version = "0.1.0"
-description = "Data preparation for __PROJECT_TITLE__"
-requires-python = ">=3.12"
-dependencies = []

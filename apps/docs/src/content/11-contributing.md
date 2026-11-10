@@ -7,7 +7,6 @@ The monorepo uses pnpm workspaces:
 ```
 packages/mozaic         the library
 packages/cli            mozaic export / eject
-packages/create-mozaic  project scaffolder and template
 apps/docs               this site: docs, gallery, API reference, embeds
 ```
 
