@@ -1,5 +1,14 @@
 import { describe, expect, it } from 'vitest';
-import { base, breakpointFor, checkTheme, contrastRatio, extendTheme, rampSteps, tokensToStyle } from './index.js';
+import {
+	base,
+	breakpointFor,
+	checkTheme,
+	contrastRatio,
+	extendTheme,
+	rampSteps,
+	readableColor,
+	tokensToStyle
+} from './index.js';
 
 describe('styles', () => {
 	it('extends the base theme without losing nested defaults', () => {
@@ -49,6 +58,27 @@ describe('colour helpers', () => {
 	it('computes WCAG contrast', () => {
 		expect(contrastRatio('#000000', '#ffffff')).toBeCloseTo(21, 0);
 		expect(contrastRatio('#ffffff', '#ffffff')).toBe(1);
+	});
+
+	it('keeps or adjusts data colours so text in them is readable', () => {
+		expect(readableColor('#1f77b4')).toBe('#1f77b4');
+		expect(readableColor('#1F77B4')).toBe('#1f77b4');
+		expect(readableColor('#123')).toBe('#112233');
+		for (const [c, bg] of [
+			['#f0e442', '#ffffff'],
+			['#e69f00', '#fbf9f4'],
+			['#56b4e9', '#ffffff'],
+			['#ff0', '#ffffff'],
+			['#0072b2', '#111111']
+		]) {
+			const out = readableColor(c, bg);
+			expect(contrastRatio(out, bg)).toBeGreaterThanOrEqual(4.5);
+			expect(contrastRatio(out, bg)).toBeLessThan(4.8);
+		}
+		expect(readableColor('#0072b2', '#111111')).not.toBe('#0072b2');
+		expect(contrastRatio(readableColor('#f0e442', '#ffffff', 3), '#ffffff')).toBeGreaterThanOrEqual(3);
+		expect(readableColor('red')).toBe('red');
+		expect(readableColor('var(--x)')).toBe('var(--x)');
 	});
 
 	it('picks ramp steps that are visible on the background, keeping brand colours', () => {

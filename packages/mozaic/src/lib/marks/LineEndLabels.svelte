@@ -1,12 +1,14 @@
 <!--
 @component
 Direct labels at the end of lines: a dot in the series colour on the last
-point, and the label in text colour beside it. Labels are nudged apart so
-they never overlap; a short leader joins a nudged label to its dot.
+point, and the label beside it, in the text colour or (with `colorText`) in
+the series colour so the labels double as the legend. Labels are nudged apart
+so they never overlap; a short leader joins a nudged label to its dot.
 -->
 <script lang="ts" generics="T">
-	import { usePlot } from '../core/context.js';
+	import { useChart, usePlot } from '../core/context.js';
 	import { scaled } from '../core/scales.js';
+	import { readableColor } from '../styles/color.js';
 	import { avoidOverlap } from '../transforms/labels.js';
 
 	interface Props {
@@ -20,12 +22,19 @@ they never overlap; a short leader joins a nudged label to its dot.
 		dx?: number;
 		/** Minimum vertical distance between labels, px. */
 		minGap?: number;
+		/**
+		 * Colour each label like its series, darkened (or lightened on dark
+		 * backgrounds) where needed to reach 4.5:1 against the background.
+		 */
+		colorText?: boolean;
 		class?: string;
 	}
 
-	let { data, x, y, text, color, dx = 10, minGap = 14, class: className = '' }: Props = $props();
+	let { data, x, y, text, color, dx = 10, minGap = 14, colorText = false, class: className = '' }: Props = $props();
 
+	const chart = useChart();
 	const plot = usePlot();
+	const background = $derived(chart.theme.tokens['--mz-color-bg']);
 
 	const labels = $derived.by(() => {
 		const points = data.map((d) => ({ d, px: scaled(plot.x, x(d)), py: scaled(plot.y, y(d)) }));
@@ -44,7 +53,12 @@ they never overlap; a short leader joins a nudged label to its dot.
 			<path class="mz-leader" d="M{label.px + 5},{label.py}L{label.px + dx - 3},{label.ly}" />
 		{/if}
 		<circle cx={label.px} cy={label.py} r={4} fill={color(label.d)} />
-		<text x={label.px + dx} y={label.ly} dy="0.32em">{text(label.d)}</text>
+		<text
+			x={label.px + dx}
+			y={label.ly}
+			dy="0.32em"
+			style:fill={colorText ? readableColor(color(label.d), background) : undefined}>{text(label.d)}</text
+		>
 	{/each}
 </g>
 

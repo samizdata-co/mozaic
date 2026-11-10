@@ -74,6 +74,7 @@
 					y={(d) => d.value}
 					text={(d) => name(d.id)}
 					color={(d) => color[d.id]}
+					colorText
 				/>
 				{#if hoverIndex !== null && hoverDate}
 					{#each series as s (s.id)}

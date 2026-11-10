@@ -12,14 +12,14 @@ Every chart should work for screen-reader users, keyboard users and readers with
 - `<ButtonGroup>` is a radio group: arrow keys move between options.
 - `<Table>` headers are buttons with `aria-sort`.
 - `<Scroller>` respects `prefers-reduced-motion`.
-- Legend, tooltip and label text uses text colours, never data colours.
+- Legend, tooltip and label text uses the text colours.
 
 ## Your job
 
 - **Write `alt` text** that says what the chart shows ("Turnout rose in four regions and fell in the south"), not how it looks ("A slope chart").
-- **Never rely on colour alone.** Two or more series need a legend, direct labels, or both.
+- **Never rely on colour alone.** Label two or more series directly (`LineEndLabels`, labels on bars); use a legend or `Key` only when labels don't fit or the chart is narrow.
 - **Keep data colours in palette order** and use the `context` grey for everything else.
-- **Check contrast.** Light hues (yellow, aqua) are fine as fills but not as thin lines or text.
+- **Check contrast.** Light hues (yellow, aqua) are fine as fills but not as thin lines or text. Text coloured like its series needs 4.5:1 against the background.
 - **Translate everything**, including `alt` and category names.
 - **Test at 320 px** and with the keyboard.
 

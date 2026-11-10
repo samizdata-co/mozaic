@@ -3,7 +3,7 @@ import type { Breakpoint, Theme } from './types.js';
 export type { Breakpoint, Medium, Padding, Theme, ThemeOverrides } from './types.js';
 /** House styles live with each brand (e.g. `datavis/mozaic/` in a brand repo) and extend `base`. */
 export { base, extendTheme } from './base.js';
-export { contrastRatio, luminance, rampSteps } from './color.js';
+export { contrastRatio, luminance, rampSteps, readableColor } from './color.js';
 export { checkTheme } from './check.js';
 
 /** Serialise theme tokens into an inline `style` attribute value. */

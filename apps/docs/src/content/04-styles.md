@@ -58,7 +58,7 @@ Tokens become CSS custom properties on the chart's `<figure>`. Components use th
 - `diverging`: `[negative, neutral, positive]`, for values around a midpoint.
 - `semantic`: `positive`, `negative`, `neutral`, `highlight` and `context` (the colour for everything you are not talking about). `highlight` can equal the first categorical colour (it does in SAMIZDATA), so don't rely on them differing.
 
-Text never uses a data colour. A coloured swatch, dot or line next to the text carries the identity. `contrastRatio(a, b)` helps pick fills that can carry white labels.
+As in Datawrapper, a direct label, an annotation or a key phrase in the title or subtitle can take its series colour, so the text doubles as the legend. Use the colour for text only if it reaches 4.5:1 against the background; otherwise use a darker shade of it, or a coloured swatch, dot or line beside text in the text colour. Axes, notes, sources and tooltips keep the text tokens. `contrastRatio(a, b)` checks both cases, and helps pick fills that can carry white labels.
 
 ## Plot defaults
 

@@ -3,10 +3,12 @@
 A text annotation with an optional curved arrow pointing at a data point.
 `x`/`y` are in data space (band scales point at the band centre); `dx`/`dy`
 place the label in pixels relative to that point. Newlines split the label.
+Pass `color` (the target's series colour) to colour the text and arrow.
 -->
 <script lang="ts">
 	import { useChart, usePlot } from '../core/context.js';
 	import { scaled } from '../core/scales.js';
+	import { readableColor } from '../styles/color.js';
 	import { calloutGeometry } from './callout-geometry.js';
 
 	interface Props {
@@ -21,6 +23,12 @@ place the label in pixels relative to that point. Newlines split the label.
 		/** Defaults to `start` when the label is right of the target, `end` when left. */
 		anchor?: 'start' | 'middle' | 'end';
 		fontSize?: number;
+		/**
+		 * Colour for the text and arrow, usually the series colour of the
+		 * target. Darkened (or lightened on dark backgrounds) where needed to
+		 * reach 4.5:1 against the background. Defaults to the text colour.
+		 */
+		color?: string;
 		class?: string;
 	}
 
@@ -34,6 +42,7 @@ place the label in pixels relative to that point. Newlines split the label.
 		arrow = true,
 		anchor,
 		fontSize,
+		color,
 		class: className = ''
 	}: Props = $props();
 
@@ -41,6 +50,7 @@ place the label in pixels relative to that point. Newlines split the label.
 	const plot = usePlot();
 
 	const size = $derived(fontSize ?? chart.theme.plot.fontSize);
+	const ink = $derived(color ? readableColor(color, chart.theme.tokens['--mz-color-bg']) : undefined);
 	const lines = $derived(label.split('\n'));
 	const lineHeight = $derived(size * 1.25);
 	const textAnchor = $derived(anchor ?? (dx > 0 ? 'start' : dx < 0 ? 'end' : 'middle'));
@@ -59,10 +69,10 @@ place the label in pixels relative to that point. Newlines split the label.
 
 <g class="mz-callout {className}">
 	{#if arrow}
-		<path class="mz-callout-arrow" d={geometry.arrow} />
-		<path class="mz-callout-arrow" d={geometry.head} />
+		<path class="mz-callout-arrow" d={geometry.arrow} style:stroke={ink} />
+		<path class="mz-callout-arrow" d={geometry.head} style:stroke={ink} />
 	{/if}
-	<text x={lx} y={ly} text-anchor={textAnchor} font-size={size}>
+	<text x={lx} y={ly} text-anchor={textAnchor} font-size={size} style:fill={ink}>
 		{#each lines as line, i}
 			<tspan x={lx} dy={i === 0 ? 0 : lineHeight}>{line}</tspan>
 		{/each}

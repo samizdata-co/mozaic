@@ -39,13 +39,16 @@ Read `PLAN.md` for the design, `docs/adr/` for decisions and `apps/docs/src/cont
 - Scales are plain d3 scales. Set the **domain** in chart code; `<Plot>` sets the range.
 - Sort, group, stack and compute domains in chart code or `transforms/`, never in marks.
 - A new mark is a component that calls `usePlot()` and draws SVG. Use `scaled(scale, value)` (band centres) or `position(plot, x, y)` (also projections). Don't depend on internals.
-- Colours come from the theme (`theme.palettes`); text colours from CSS tokens (`var(--mz-color-text)`, `--mz-color-muted`, …). Text never uses a data colour. Assign categorical colours by entity, in palette order; never cycle past the end.
+- Colours come from the theme (`theme.palettes`); text colours from CSS tokens (`var(--mz-color-text)`, `--mz-color-muted`, …). As in Datawrapper, a direct label, an annotation or a key phrase in the title or subtitle may take its series colour, so the text doubles as the legend, if that colour reaches 4.5:1 against the background (`contrastRatio()`); otherwise use a darker shade of it, or a swatch beside text in the text colour. Axes, notes, sources and tooltips use the tokens. Assign categorical colours by entity, in palette order; never cycle past the end. Grey (`semantic.context`) for everything the chart is not about, and one or two strong colours for what it is.
 - Anything that must print goes in `<Svg>`. `<Html>`, `<Canvas>`, tooltips and controls are hidden in print.
 - Theme-dependent defaults must be `$derived`, not destructuring defaults.
 - Use `Accessor<T, Value>`, never `Accessor<T, any>` (it erases callback types).
 - A chart form that more than one project could use (not just one dataset) belongs here as a recipe in `recipes/`, not in the project: add it to `recipes/index.ts` (and its `recipes` list) and `src/tests/recipes.spec.ts`; `mozaic eject` finds it by its file name. Projects wrap recipes with their data and strings.
 - Every component has an `@component` comment and typed, JSDoc-commented `Props`: the API reference is generated from them.
-- Every chart: `alt` text, a legend for 2+ series, all strings per locale, and a headline that is true of the data.
+- Every chart: `alt` text (chart type, data, takeaway), a headline that states one finding true of the data, a subtitle with what is measured, the unit, place and period, a `<Source>`, and all strings per locale.
+- Label 2+ series directly (`LineEndLabels`, labels on bars and areas) instead of with a legend. Use `Legend` or `Key` for colour and size scales, for labels that can't fit, and at narrow widths.
+- Annotate what the headline depends on (the key value, outliers, events, reference lines) next to the data it explains, with at most two text sizes. At narrow widths, move annotations below the chart or drop the least important; never shrink text.
+- Bars, columns and areas start at zero; lines needn't. No rotated tick labels: switch to horizontal bars.
 - Never nest interactive content (a chart can contain links and buttons; don't wrap it in `<a>`).
 - Test at 320 px and 1000 px wide, in each style and language, and in print.
 

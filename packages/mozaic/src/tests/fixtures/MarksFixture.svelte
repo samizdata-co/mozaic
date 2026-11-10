@@ -33,9 +33,11 @@
 			<Rules y={[0, 25]} />
 			<Text x={2} y={45} text={twoLines} halo />
 			<Callout x={4} y={40} dx={-40} dy={-20} label="callout-label" />
+			<Callout x={3} y={20} dx={-40} dy={-20} label="coloured-callout" color="#f0e442" class="coloured" />
 			<RefLine y={35} label="target" />
 			<RefLine x={2} label={twoLines} labelY={-30} anchor="end" dotted />
 			<Label x={1} y={30} label="labelled-point" marker />
+			<Label x={3} y={20} label="coloured-point" marker color="#f0e442" class="coloured" />
 			<Arrow from={[0, 10]} to={[1, 30]} />
 			<LineEndLabels
 				data={[
@@ -45,7 +47,8 @@
 				x={(d) => d.x}
 				y={(d) => d.y}
 				text={(d) => d.n}
-				color={() => 'red'}
+				color={(d) => (d.n === 'A' ? '#1f77b4' : '#f0e442')}
+				colorText
 			/>
 		</Svg>
 		<Html>

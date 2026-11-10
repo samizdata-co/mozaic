@@ -15,6 +15,7 @@ import ElectionFixture from './fixtures/ElectionFixture.svelte';
 import EmbeddedFixture from './fixtures/EmbeddedFixture.svelte';
 import DownloadsFixture from './fixtures/DownloadsFixture.svelte';
 import { gazeta, paper } from './fixtures/themes.js';
+import { contrastRatio } from '../lib/styles/index.js';
 
 const finite = (value: string | null) => value !== null && !/NaN|undefined/.test(value);
 
@@ -173,7 +174,7 @@ describe('marks and annotations', () => {
 
 	it('renders annotations', () => {
 		expect($('.mz-callout text')!.textContent).toContain('callout-label');
-		expect($$('.mz-callout path')).toHaveLength(2);
+		expect($('.mz-callout')!.querySelectorAll('path')).toHaveLength(2);
 		expect($('.mz-ref-line text')!.textContent).toBe('target');
 		expect($('.mz-ref-band text')!.textContent).toBe('band-label');
 		expect($('.mz-label circle')).not.toBeNull();
@@ -203,6 +204,27 @@ describe('marks and annotations', () => {
 		expect($$('.mz-tooltip-label').map((t) => t.textContent)).toEqual(['A', 'Longer B']);
 		expect($$('.mz-tooltip-value').map((t) => t.textContent)).toEqual(['1,00', '20,00']);
 		expect($('.mz-tooltip-swatch.line')!.getAttribute('style')).toContain('red');
+	});
+
+	it('keeps label text in the text colour unless given a series colour', () => {
+		expect($('.mz-callout text')!.getAttribute('style')).toBeNull();
+		expect($('.mz-label text')!.getAttribute('style')).toBeNull();
+	});
+
+	it('colours labels like their series, darkened until readable', () => {
+		const prop = (el: Element | null, name: string) =>
+			new RegExp(`${name}:\\s*([^;]+)`).exec(el!.getAttribute('style') ?? '')?.[1].trim();
+		const [a, b] = $$('.mz-line-end-labels text').map((t) => prop(t, 'fill'));
+		expect(a).toBe('#1f77b4');
+		expect(b).not.toBe('#f0e442');
+		expect(contrastRatio(b!, '#ffffff')).toBeGreaterThanOrEqual(4.5);
+		const callout = $('.mz-callout.coloured')!;
+		expect(prop(callout.querySelector('text'), 'fill')).toBe(b);
+		const arrows = [...callout.querySelectorAll('path')];
+		expect(arrows).toHaveLength(2);
+		for (const path of arrows) expect(prop(path, 'stroke')).toBe(b);
+		expect(prop($('.mz-label.coloured text'), 'fill')).toBe(b);
+		expect(prop($('.mz-label.coloured circle'), 'stroke')).toBe(b);
 	});
 
 	it('nudges overlapping end labels apart', () => {
