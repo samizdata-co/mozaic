@@ -74,7 +74,8 @@ copies this file into your project.
 			.domain([Math.min(0, min(data, value) ?? 0), Math.max(0, max(data, value) ?? 1)])
 			.nice()
 	);
-	let hovered = $state<T | null>(null);
+	// Raw, not a proxy: marks compare the hovered row with each datum by identity.
+	let hovered = $state.raw<T | null>(null);
 </script>
 
 <Chart {style} {locale} {medium} {width} {alt} {embed}>

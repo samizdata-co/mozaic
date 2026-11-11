@@ -65,6 +65,17 @@ test('line chart shows a tooltip on hover', async ({ page }) => {
 	await expect(page.locator('.frame .hover-dot')).toHaveCount(4);
 });
 
+test('scatter chart keeps the hovered point and fades the rest', async ({ page }) => {
+	await page.goto('/gallery/scatter/');
+	const points = page.locator('.frame .mz-points circle');
+	const box = (await points.first().boundingBox())!;
+	await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+	await expect(page.locator('.frame .mz-tooltip')).toBeVisible();
+	const opacities = await points.evaluateAll((els) => els.map((el) => Number(el.getAttribute('fill-opacity'))));
+	expect(Math.max(...opacities)).toBeGreaterThan(0.5);
+	expect(opacities.filter((o) => o > 0.5)).toHaveLength(1);
+});
+
 test('button group switches stacked columns to shares', async ({ page }) => {
 	await page.goto('/gallery/stacked-columns/');
 	const share = page.locator('.frame [role="radio"]').nth(1);

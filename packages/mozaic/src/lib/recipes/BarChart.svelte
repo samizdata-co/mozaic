@@ -132,7 +132,8 @@ file into your project and change anything.
 	const barColor = (d: T) => color?.(d) ?? theme.palettes.categorical[0];
 	/** White on dark bars, the text colour on light ones. */
 	const inkOn = (d: T) => (contrastRatio(barColor(d), '#ffffff') >= 4.5 ? '#ffffff' : 'var(--mz-color-text)');
-	let hovered = $state<T | null>(null);
+	// Raw, not a proxy: marks compare the hovered row with each datum by identity.
+	let hovered = $state.raw<T | null>(null);
 </script>
 
 <Chart {style} {locale} {medium} {width} {alt} {embed}>

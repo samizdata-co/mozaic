@@ -187,7 +187,8 @@ copies this file into your project.
 			: basePadding;
 	};
 	const withUnit = (s: string, unit?: string) => (unit ? `${s} ${unit}` : s);
-	let hovered = $state<T | null>(null);
+	// Raw, not a proxy: marks compare the hovered row with each datum by identity.
+	let hovered = $state.raw<T | null>(null);
 </script>
 
 <Chart {style} {locale} {medium} {width} {alt} {embed}>
