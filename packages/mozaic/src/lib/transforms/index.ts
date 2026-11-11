@@ -1,4 +1,4 @@
-export { avoidOverlap } from './labels.js';
+export { avoidOverlap, wrapLabel } from './labels.js';
 export { stack, type StackedRow, type StackOptions } from './stack.js';
 export { bin, type Bin } from './bin.js';
 export { groupBy, indexTo, rollup } from './group.js';

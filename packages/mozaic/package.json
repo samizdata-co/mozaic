@@ -109,6 +109,10 @@
 			"types": "./dist/transforms/index.d.ts",
 			"default": "./dist/transforms/index.js"
 		},
+		"./cli": {
+			"types": "./cli/src/index.d.ts",
+			"default": "./cli/src/index.js"
+		},
 		"./package.json": "./package.json"
 	},
 	"peerDependencies": {

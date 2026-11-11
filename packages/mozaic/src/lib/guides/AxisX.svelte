@@ -1,12 +1,14 @@
 <!--
 @component
 Horizontal axis for the plot's x scale. Tick labels use the chart's locale
-unless you pass `format`.
+unless you pass `format`. On a continuous scale, labels that would overlap are
+thinned to every other tick (or every third, and so on); the tick marks stay.
 -->
 <script lang="ts">
 	import { useChart, usePlot } from '../core/context.js';
 	import { estimateTextWidth, scaled } from '../core/scales.js';
-	import { defaultTickFormat, tickValues } from './ticks.js';
+	import { useTextWidth } from '../core/text.svelte.js';
+	import { defaultTickFormat, tickStride, tickValues } from './ticks.js';
 
 	interface Props {
 		/** Approximate number of ticks for continuous scales. */
@@ -46,6 +48,17 @@ unless you pass `format`.
 	const values = $derived(tickValues(plot.x, ticks ?? chart.theme.plot.ticks, explicitValues));
 	const fmt = $derived(format ?? defaultTickFormat(values, chart.locale));
 	const dir = $derived(position === 'bottom' ? 1 : -1);
+	const measure = useTextWidth();
+	const items = $derived(values.map((value, i) => ({ value, px: scaled(plot.x, value), label: fmt(value, i) })));
+	// Band and point scales name every category, so only continuous scales are thinned.
+	const stride = $derived(
+		plot.x.bandwidth
+			? 1
+			: tickStride(
+					items.map((t) => t.px),
+					items.map((t) => measure(t.label, chart.theme.plot.fontSize, chart.theme.tokens['--mz-font-body']))
+				)
+	);
 
 	// Labels that would spill past the chart edge are anchored inwards instead of centred.
 	function anchor(px: number, label: string): 'start' | 'middle' | 'end' {
@@ -58,18 +71,18 @@ unless you pass `format`.
 
 <g class="mz-axis mz-axis-x {className}" transform="translate(0,{position === 'bottom' ? plot.height : 0})">
 	{#if baseline}<line class="mz-axis-line" x2={plot.width} />{/if}
-	{#each values as value, i (value)}
-		{@const px = scaled(plot.x, value)}
-		{@const label = fmt(value, i)}
+	{#each items as { value, px, label }, i (value)}
 		<g class="mz-tick" transform="translate({px},0)">
 			{#if tickSize > 0}<line y2={dir * tickSize} />{/if}
-			<text
-				y={dir * (tickSize + tickPadding)}
-				dy={position === 'bottom' ? '0.71em' : '0'}
-				text-anchor={anchor(px, label)}
-			>
-				{label}
-			</text>
+			{#if i % stride === 0}
+				<text
+					y={dir * (tickSize + tickPadding)}
+					dy={position === 'bottom' ? '0.71em' : '0'}
+					text-anchor={anchor(px, label)}
+				>
+					{label}
+				</text>
+			{/if}
 		</g>
 	{/each}
 	{#if label}
