@@ -39,6 +39,7 @@ values aligned in a column. `children` follow the rows.
 	let { title, items = [], x, y, visible = true, offset = 12, class: className = '', children }: Props = $props();
 
 	const plot = usePlot();
+	const swatches = $derived(items.some((item) => item.color));
 	const flip = $derived(x > plot.width * 0.6);
 	const top = $derived(Math.max(0, Math.min(plot.height, y)));
 	// Once measured, the tooltip is placed so it stays inside the chart (see tooltipLeft).
@@ -61,10 +62,13 @@ values aligned in a column. `children` follow the rows.
 	>
 		{#if title}<strong class="mz-tooltip-title">{title}</strong>{/if}
 		{#if items.length}
-			<div class="mz-tooltip-items">
+			<!-- The swatch column only when some row has a colour; otherwise it would indent every row. -->
+			<div class="mz-tooltip-items" class:plain={!swatches}>
 				{#each items as item, i (i)}
-					<span class="mz-tooltip-swatch {item.shape ?? 'square'}" style:background={item.color ?? 'transparent'}
-					></span>
+					{#if swatches}
+						<span class="mz-tooltip-swatch {item.shape ?? 'square'}" style:background={item.color ?? 'transparent'}
+						></span>
+					{/if}
 					<span class="mz-tooltip-label">{item.label}</span>
 					<strong class="mz-tooltip-value">{item.value}</strong>
 				{/each}
@@ -103,6 +107,9 @@ values aligned in a column. `children` follow the rows.
 		align-items: center;
 		column-gap: 0.4rem;
 		row-gap: 0.15rem;
+	}
+	.mz-tooltip-items.plain {
+		grid-template-columns: 1fr auto;
 	}
 	.mz-tooltip-swatch {
 		width: 0.7rem;

@@ -38,6 +38,8 @@ project.
 		alt?: string;
 		/** The chart's embed page, for the embed code under the chart (see `<Chart embed>`). */
 		embed?: ChartEmbed;
+		/** Unit after the last value-axis tick label and the tooltip values, e.g. "lei/m³". */
+		unit?: string;
 		format?: (n: number) => string;
 		/** Tooltip date format (d3-time-format specifier). */
 		dateFormat?: string;
@@ -64,6 +66,7 @@ project.
 		source,
 		alt,
 		embed,
+		unit,
 		format,
 		dateFormat = '%B %Y',
 		color,
@@ -110,7 +113,7 @@ project.
 		{#snippet children(plot)}
 			<Svg>
 				<GridY ticks={5} />
-				<AxisY ticks={5} format={fmt} inside={plot.breakpoint === 's'} />
+				<AxisY ticks={5} format={fmt} inside={plot.breakpoint === 's'} {unit} />
 				<AxisX ticks={plot.breakpoint === 's' ? 4 : 7} />
 				{#if hover}
 					<line x1={plot.x(xValue(hover))} x2={plot.x(xValue(hover))} y2={plot.height} stroke="var(--mz-color-axis)" />
@@ -142,7 +145,10 @@ project.
 						{#each series as s, i}
 							{@const p = valueAt(s, date)}
 							{#if p}
-								<div><span style:color={colour(s, i)}>●</span> {name(s)}: <strong>{fmt(yValue(p))}</strong></div>
+								<div>
+									<span style:color={colour(s, i)}>●</span>
+									{name(s)}: <strong>{fmt(yValue(p))}{unit ? ` ${unit}` : ''}</strong>
+								</div>
 							{/if}
 						{/each}
 					</Tooltip>

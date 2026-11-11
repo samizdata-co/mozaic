@@ -8,6 +8,19 @@ describe('createLocale', () => {
 		expect(createLocale('ru').number(1234567.5)).toBe('1 234 567,5');
 	});
 
+	it('decimals and money: fixed decimals, none for whole numbers', () => {
+		const ro = createLocale('ro');
+		expect(ro.money(26.14)).toBe('26,14');
+		expect(ro.money(12.3)).toBe('12,30');
+		expect(ro.money(26)).toBe('26');
+		expect(ro.money(10.999)).toBe('11');
+		expect(ro.money(3788)).toBe('3.788');
+		expect(ro.money(-1.5)).toBe('−1,50');
+		expect(ro.decimals(1)(8.46)).toBe('8,5');
+		expect(ro.decimals(1)(11.03)).toBe('11');
+		expect(createLocale('en').money(1234.5)).toBe('1,234.50');
+	});
+
 	it('formats percentages and signs with a true minus', () => {
 		const ro = createLocale('ro');
 		expect(ro.percent(0.125)).toBe('13%');

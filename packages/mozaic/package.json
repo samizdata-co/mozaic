@@ -104,6 +104,11 @@
 			"types": "./dist/locale/index.d.ts",
 			"default": "./dist/locale/index.js"
 		},
+		"./flags": {
+			"mozaic-dev": "./src/lib/flags/index.ts",
+			"types": "./dist/flags/index.d.ts",
+			"default": "./dist/flags/index.js"
+		},
 		"./transforms": {
 			"mozaic-dev": "./src/lib/transforms/index.ts",
 			"types": "./dist/transforms/index.d.ts",
@@ -147,6 +152,7 @@
 		"@types/node": "^24.0.0",
 		"@vitest/coverage-v8": "^4.1.12",
 		"d3-scale-chromatic": "^3.1.0",
+		"flag-icons": "7.6.0",
 		"linkedom": "^0.18.14",
 		"publint": "^0.3.21",
 		"svelte": "^5.57.2",

@@ -17,6 +17,14 @@ export interface Locale {
 	timeFormat(specifier: string): (d: Date) => string;
 	/** 1234.5 → "1,234.5" (en) / "1.234,5" (ro) / "1 234,5" (ru). Trailing zeros removed. */
 	number: (n: number) => string;
+	/**
+	 * Exactly `digits` decimals, except that a value which rounds to a whole number at that
+	 * precision has none: `decimals(1)` gives 8.46 → "8.5" and 11.03 → "11" (not "11.0").
+	 * Use it for one rounding level across a chart without "26.0" or "26.00".
+	 */
+	decimals(digits: number): (n: number) => string;
+	/** Money: two decimals, or none when the value is a whole number (26.14 → "26.14", 26 → "26", 12.3 → "12.30"). */
+	money: (n: number) => string;
 	/** 0.123 → "12%". */
 	percent: (n: number) => string;
 	/** 0.123 → "+12%"; −0.05 → "−5%". */
@@ -32,6 +40,14 @@ export function createLocale(code: LocaleCode): Locale {
 	if (!def) throw new Error(`Unknown mozaic locale "${code}". Known locales: ${Object.keys(definitions).join(', ')}`);
 	const numbers = formatLocale(def.number);
 	const times = timeFormatLocale(def.time);
+	const decimals = (digits: number) => {
+		const withDecimals = numbers.format(`,.${digits}f`);
+		const whole = numbers.format(',.0f');
+		return (n: number) => {
+			const rounded = Number(n.toFixed(digits));
+			return Number.isInteger(rounded) ? whole(rounded) : withDecimals(n);
+		};
+	};
 	const locale: Locale = {
 		code,
 		lang: def.lang,
@@ -39,6 +55,8 @@ export function createLocale(code: LocaleCode): Locale {
 		format: (specifier) => numbers.format(specifier),
 		timeFormat: (specifier) => times.format(specifier),
 		number: numbers.format(',~f'),
+		decimals,
+		money: decimals(2),
 		percent: numbers.format('.0%'),
 		signedPercent: numbers.format('+.0%')
 	};

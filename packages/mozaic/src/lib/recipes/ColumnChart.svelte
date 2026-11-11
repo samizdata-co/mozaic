@@ -34,6 +34,8 @@ copies this file into your project.
 		alt?: string;
 		/** The chart's embed page, for the embed code under the chart (see `<Chart embed>`). */
 		embed?: ChartEmbed;
+		/** Unit after the last value-axis tick label and the tooltip values, e.g. "lei/m³". */
+		unit?: string;
 		format?: (n: number) => string;
 		color?: (d: T) => string;
 		height?: number;
@@ -56,6 +58,7 @@ copies this file into your project.
 		source,
 		alt,
 		embed,
+		unit,
 		format,
 		color,
 		height = 280,
@@ -87,7 +90,7 @@ copies this file into your project.
 			{@const every = labelEvery ?? Math.max(1, Math.ceil((data.length * 36) / Math.max(1, plot.width)))}
 			<Svg>
 				<GridY ticks={5} />
-				<AxisY ticks={5} format={fmt} />
+				<AxisY ticks={5} format={fmt} {unit} />
 				<AxisX tickValues={data.map(label).filter((_, i) => i % every === 0)} />
 				<Bars
 					{data}
@@ -104,7 +107,7 @@ copies this file into your project.
 			<Html>
 				{#if hovered}
 					<Tooltip x={scaled(plot.x, label(hovered))} y={plot.y(value(hovered)) ?? 0}>
-						<strong>{label(hovered)}</strong><br />{fmt(value(hovered))}
+						<strong>{label(hovered)}</strong><br />{fmt(value(hovered))}{unit ? ` ${unit}` : ''}
 					</Tooltip>
 				{/if}
 			</Html>

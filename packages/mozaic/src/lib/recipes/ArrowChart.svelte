@@ -44,6 +44,8 @@ project and change anything.
 		/** The chart's embed page, for the embed code under the chart (see `<Chart embed>`). */
 		embed?: ChartEmbed;
 		/** Value label format; defaults to locale numbers. */
+		/** Unit after the last value-axis tick label and the tooltip values, e.g. "lei/m³". */
+		unit?: string;
 		format?: (n: number) => string;
 		/** Axis tick format; defaults to `format`. */
 		tickFormat?: (n: number) => string;
@@ -77,6 +79,7 @@ project and change anything.
 		source,
 		alt,
 		embed,
+		unit,
 		format,
 		tickFormat,
 		color,
@@ -165,7 +168,7 @@ project and change anything.
 		{#snippet children(plot)}
 			<Svg>
 				<GridX ticks={4} />
-				<AxisX ticks={4} format={tickFormat ?? fmt} />
+				<AxisX ticks={4} format={tickFormat ?? fmt} {unit} />
 				<AxisY />
 				<Arrows
 					data={both}

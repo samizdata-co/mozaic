@@ -26,6 +26,14 @@ export default ts.config(
 		}
 	},
 	{
-		ignores: ['**/node_modules', '**/dist', '**/build', '**/.svelte-kit', '**/test-results', '**/playwright-report']
+		ignores: [
+			'**/node_modules',
+			'packages/mozaic/src/lib/flags/svgs.ts',
+			'**/dist',
+			'**/build',
+			'**/.svelte-kit',
+			'**/test-results',
+			'**/playwright-report'
+		]
 	}
 );

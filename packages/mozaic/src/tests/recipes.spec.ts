@@ -9,8 +9,10 @@ import {
 	MosaicChart,
 	PercentileChart,
 	ScatterChart,
-	StackedBarChart
+	StackedBarChart,
+	StripChart
 } from '../lib/recipes/index.js';
+import { EL, MD, RO } from '../lib/flags/index.js';
 
 const rows = [
 	{ name: 'Chișinău', value: 30 },
@@ -34,6 +36,215 @@ describe('recipes', () => {
 		expect($('.mz-chart-tools .mz-tool')!.getAttribute('aria-label')).toBe('Embed');
 		expect($$('.mz-axis-y text').map((t) => t.textContent?.trim())).toEqual(['Chișinău', 'Bălți', 'Cahul']);
 		expect($$('.mz-text text').map((t) => t.textContent?.trim())).toContain('30');
+	});
+
+	it('BarChart: a range gets a lighter bar to the high end and a "low–high" label', () => {
+		const data = [
+			{ name: 'Chișinău', value: 30 },
+			{ name: 'Bălți', value: 14, low: 12, high: 16 },
+			{ name: 'Cahul', value: 8 }
+		];
+		type D = (typeof data)[number];
+		const { $$ } = renderDocument(BarChart, {
+			data,
+			label: (d: D) => d.name,
+			value: (d: D) => d.value,
+			range: (d: D): [number, number] | null => (d.low != null && d.high != null ? [d.low, d.high] : null),
+			format: (n: number) => String(n),
+			width: 400
+		});
+		expect($$('.mz-bars-range path')).toHaveLength(1);
+		expect(
+			$$('.mz-text text')
+				.map((t) => t.textContent?.trim())
+				.sort()
+		).toEqual(['12–16', '30', '8']);
+		// The long bar holds its label; the range keeps its label outside, after the high end.
+		const inside = $$('.mz-bar-value-inside text').map((t) => t.textContent?.trim());
+		expect(inside).toContain('30');
+		expect(inside).not.toContain('12–16');
+	});
+
+	it('BarChart: flags between the labels and the bars', () => {
+		const { $$ } = renderDocument(BarChart, {
+			data: rows,
+			label: (d: (typeof rows)[number]) => d.name,
+			value: (d: (typeof rows)[number]) => d.value,
+			flag: (d: (typeof rows)[number]) => (d.name === 'Cahul' ? null : MD),
+			width: 400
+		});
+		expect($$('.mz-flag')).toHaveLength(2);
+		expect($$('.mz-flag clipPath circle')).toHaveLength(2);
+		const ids = $$('.mz-flag clipPath').map((c) => c.id);
+		expect(new Set(ids).size).toBe(2);
+	});
+
+	it('ScatterChart: flags instead of dots', () => {
+		const data = [
+			{ name: 'Moldova', geo: 'MD', x: 1, y: 2 },
+			{ name: 'Romania', geo: 'RO', x: 2, y: 1 },
+			{ name: 'Other', geo: 'XX', x: 3, y: 3 }
+		];
+		type D = (typeof data)[number];
+		const flags: Record<string, string> = { MD, RO };
+		const { $$ } = renderDocument(ScatterChart, {
+			data,
+			x: (d: D) => d.x,
+			y: (d: D) => d.y,
+			name: (d: D) => d.name,
+			flag: (d: D) => flags[d.geo],
+			width: 400
+		});
+		expect($$('.mz-flags .mz-flag')).toHaveLength(2);
+		expect($$('.mz-points circle')).toHaveLength(1);
+	});
+
+	it('StripChart: one flag per item, labels for highlights, a reference line', () => {
+		const data = [
+			{ geo: 'MD', name: 'Moldova', value: 8.5 },
+			{ geo: 'RO', name: 'România', value: 5.9 },
+			{ geo: 'EL', name: 'Grecia', value: 7.7 },
+			{ geo: 'XX', name: 'Fără steag', value: 6 }
+		];
+		type D = (typeof data)[number];
+		const flags: Record<string, string> = { MD, RO, EL };
+		const { $$ } = renderDocument(StripChart, {
+			data,
+			value: (d: D) => d.value,
+			label: (d: D) => d.name,
+			flag: (d: D) => flags[d.geo],
+			highlight: (d: D) => d.geo === 'MD' || d.geo === 'RO',
+			emphasize: (d: D) => d.geo === 'MD',
+			references: [{ value: 11, label: 'Media UE: 11' }],
+			format: (n: number) => String(n),
+			width: 500
+		});
+		expect($$('.mz-flag')).toHaveLength(3);
+		expect($$('circle[r]').filter((c) => c.closest('.mz-flag') == null && c.getAttribute('fill'))).toHaveLength(1);
+		const labels = $$('.mz-strip-label');
+		expect(labels.map((t) => t.textContent)).toEqual(['România 5.9', 'Moldova 8.5']);
+		expect(labels.map((t) => (t.getAttribute('style') ?? '').includes('font-weight'))).toEqual([false, true]);
+		expect($$('.mz-strip-ref-label').map((t) => t.textContent)).toEqual(['Media UE: 11']);
+	});
+
+	it('the last tick label of each value axis carries the unit', () => {
+		const data = [
+			{ name: 'A', x: 1, y: 2 },
+			{ name: 'B', x: 9, y: 18 }
+		];
+		type D = (typeof data)[number];
+		const scatter = renderDocument(ScatterChart, {
+			data,
+			x: (d: D) => d.x,
+			y: (d: D) => d.y,
+			name: (d: D) => d.name,
+			xUnit: 'euro',
+			yUnit: 'c/kWh',
+			width: 500
+		});
+		const xs = scatter.$$('.mz-axis-x .mz-tick text').map((t) => t.textContent?.trim());
+		expect(xs.at(-1)).toMatch(/ euro$/);
+		expect(xs.filter((t) => t?.includes('euro'))).toHaveLength(1);
+		expect(
+			scatter
+				.$$('.mz-axis-y')
+				.map((g) => g.textContent)
+				.join(' ')
+		).toContain('c/kWh');
+		const strip = renderDocument(StripChart, {
+			data,
+			value: (d: D) => d.x,
+			label: (d: D) => d.name,
+			unit: 'c/kWh',
+			width: 500
+		});
+		expect(
+			strip
+				.$$('.mz-axis-x .mz-tick text')
+				.map((t) => t.textContent?.trim())
+				.at(-1)
+		).toMatch(/ c\/kWh$/);
+	});
+
+	it('ScatterChart: emphasized labels are bold', () => {
+		const data = [{ name: 'A', x: 1, y: 1 }];
+		type D = (typeof data)[number];
+		const { $$ } = renderDocument(ScatterChart, {
+			data,
+			x: (d: D) => d.x,
+			y: (d: D) => d.y,
+			name: (d: D) => d.name,
+			labelled: () => true,
+			emphasize: () => true,
+			width: 400
+		});
+		expect(
+			$$('.mz-label text, text.mz-label').some((t) => (t.getAttribute('style') ?? '').includes('font-weight'))
+		).toBe(true);
+	});
+
+	it('ScatterChart: quadrants draw two dividing lines and a label per corner', () => {
+		const data = [
+			{ name: 'A', x: 1, y: 1 },
+			{ name: 'B', x: 9, y: 9 }
+		];
+		type D = (typeof data)[number];
+		const { $$ } = renderDocument(ScatterChart, {
+			data,
+			x: (d: D) => d.x,
+			y: (d: D) => d.y,
+			name: (d: D) => d.name,
+			xDomain: [0, 10],
+			yDomain: [0, 10],
+			quadrants: { x: 5, y: 5, xLabel: 'Average', topLeft: 'Poorer,\nmore expensive', bottomRight: 'Richer, cheaper' },
+			width: 500
+		});
+		expect($$('.mz-ref-line')).toHaveLength(2);
+		expect($$('.mz-quadrant').map((t) => [...t.querySelectorAll('tspan')].map((s) => s.textContent))).toEqual([
+			['Poorer,', 'more expensive'],
+			['Richer, cheaper']
+		]);
+	});
+
+	it('ScatterChart: axis arrows replace quarter labels that do not fit', () => {
+		const data = [
+			{ name: 'A', x: 1, y: 1 },
+			{ name: 'B', x: 9, y: 9 }
+		];
+		type D = (typeof data)[number];
+		const props = {
+			data,
+			x: (d: D) => d.x,
+			y: (d: D) => d.y,
+			name: (d: D) => d.name,
+			xDomain: [0, 10] as [number, number],
+			yDomain: [0, 10] as [number, number],
+			quadrants: { x: 5, y: 5, topLeft: 'Lower incomes,\nmore expensive gas' },
+			directions: { x: ['Poorer', 'Richer'] as [string, string] }
+		};
+		const wide = renderDocument(ScatterChart, { ...props, width: 900 });
+		expect(wide.$$('.mz-quadrant')).toHaveLength(1);
+		expect(wide.$$('.mz-direction')).toHaveLength(0);
+		const narrow = renderDocument(ScatterChart, { ...props, width: 240 });
+		expect(narrow.$$('.mz-quadrant')).toHaveLength(0);
+		expect(narrow.$$('.mz-direction').map((t) => t.textContent)).toEqual(['← Poorer', 'Richer →']);
+	});
+
+	it('StripChart: arrows for what each end means, soft gridlines', () => {
+		const data = [
+			{ name: 'A', value: 2 },
+			{ name: 'B', value: 8 }
+		];
+		type D = (typeof data)[number];
+		const { $$ } = renderDocument(StripChart, {
+			data,
+			value: (d: D) => d.value,
+			label: (d: D) => d.name,
+			directions: ['Cheaper', 'Dearer'],
+			width: 500
+		});
+		expect($$('.mz-strip-direction').map((t) => t.textContent)).toEqual(['← Cheaper', 'Dearer →']);
+		expect($$('.mz-strip-grid').length).toBeGreaterThan(2);
 	});
 
 	it('source: text, or linked sources joined with "; " (plain text in print)', () => {

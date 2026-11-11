@@ -2,12 +2,14 @@
 @component
 A beeswarm: one dot per datum along the x scale, nudged vertically so dots
 do not overlap. With a band y scale, each category gets its own swarm.
+Pass `flag` to draw countries as circular flags instead of dots.
 -->
 <script lang="ts" generics="T">
 	import { useChart, usePlot } from '../core/context.js';
 	import { scaled } from '../core/scales.js';
 	import { access, type Accessor } from '../core/accessor.js';
 	import { dodge } from '../transforms/dodge.js';
+	import Flag from './Flag.svelte';
 
 	interface Props {
 		data: T[];
@@ -18,6 +20,8 @@ do not overlap. With a band y scale, each category gets its own swarm.
 		padding?: number;
 		fill?: Accessor<T, string>;
 		opacity?: Accessor<T, number>;
+		/** The datum's flag from `@samizdata/mozaic/flags`, drawn as a circle of radius `r` instead of a dot. */
+		flag?: (d: T) => string | null | undefined;
 		title?: (d: T) => string;
 		onpointerenter?: (d: T, event: PointerEvent) => void;
 		onpointerleave?: (d: T, event: PointerEvent) => void;
@@ -31,6 +35,7 @@ do not overlap. With a band y scale, each category gets its own swarm.
 		r = 4,
 		padding = 1,
 		fill,
+		flag,
 		opacity = 1,
 		title,
 		onpointerenter,
@@ -62,22 +67,36 @@ do not overlap. With a band y scale, each category gets its own swarm.
 
 <g class="mz-beeswarm {className}">
 	{#each dots as dot, i}
-		<!-- svelte-ignore a11y_no_static_element_interactions -->
-		<circle
-			cx={dot.cx}
-			cy={dot.cy}
-			{r}
-			fill={fill ? access(fill, dot.d, i) : chart.theme.palettes.categorical[0]}
-			fill-opacity={access(opacity, dot.d, i)}
-			onpointerenter={onpointerenter ? (e) => onpointerenter(dot.d, e) : undefined}
-			onpointerleave={onpointerleave ? (e) => onpointerleave(dot.d, e) : undefined}
-			>{#if title}<title>{title(dot.d)}</title>{/if}</circle
-		>
+		{@const svg = flag?.(dot.d)}
+		{#if svg}
+			<Flag
+				{svg}
+				cx={dot.cx}
+				cy={dot.cy}
+				{r}
+				opacity={access(opacity, dot.d, i)}
+				title={title?.(dot.d)}
+				onpointerenter={onpointerenter ? (e) => onpointerenter(dot.d, e) : undefined}
+				onpointerleave={onpointerleave ? (e) => onpointerleave(dot.d, e) : undefined}
+			/>
+		{:else}
+			<!-- svelte-ignore a11y_no_static_element_interactions -->
+			<circle
+				cx={dot.cx}
+				cy={dot.cy}
+				{r}
+				fill={fill ? access(fill, dot.d, i) : chart.theme.palettes.categorical[0]}
+				fill-opacity={access(opacity, dot.d, i)}
+				onpointerenter={onpointerenter ? (e) => onpointerenter(dot.d, e) : undefined}
+				onpointerleave={onpointerleave ? (e) => onpointerleave(dot.d, e) : undefined}
+				>{#if title}<title>{title(dot.d)}</title>{/if}</circle
+			>
+		{/if}
 	{/each}
 </g>
 
 <style>
-	circle {
+	.mz-beeswarm > circle {
 		stroke: var(--mz-color-bg);
 		stroke-width: 1;
 	}

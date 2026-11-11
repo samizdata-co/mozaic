@@ -3,6 +3,8 @@
 Horizontal axis for the plot's x scale. Tick labels use the chart's locale
 unless you pass `format`. On a continuous scale, labels that would overlap are
 thinned to every other tick (or every third, and so on); the tick marks stay.
+`unit` names the unit once, after the last labelled tick ("20 c/kWh"), kept
+inside the chart.
 -->
 <script lang="ts">
 	import { useChart, usePlot } from '../core/context.js';
@@ -23,6 +25,8 @@ thinned to every other tick (or every third, and so on); the tick marks stay.
 		baseline?: boolean;
 		/** Axis title, drawn at the end of the axis. */
 		label?: string;
+		/** Unit written after the last labelled tick, e.g. "lei/m³" or "euro a year". */
+		unit?: string;
 		class?: string;
 	}
 
@@ -38,6 +42,7 @@ thinned to every other tick (or every third, and so on); the tick marks stay.
 		tickPadding: tickPaddingInput,
 		baseline: baselineInput,
 		label,
+		unit,
 		class: className = ''
 	}: Props = $props();
 
@@ -49,15 +54,25 @@ thinned to every other tick (or every third, and so on); the tick marks stay.
 	const fmt = $derived(format ?? defaultTickFormat(values, chart.locale));
 	const dir = $derived(position === 'bottom' ? 1 : -1);
 	const measure = useTextWidth();
-	const items = $derived(values.map((value, i) => ({ value, px: scaled(plot.x, value), label: fmt(value, i) })));
+	const raw = $derived(values.map((value, i) => ({ value, px: scaled(plot.x, value), label: fmt(value, i) })));
+	// The unit makes the last label longer, so the thinning takes it into account.
+	const withUnit = (list: typeof raw) =>
+		unit && list.length
+			? list.map((t, i) => (i === list.length - 1 ? { ...t, label: `${t.label} ${unit}` } : t))
+			: list;
 	// Band and point scales name every category, so only continuous scales are thinned.
 	const stride = $derived(
 		plot.x.bandwidth
 			? 1
 			: tickStride(
-					items.map((t) => t.px),
-					items.map((t) => measure(t.label, chart.theme.plot.fontSize, chart.theme.tokens['--mz-font-body']))
+					raw.map((t) => t.px),
+					withUnit(raw).map((t) => measure(t.label, chart.theme.plot.fontSize, chart.theme.tokens['--mz-font-body']))
 				)
+	);
+	/** Index of the last tick that gets a label: the one that carries the unit. */
+	const lastShown = $derived(raw.length ? raw.length - 1 - ((raw.length - 1) % stride) : -1);
+	const items = $derived(
+		raw.map((t, i) => (unit && i === lastShown && !plot.x.bandwidth ? { ...t, label: `${t.label} ${unit}` } : t))
 	);
 
 	// Labels that would spill past the chart edge are anchored inwards instead of centred.

@@ -7,3 +7,4 @@ pnpm-lock.yaml
 apps/docs/e2e/__screenshots__
 packages/mozaic/coverage
 docs/README.md
+packages/mozaic/src/lib/flags/svgs.ts
