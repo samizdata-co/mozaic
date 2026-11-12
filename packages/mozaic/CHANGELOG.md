@@ -1,5 +1,11 @@
 # @samizdata/mozaic
 
+## 0.12.1
+
+### Patch Changes
+
+- 4769e7b: `ScatterChart`, `BarChart` and `ColumnChart` keep the hovered point or bar at full strength again: the hovered row was stored in a deep `$state` proxy, so it never matched its datum and every mark faded, the hovered one too.
+
 ## 0.12.0
 
 ### Minor Changes
