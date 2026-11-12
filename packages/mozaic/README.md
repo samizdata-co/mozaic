@@ -40,7 +40,7 @@ pnpm add @samizdata/mozaic d3-scale d3-array d3-shape
 | `@samizdata/mozaic/locale`      | `createLocale` (`en`, `ro`, `ru`)                                                                                                                                                                   |
 | `@samizdata/mozaic/embed`       | `Embed`, `useEmbedParams`, `embedCode`, `hostScript`, `observeHeight`                                                                                                                               |
 | `@samizdata/mozaic/export`      | `figureToSvg`, `downloadSvg`, `downloadPng`, `figureToPng`                                                                                                                                          |
-| `@samizdata/mozaic/recipes`     | `BarChart`, `ColumnChart`, `LineChart`, `ScatterChart`, `ArrowChart`, `BarDotChart`, `StackedBarChart`, `MosaicChart`, `PercentileChart`                                                            |
+| `@samizdata/mozaic/recipes`     | `BarChart`, `ColumnChart`, `LineChart`, `ScatterChart`, `ArrowChart`, `BarDotChart`, `StackedBarChart`, `MosaicChart`, `PercentileChart`, `StripChart`                                              |
 
 ## CLI
 
