@@ -9,5 +9,5 @@ export { default as Logo } from './Logo.svelte';
 export { default as Byline } from './Byline.svelte';
 export { default as DataTable } from './DataTable.svelte';
 export { default as DataDownload } from './DataDownload.svelte';
-export { setDownloads, useChart, useLocale, useTheme } from '../core/context.js';
+export { setDownloads, setLoadFonts, useChart, useLocale, useTheme } from '../core/context.js';
 export type { SourceItem } from './types.js';

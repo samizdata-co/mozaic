@@ -7,6 +7,7 @@ The last point gets a dot.
 	import { extent } from 'd3-array';
 	import { scaleLinear } from 'd3-scale';
 	import { line } from 'd3-shape';
+	import { PATH_DIGITS } from '../core/scales.js';
 
 	interface Props {
 		values: number[];
@@ -33,7 +34,8 @@ The last point gets a dot.
 	const d = $derived(
 		line<number>()
 			.x((_, i) => x(i))
-			.y((v) => y(v))(values) ?? ''
+			.y((v) => y(v))
+			.digits(PATH_DIGITS)(values) ?? ''
 	);
 	const last = $derived(values.length - 1);
 </script>

@@ -14,6 +14,8 @@ import EdgeAxisFixture from './fixtures/EdgeAxisFixture.svelte';
 import ElectionFixture from './fixtures/ElectionFixture.svelte';
 import EmbeddedFixture from './fixtures/EmbeddedFixture.svelte';
 import DownloadsFixture from './fixtures/DownloadsFixture.svelte';
+import HostFontsFixture from './fixtures/HostFontsFixture.svelte';
+import PrecisionFixture from './fixtures/PrecisionFixture.svelte';
 import { gazeta, paper } from './fixtures/themes.js';
 import { contrastRatio } from '../lib/styles/index.js';
 
@@ -49,6 +51,12 @@ describe('Chart frame', () => {
 		expect(svgOnly.$('.mz-logo-text')).toBeNull();
 		expect(render(BarsFixture, { props: { style: paper } }).head).toContain('fonts.bunny.net/css?family=work-sans');
 		expect(render(BarsFixture).head).not.toContain('fonts.bunny.net');
+	});
+
+	it('leaves the fonts to the page under setLoadFonts(false), unless a chart asks for them', () => {
+		expect(render(BarsFixture, { props: { style: paper, loadFonts: false } }).head).not.toContain('fonts.bunny.net');
+		expect(render(HostFontsFixture, { props: { style: paper } }).head).not.toContain('fonts.bunny.net');
+		expect(render(HostFontsFixture, { props: { style: paper, loadFonts: true } }).head).toContain('fonts.bunny.net');
 	});
 
 	it('translates frame labels', () => {
@@ -158,6 +166,17 @@ describe('marks and annotations', () => {
 		expect(finite(line)).toBe(true);
 		expect(line.match(/M/g)).toHaveLength(2);
 		expect(finite($('.mz-area')!.getAttribute('d'))).toBe(true);
+	});
+
+	it('writes coordinates no finer than can be seen', () => {
+		const precise = renderDocument(PrecisionFixture);
+		const decimals = (value: string) =>
+			Math.max(0, ...(value.match(/\d+\.\d+/g) ?? []).map((n) => n.split('.')[1].length));
+		expect(decimals(precise.$('.mz-line')!.getAttribute('d')!)).toBe(1);
+		expect(decimals(precise.$('.mz-area')!.getAttribute('d')!)).toBe(1);
+		const circles = precise.$$('.mz-points circle').map((c) => `${c.getAttribute('cx')} ${c.getAttribute('cy')}`);
+		expect(circles).toHaveLength(7);
+		expect(decimals(circles.join(' '))).toBe(2);
 	});
 
 	it('skips points with missing values', () => {

@@ -6,7 +6,7 @@ One line through `data` (one series). For several series, render one
 <script lang="ts" generics="T">
 	import { curveLinear, line, type CurveFactory } from 'd3-shape';
 	import { useChart, usePlot } from '../core/context.js';
-	import { scaled } from '../core/scales.js';
+	import { PATH_DIGITS, scaled } from '../core/scales.js';
 
 	interface Props {
 		data: T[];
@@ -47,7 +47,8 @@ One line through `data` (one series). For several series, render one
 			.defined((p, i) =>
 				defined ? defined(p, i) : Number.isFinite(scaled(plot.x, x(p, i))) && Number.isFinite(scaled(plot.y, y(p, i)))
 			)
-			.curve(curve)(data) ?? ''
+			.curve(curve)
+			.digits(PATH_DIGITS)(data) ?? ''
 	);
 </script>
 

@@ -6,7 +6,7 @@ Each dot has a ring in the background colour so overlaps stay legible.
 -->
 <script lang="ts" generics="T">
 	import { useChart, usePlot } from '../core/context.js';
-	import { position } from '../core/scales.js';
+	import { position, px } from '../core/scales.js';
 	import { access, type Accessor, type Value } from '../core/accessor.js';
 
 	interface Props {
@@ -54,8 +54,8 @@ Each dot has a ring in the background colour so overlaps stay legible.
 		{#if Number.isFinite(cx) && Number.isFinite(cy)}
 			<!-- svelte-ignore a11y_no_static_element_interactions, a11y_click_events_have_key_events -->
 			<circle
-				{cx}
-				{cy}
+				cx={px(cx)}
+				cy={px(cy)}
 				r={access(r, d, i)}
 				fill={fill ? access(fill, d, i) : defaultFill}
 				fill-opacity={access(opacity, d, i)}

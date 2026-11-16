@@ -9,6 +9,7 @@ const PLOT = Symbol('mozaic:plot');
 const INITIAL_WIDTH = Symbol('mozaic:initial-width');
 const EMBEDDED = Symbol('mozaic:embedded');
 const DOWNLOADS = Symbol('mozaic:downloads');
+const LOAD_FONTS = Symbol('mozaic:load-fonts');
 
 /** Used when a component renders outside `<Chart>` (tests, quick sketches). */
 const fallbackChart: ChartContext = {
@@ -81,4 +82,18 @@ export function setDownloads(on = true): void {
 
 export function useDownloads(): boolean {
 	return getContext<boolean | undefined>(DOWNLOADS) ?? false;
+}
+
+/**
+ * Whether the charts inside this component (a site's layout, say) add their style's web-font stylesheet to the
+ * page head, unless a chart sets `<Chart loadFonts>`. A site that loads the fonts itself, or inlines their
+ * `@font-face` rules, calls `setLoadFonts(false)`: one render-blocking stylesheet fewer, and no copy of the
+ * `<link>` per chart.
+ */
+export function setLoadFonts(on = true): void {
+	setContext(LOAD_FONTS, on);
+}
+
+export function useLoadFonts(): boolean {
+	return getContext<boolean | undefined>(LOAD_FONTS) ?? true;
 }

@@ -31,7 +31,7 @@ Don't edit the copy: update it from a brand release and review the change. Proje
 
 ## Fonts
 
-A style can name a web-font stylesheet (`theme.fonts.stylesheet`). `<Chart>` adds it to the page head, so embeds and exports get the right fonts. Pass `loadFonts={false}` when the page already loads them. Exports wait for fonts to load before rendering.
+A style can name a web-font stylesheet (`theme.fonts.stylesheet`). `<Chart>` adds it to the page head, so embeds and exports get the right fonts. Pass `loadFonts={false}` when the page already loads them, or call `setLoadFonts(false)` (from `@samizdata/mozaic/frame`) in the site's layout to turn it off for every chart on its pages: one render-blocking stylesheet fewer if the site inlines its `@font-face` rules. Exports wait for fonts to load before rendering.
 
 ## Tokens
 

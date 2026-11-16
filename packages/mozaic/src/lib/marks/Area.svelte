@@ -7,7 +7,7 @@ Pair a light area (opacity ~0.1–0.2) with a `<Line>` on top for emphasis.
 <script lang="ts" generics="T">
 	import { area, curveLinear, type CurveFactory } from 'd3-shape';
 	import { useChart, usePlot } from '../core/context.js';
-	import { scaled } from '../core/scales.js';
+	import { PATH_DIGITS, scaled } from '../core/scales.js';
 	import { access, type Accessor } from '../core/accessor.js';
 
 	interface Props {
@@ -37,7 +37,8 @@ Pair a light area (opacity ~0.1–0.2) with a `<Line>` on top for emphasis.
 			.defined((p, i) =>
 				defined ? defined(p, i) : Number.isFinite(scaled(plot.x, x(p, i))) && Number.isFinite(scaled(plot.y, y(p, i)))
 			)
-			.curve(curve)(data) ?? ''
+			.curve(curve)
+			.digits(PATH_DIGITS)(data) ?? ''
 	);
 </script>
 

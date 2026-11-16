@@ -35,3 +35,15 @@ export function position(plot: PlotContext, x: unknown, y: unknown): [number, nu
 	}
 	return [scaled(plot.x, x), scaled(plot.y, y)];
 }
+
+/**
+ * Decimals in the path data of lines and areas (d3's own default is 3). A tenth of a pixel cannot be seen, on
+ * screen or in print, and the coordinates are most of a chart's markup: on a page of long-running poll lines,
+ * this takes a fifth off the HTML.
+ */
+export const PATH_DIGITS = 1;
+
+/** A coordinate for an SVG attribute, to a hundredth of a pixel: `5.737261287934863` becomes `5.74`. */
+export function px(value: number): number {
+	return Math.round(value * 100) / 100;
+}

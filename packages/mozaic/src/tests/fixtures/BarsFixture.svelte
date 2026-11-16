@@ -16,7 +16,8 @@
 		orientation = 'horizontal',
 		fluid = false,
 		embed,
-		download
+		download,
+		loadFonts
 	}: {
 		style?: Theme;
 		locale?: LocaleCode;
@@ -26,6 +27,7 @@
 		fluid?: boolean;
 		embed?: ChartEmbed;
 		download?: boolean | string;
+		loadFonts?: boolean;
 	} = $props();
 
 	const data = [
@@ -37,7 +39,7 @@
 	const linear = scaleLinear().domain([-100, 1500]);
 </script>
 
-<Chart {style} {locale} {medium} {embed} {download} width={400} alt="Test bars">
+<Chart {style} {locale} {medium} {embed} {download} {loadFonts} width={400} alt="Test bars">
 	<Header><Title>Bars title</Title></Header>
 	<Plot
 		x={orientation === 'horizontal' ? linear : band}

@@ -9,7 +9,7 @@ a map or a table.
 -->
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import { setChartContext, useDownloads } from '../core/context.js';
+	import { setChartContext, useDownloads, useLoadFonts } from '../core/context.js';
 	import { createLocale, type LocaleCode } from '../locale/index.js';
 	import { base, breakpointFor, tokensToStyle } from '../styles/index.js';
 	import type { Medium, Theme } from '../styles/types.js';
@@ -26,7 +26,10 @@ a map or a table.
 		alt?: string;
 		/** Fixed width in px (print: use `mm()`). Otherwise the chart fills its container. */
 		width?: number;
-		/** Add the style's web-font stylesheet to the page head. Turn off when the host page already loads the fonts. */
+		/**
+		 * Add the style's web-font stylesheet to the page head. Turn off when the host page already loads the fonts
+		 * (`setLoadFonts(false)` above the chart turns it off for every chart inside).
+		 */
 		loadFonts?: boolean;
 		/** The chart's embed page: shows an "Embed" button under the chart, with the code to put it on another site. */
 		embed?: ChartEmbed;
@@ -45,7 +48,7 @@ a map or a table.
 		medium = 'web',
 		alt,
 		width: fixedWidth,
-		loadFonts = true,
+		loadFonts: loadFontsProp,
 		embed,
 		download,
 		class: className = '',
@@ -54,6 +57,8 @@ a map or a table.
 
 	const uid = $props.id();
 	const downloads = useDownloads();
+	const loadFontsDefault = useLoadFonts();
+	const loadFonts = $derived(loadFontsProp ?? loadFontsDefault);
 	const tools = $state<{ table: Snippet | null }>({ table: null });
 	const theme = $derived(style);
 	const loc = $derived(createLocale(locale ?? theme.defaultLocale));

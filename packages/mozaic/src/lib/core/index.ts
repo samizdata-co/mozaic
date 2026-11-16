@@ -6,10 +6,12 @@ export { default as Facets } from './Facets.svelte';
 export {
 	setChartContext,
 	setDownloads,
+	setLoadFonts,
 	setInitialWidth,
 	setPlotContext,
 	useChart,
 	useDownloads,
+	useLoadFonts,
 	useInitialWidth,
 	useLocale,
 	usePlot,
