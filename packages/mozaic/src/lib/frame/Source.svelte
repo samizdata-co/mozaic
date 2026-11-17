@@ -2,7 +2,7 @@
 @component
 "Source: …", with the label in the chart's language. Pass `sources` as text or as a list of
 sources with optional links (`[{ label: 'ANRE', href: 'https://anre.md/…' }, …]`, joined with
-"; "), or write the text as children. The label turns plural for more than one listed source,
+", "), or write the text as children. The label turns plural for more than one listed source,
 or set `plural`. Links open in a new tab; in print they are plain text.
 -->
 <script lang="ts">
@@ -28,7 +28,7 @@ or set `plural`. Links open in a new tab; in print they are plain text.
 
 <p class="mz-source">
 	<span class="mz-label">{many ? chart.locale.strings.sources : chart.locale.strings.source}:</span>
-	{#each items as item, i (i)}{i > 0 ? '; ' : ''}{#if item.href && linked}<a
+	{#each items as item, i (i)}{i > 0 ? ', ' : ''}{#if item.href && linked}<a
 				href={item.href}
 				target="_blank"
 				rel="noopener">{item.label}</a
