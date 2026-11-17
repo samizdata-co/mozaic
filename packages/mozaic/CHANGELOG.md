@@ -1,5 +1,11 @@
 # @samizdata/mozaic
 
+## 0.14.0
+
+### Minor Changes
+
+- b7f357d: `Source` joins a list of sources with commas ("Sources: ANRE, BNM"); it used to join them with semicolons. To keep semicolons, write the sources as text or as children.
+
 ## 0.13.0
 
 ### Minor Changes
