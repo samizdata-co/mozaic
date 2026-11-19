@@ -15,7 +15,7 @@
 		"export": "pnpm --filter docs export",
 		"changeset": "changeset",
 		"release": "changeset version",
-		"release:publish": "changeset publish"
+		"release:publish": "pnpm --filter @samizdata/mozaic publish && node -e \"const v = require('./packages/mozaic/package.json').version; require('child_process').execFileSync('git', ['tag', '@samizdata/mozaic@' + v], { stdio: 'inherit' }); console.log('Tagged @samizdata/mozaic@' + v)\""
 	},
 	"devDependencies": {
 		"@changesets/cli": "^2.29.0",
