@@ -10,8 +10,10 @@ import {
 	PercentileChart,
 	ScatterChart,
 	StackedBarChart,
-	StripChart
+	StripChart,
+	FootprintMap
 } from '../lib/recipes/index.js';
+import { geoConicConformal } from 'd3-geo';
 import { EL, MD, RO } from '../lib/flags/index.js';
 
 const rows = [
@@ -518,5 +520,51 @@ describe('recipes', () => {
 		expect($('.mz-percentile-you-label')!.textContent).toBe('40');
 		expect($$('.mz-percentile-readout').map((t) => t.textContent)).toEqual(['>75%', '50%']);
 		expect($('.mz-percentile-controls')).toBeNull();
+	});
+
+	it('FootprintMap: oldest footprint faintest, labels on the map, key only when needed', () => {
+		const square = (x0: number, y0: number, s: number) => ({
+			type: 'Polygon' as const,
+			// Clockwise, as d3-geo wants.
+			coordinates: [
+				[
+					[x0, y0],
+					[x0, y0 + s],
+					[x0 + s, y0 + s],
+					[x0 + s, y0],
+					[x0, y0]
+				]
+			]
+		});
+		const rows = [
+			{ year: 1990, geo: square(27, 46, 1) },
+			{ year: 1940, geo: square(27.5, 46.5, 1.5) }
+		];
+		type R = (typeof rows)[number];
+		const props = {
+			data: rows,
+			geometry: (d: R) => d.geo,
+			label: (d: R) => String(d.year),
+			order: (d: R) => d.year,
+			labelAt: (d: R): [number, number] => [d.geo.coordinates[0][0][0] + 0.2, d.geo.coordinates[0][0][1] + 0.2],
+			projection: geoConicConformal().parallels([44, 48]).rotate([-28, 0]),
+			fit: square(26.5, 45.5, 3),
+			focus: [square(27.2, 46.2, 0.5)],
+			places: [{ name: 'Chișinău', lon: 28.86, lat: 47.01, dot: true }],
+			title: 'Footprints',
+			tooltipTitle: 'Covered by',
+			width: 800
+		};
+		const { $, $$ } = renderDocument(FootprintMap, props);
+		const fills = $$('path.mz-footprint').map((p) => Number(p.getAttribute('fill-opacity')));
+		expect(fills).toEqual([0.12, 0.4]);
+		expect($$('path.mz-footprint-focus')).toHaveLength(1);
+		expect($$('.mz-text text').map((t) => t.textContent?.trim())).toEqual(['Chișinău', '1940', '1990']);
+		expect($('.mz-footprint-key')!.classList.contains('mz-footprint-key-always')).toBe(false);
+		expect($('clipPath')).not.toBeNull();
+
+		const unlabelled = renderDocument(FootprintMap, { ...props, labelAt: undefined, width: 300 });
+		expect(unlabelled.$('.mz-footprint-key')!.classList.contains('mz-footprint-key-always')).toBe(true);
+		expect(unlabelled.$('.mz-footprint-key')!.textContent).toContain('1940');
 	});
 });

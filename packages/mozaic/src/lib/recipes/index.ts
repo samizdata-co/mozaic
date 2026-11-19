@@ -8,6 +8,8 @@ export { default as StackedBarChart } from './StackedBarChart.svelte';
 export { default as MosaicChart } from './MosaicChart.svelte';
 export { default as PercentileChart } from './PercentileChart.svelte';
 export { default as StripChart } from './StripChart.svelte';
+export { default as FootprintMap } from './FootprintMap.svelte';
+export type { FootprintPlace } from './FootprintMap.svelte';
 
 /** Recipe names accepted by `mozaic eject`. */
 export const recipes = [
@@ -20,5 +22,6 @@ export const recipes = [
 	'StackedBarChart',
 	'MosaicChart',
 	'PercentileChart',
-	'StripChart'
+	'StripChart',
+	'FootprintMap'
 ] as const;

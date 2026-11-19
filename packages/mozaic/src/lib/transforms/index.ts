@@ -14,3 +14,4 @@ export {
 	type Smoothed
 } from './smooth.js';
 export { percentileRank, type PercentilePoint, type PercentileRank } from './percentile.js';
+export { contourPoints, type ContourArea, type ContourPointsOptions } from './contour.js';
